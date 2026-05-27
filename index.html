@@ -153,7 +153,7 @@
   <div class="stats-bar">
     <div class="container stats-inner">
       <div class="stat"><strong>3</strong> platforms compared</div>
-      <div class="stat"><strong>17</strong> events listed</div>
+      <div class="stat"><strong id="events-count">—</strong> events listed</div>
       <div class="stat"><strong>All-in pricing</strong> — no hidden fees</div>
       <div class="stat"><strong>Updated</strong> every 15 min</div>
     </div>
@@ -186,5 +186,32 @@
     </div>
   </footer>
 
+
+  <script src="events-data.js"></script>
+  <script src="nfl-schedule.js"></script>
+  <script src="mlb-schedule.js"></script>
+  <script src="nhl-schedule.js"></script>
+  <script src="worldcup-schedule.js"></script>
+  <script>
+    (function () {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const upcoming = e => new Date(e.date) >= today;
+
+      const sports = ['nfl', 'mlb', 'nba', 'nhl', 'worldcup', 'ufc', 'mls'];
+      const featured = (typeof EVENTS !== 'undefined')
+        ? EVENTS.filter(e => sports.includes(e.sport) && upcoming(e)).length
+        : 0;
+
+      const schedule =
+        (typeof NFL_GAMES       !== 'undefined' ? NFL_GAMES.filter(upcoming).length       : 0) +
+        (typeof MLB_GAMES       !== 'undefined' ? MLB_GAMES.filter(upcoming).length       : 0) +
+        (typeof NHL_GAMES       !== 'undefined' ? NHL_GAMES.filter(upcoming).length       : 0) +
+        (typeof WORLDCUP_GAMES  !== 'undefined' ? WORLDCUP_GAMES.filter(upcoming).length  : 0);
+
+      const el = document.getElementById('events-count');
+      if (el) el.textContent = featured + schedule;
+    })();
+  </script>
 </body>
 </html>

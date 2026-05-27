@@ -396,21 +396,46 @@ function estimateAvailCount(secId, globalIdx, cfg) {
 
 // ── Platform purchase-link builder ────────────────────────────────────────────
 function platformUrl(platform, event) {
-  // Build the most specific query: prefer "Home vs Away Date" over generic title
-  const parts = [];
-  if (event.home && event.away) {
-    parts.push(event.home, 'vs', event.away);
-  } else if (event.home) {
-    parts.push(event.home, 'tickets');
-  } else {
-    parts.push(event.title);
+  // Convert a team/event name to a URL slug: "Dallas Cowboys" → "dallas-cowboys"
+  function toSlug(s) {
+    return s.toLowerCase()
+      .replace(/['’&]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/-+$/, '');
   }
-  if (event.date) parts.push(event.date);
-  const q = encodeURIComponent(parts.join(' '));
 
-  if (platform === 'Ticketmaster') return `https://www.ticketmaster.com/search?q=${q}`;
-  if (platform === 'StubHub')      return `https://www.stubhub.com/find/s/?q=${q}`;
-  if (platform === 'SeatGeek')     return `https://seatgeek.com/search?q=${q}`;
+  // Sport-level category pages used as fallback when no home team is set
+  const sportFallback = {
+    nfl:      { tm: 'nfl-football', sh: 'nfl-tickets',     sg: 'nfl-tickets'     },
+    mlb:      { tm: 'mlb-baseball', sh: 'mlb-tickets',     sg: 'mlb-tickets'     },
+    nba:      { tm: 'nba-basketball',sh: 'nba-tickets',    sg: 'nba-tickets'     },
+    nhl:      { tm: 'nhl-hockey',   sh: 'nhl-tickets',     sg: 'nhl-tickets'     },
+    worldcup: { tm: 'soccer',       sh: 'soccer-tickets',  sg: 'world-cup-tickets'},
+    ufc:      { tm: 'mma',          sh: 'ufc-tickets',     sg: 'ufc-tickets'     },
+    mls:      { tm: 'soccer',       sh: 'mls-tickets',     sg: 'mls-tickets'     },
+  };
+  const fb = sportFallback[event.sport] || { tm: 'sports', sh: 'sports-tickets', sg: 'sports' };
+  const teamSlug = event.home ? toSlug(event.home) : null;
+
+  if (platform === 'Ticketmaster') {
+    // Ticketmaster team page: /dallas-cowboys-tickets/artist/... doesn't need the ID –
+    // the slug alone redirects to the right team listing.
+    return teamSlug
+      ? `https://www.ticketmaster.com/${teamSlug}-tickets`
+      : `https://www.ticketmaster.com/browse/sports/${fb.tm}`;
+  }
+  if (platform === 'StubHub') {
+    // StubHub team pages: stubhub.com/dallas-cowboys-tickets/
+    return teamSlug
+      ? `https://www.stubhub.com/${teamSlug}-tickets/`
+      : `https://www.stubhub.com/${fb.sh}/`;
+  }
+  if (platform === 'SeatGeek') {
+    // SeatGeek team pages: seatgeek.com/dallas-cowboys-tickets
+    return teamSlug
+      ? `https://seatgeek.com/${teamSlug}-tickets`
+      : `https://seatgeek.com/${fb.sg}`;
+  }
   return '#';
 }
 

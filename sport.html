@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Games — TicketCompare</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="sport.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="#16a34a"/>
+          <ellipse cx="14" cy="14" rx="7" ry="7" stroke="#fff" stroke-width="1.5" fill="none"/>
+          <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="21" cy="8" r="3" fill="#f59e0b"/>
+        </svg>
+        <span>TicketCompare</span>
+      </div>
+      <a href="index.html" class="nav-link">← All Sports</a>
+    </div>
+  </header>
+
+  <div class="sport-page">
+    <div class="container">
+
+      <!-- Sport header banner -->
+      <div class="sport-banner" id="sportBanner">
+        <div class="banner-logo" id="bannerLogo"></div>
+        <div class="banner-info">
+          <h1 class="banner-title" id="bannerTitle">Loading…</h1>
+          <p class="banner-sub" id="bannerSub"></p>
+        </div>
+      </div>
+
+      <!-- Browse area — picker → options → games (all rendered by JS) -->
+      <div id="browseArea">
+        <div class="games-loading">Loading…</div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>All prices are all-in and include every fee. Updated regularly — always confirm on the platform before purchasing.</p>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button class="back-to-top" id="backToTop"
+          onclick="window.scrollTo({top:0,behavior:'smooth'})"
+          title="Back to top" aria-label="Back to top">↑</button>
+
+  <script src="events-data.js"></script>
+  <script src="nfl-schedule.js"></script>
+  <script src="mlb-schedule.js"></script>
+  <script src="nhl-schedule.js"></script>
+  <script src="worldcup-schedule.js"></script>
+  <script src="sport.js"></script>
+</body>
+</html>

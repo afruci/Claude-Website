@@ -1,0 +1,558 @@
+/* ── Page layout ── */
+.map-page { padding: 0 0 72px; }
+
+/* ── Stadium hero ── */
+.stadium-hero {
+  position: relative;
+  width: 100%;
+  height: 340px;
+  overflow: hidden;
+  background: #0a0a14;
+  /* Shimmer while photo loads */
+  background: linear-gradient(90deg, #0f172a 25%, #1e2d3d 50%, #0f172a 75%);
+  background-size: 200% 100%;
+  animation: hero-shimmer 1.6s ease-in-out infinite;
+}
+
+@keyframes hero-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Once the img loads, it covers the shimmer naturally */
+
+.stadium-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 40%;
+  display: block;
+}
+
+.stadium-hero-fallback {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.hero-fallback-icon { font-size: 3.5rem; }
+
+.hero-fallback-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+  padding: 0 24px;
+}
+
+.stadium-hero-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 56px 32px 22px;
+  background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+}
+
+.hero-venue-name {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(0,0,0,.8);
+  letter-spacing: -.2px;
+}
+
+/* ── Event topbar ── */
+.map-topbar {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 0 20px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.map-event-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+
+.map-event-meta {
+  font-size: .85rem;
+  color: var(--muted);
+}
+
+/* ── Tickets toolbar (legend + expand-all button) ── */
+.tickets-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 10px 0 18px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+
+.tt-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.ttl-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: .78rem;
+  color: var(--muted);
+}
+
+.ttl-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.ttl-dot.ticketmaster { background: #026cdf; }
+.ttl-dot.stubhub      { background: #5f259f; }
+.ttl-dot.seatgeek     { background: #f4811f; }
+
+.ttl-item.caution-legend { gap: 4px; }
+
+.expand-all-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  padding: 7px 16px;
+  font-size: .83rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: border-color .15s, color .15s;
+  flex-shrink: 0;
+}
+.expand-all-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ── Sections accordion ── */
+.sections-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 48px;
+}
+
+/* ── Bowl group (lower / upper) ── */
+.bowl-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bowl-label {
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .9px;
+  color: var(--muted);
+  padding: 0 2px 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
+/* ── Section item ── */
+.section-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: border-color .15s, box-shadow .2s;
+}
+
+.section-item.open {
+  border-color: var(--primary);
+  box-shadow: 0 2px 12px rgba(22,163,74,.12);
+}
+
+/* ── Section header (accordion trigger) ── */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 13px 18px;
+  background: transparent;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+  gap: 12px;
+  transition: background .15s;
+}
+.section-header:hover { background: rgba(22,163,74,.04); }
+
+.sh-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.sh-num {
+  font-size: .95rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.sh-level {
+  font-size: .72rem;
+  color: var(--muted);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 2px 8px;
+  white-space: nowrap;
+}
+
+.sh-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.sh-avail {
+  font-size: .78rem;
+  color: var(--primary);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.sh-arrow {
+  font-size: .65rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: color .15s;
+}
+.section-item.open .sh-arrow { color: var(--primary); }
+
+/* ── Section body (collapsed by default, transition in JS) ── */
+.section-body { padding: 0 18px; }
+.section-item.open .section-body { padding: 0 18px 16px; }
+
+/* ── Row group ── */
+.row-group {
+  border-bottom: 1px solid var(--border);
+  padding: 10px 0;
+}
+.row-group:last-child { border-bottom: none; }
+
+.row-label {
+  font-size: .68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .7px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+/* ── Ticket entry ── */
+.ticket-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  margin-bottom: 4px;
+  background: var(--surface2);
+  border: 1px solid transparent;
+  transition: border-color .15s;
+}
+.ticket-entry:last-child { margin-bottom: 0; }
+
+.ticket-entry.multi-listed {
+  border-color: rgba(245,158,11,.28);
+  background: rgba(245,158,11,.05);
+}
+
+.te-seat {
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  min-width: 54px;
+  padding-top: 3px;
+  flex-shrink: 0;
+}
+
+.te-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+
+/* Platform pills — now <a> tags linking to purchase pages */
+.te-plat {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  color: #fff;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity .15s, transform .12s, box-shadow .15s;
+}
+.te-plat:hover {
+  opacity: .88;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0,0,0,.35);
+}
+.te-plat:active { transform: scale(.96); }
+.te-plat.ticketmaster { background: #026cdf; }
+.te-plat.stubhub      { background: #5f259f; }
+.te-plat.seatgeek     { background: #f4811f; }
+
+/* Multi-platform caution badge */
+.te-caution {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .68rem;
+  font-weight: 700;
+  background: rgba(245,158,11,.16);
+  color: #d97706;
+  border: 1px solid rgba(245,158,11,.35);
+  padding: 2px 8px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.no-tickets {
+  font-size: .85rem;
+  color: var(--muted);
+  padding: 18px 0;
+  text-align: center;
+}
+
+/* ── Combined filters bar (max price + seats together) ── */
+.sm-filters-bar {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+/* Left panel: price slider */
+.sm-pf-section {
+  flex: 2;
+  min-width: 0;
+  padding: 14px 20px 20px;
+}
+
+/* Vertical divider between panels */
+.sm-filter-divider {
+  width: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+/* Right panel: seat pills */
+.sm-sf-section {
+  flex: 1;
+  min-width: 160px;
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sm-sf-label {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sm-sf-tiles {
+  display: flex;
+  gap: 6px;
+}
+
+.sm-sf-tile {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-size: .88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s, transform .1s;
+  flex-shrink: 0;
+}
+
+.sm-sf-tile:hover {
+  border-color: var(--primary);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.sm-sf-tile.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(22,163,74,.35);
+}
+
+/* Price filter header row */
+.sm-pf-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.sm-pf-label {
+  font-size: .85rem;
+  font-weight: 700;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+}
+
+.sm-pf-allin {
+  font-size: .75rem;
+  color: var(--muted);
+  font-weight: 400;
+}
+
+.sm-pf-display {
+  font-size: .88rem;
+  font-weight: 800;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+.sm-pf-clear {
+  font-size: .75rem;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+}
+.sm-pf-clear:hover { color: var(--text); border-color: var(--primary); }
+
+/* Single-thumb slider */
+.sm-pf-track-wrap {
+  position: relative;
+  height: 22px;
+  user-select: none;
+}
+
+.sm-pf-track {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.sm-pf-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+.sm-pf-thumb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  background: none;
+  margin: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+.sm-pf-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  border: 2.5px solid var(--bg);
+  box-shadow: 0 0 0 1.5px var(--primary);
+  transition: transform .1s, box-shadow .1s;
+}
+
+.sm-pf-thumb::-webkit-slider-thumb:hover,
+.sm-pf-thumb:active::-webkit-slider-thumb {
+  transform: scale(1.18);
+  box-shadow: 0 0 0 3px rgba(22,163,74,.25);
+}
+
+.sm-pf-thumb::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  border: 2.5px solid var(--bg);
+  box-shadow: 0 0 0 1.5px var(--primary);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .stadium-hero       { height: 220px; }
+  .hero-venue-name    { font-size: 1.1rem; }
+  .map-event-title    { font-size: 1.2rem; }
+  .tickets-toolbar    { flex-direction: column; align-items: flex-start; }
+  .sh-level           { display: none; }
+  .te-seat            { min-width: 44px; }
+  .expand-all-btn     { width: 100%; text-align: center; justify-content: center; }
+  .sm-filters-bar     { flex-direction: column; }
+  .sm-filter-divider  { width: auto; height: 1px; }
+  .sm-pf-section      { padding-bottom: 16px; }
+  .sm-sf-section      { padding-top: 16px; }
+  .sm-pf-header       { gap: 6px; }
+}

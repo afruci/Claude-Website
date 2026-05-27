@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(not exist *)",
+      "Bash(mkdir -p \"/c/Users/12814/Desktop/Claude Website/.claude\")",
+      "mcp__Claude_Preview__preview_start",
+      "WebSearch",
+      "WebFetch(domain:www.espn.com)",
+      "WebFetch(domain:www.cbssports.com)",
+      "WebFetch(domain:www.baseball-reference.com)",
+      "WebFetch(domain:sports.yahoo.com)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "mcp__mcp-registry__list_connectors"
+    ]
+  }
+}

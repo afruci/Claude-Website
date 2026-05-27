@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tickets — TicketCompare</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="seat-map.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="#16a34a"/>
+          <ellipse cx="14" cy="14" rx="7" ry="7" stroke="#fff" stroke-width="1.5" fill="none"/>
+          <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="21" cy="8" r="3" fill="#f59e0b"/>
+        </svg>
+        <span>TicketCompare</span>
+      </div>
+      <a href="javascript:history.back()" class="nav-link">← Back</a>
+    </div>
+  </header>
+
+  <div class="map-page">
+
+    <!-- Full-width stadium hero photo (outside .container so it bleeds edge-to-edge) -->
+    <div class="stadium-hero" id="stadiumHero">
+      <img id="stadiumHeroImg" class="stadium-hero-img" src="" alt=""
+           onload="document.getElementById('stadiumHero').style.animation='none'"
+           onerror="this.style.display='none';document.getElementById('stadiumHeroFallback').style.display='flex';document.getElementById('stadiumHero').style.animation='none'">
+      <div class="stadium-hero-fallback" id="stadiumHeroFallback" style="display:none">
+        <span class="hero-fallback-icon">🏟️</span>
+        <span id="heroFallbackName" class="hero-fallback-name"></span>
+      </div>
+      <div class="stadium-hero-overlay">
+        <span id="heroVenueName" class="hero-venue-name"></span>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Event header -->
+      <div class="map-topbar">
+        <span id="eventBadge" class="sport-badge"></span>
+        <div class="map-event-info">
+          <h1 id="eventTitle" class="map-event-title">Loading…</h1>
+          <p id="eventMeta" class="map-event-meta"></p>
+        </div>
+      </div>
+
+      <!-- Toolbar: platform legend + Expand All -->
+      <div class="tickets-toolbar">
+        <div class="tt-legend">
+          <span class="ttl-item"><span class="ttl-dot ticketmaster"></span>Ticketmaster</span>
+          <span class="ttl-item"><span class="ttl-dot stubhub"></span>StubHub</span>
+          <span class="ttl-item"><span class="ttl-dot seatgeek"></span>SeatGeek</span>
+          <span class="ttl-item caution-legend"><span>⚠️</span>&nbsp;Same seat on multiple platforms</span>
+        </div>
+        <button class="expand-all-btn" id="expandAllBtn" onclick="expandAll()">Expand All</button>
+      </div>
+
+      <!-- Max-price filter — populated by seat-map.js -->
+      <div id="priceFilterWrap"></div>
+
+      <!-- Section accordion — populated by seat-map.js -->
+      <div id="sectionsAccordion" class="sections-accordion">
+        <div class="games-loading">Loading…</div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Prices are all-in and include all fees. Seat availability and pricing are illustrative and updated regularly.</p>
+    </div>
+  </footer>
+
+  <script src="events-data.js"></script>
+  <script src="nfl-schedule.js"></script>
+  <script src="mlb-schedule.js"></script>
+  <script src="nhl-schedule.js"></script>
+  <script src="worldcup-schedule.js"></script>
+  <script src="seat-map.js"></script>
+</body>
+</html>

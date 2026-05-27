@@ -396,7 +396,18 @@ function estimateAvailCount(secId, globalIdx, cfg) {
 
 // ── Platform purchase-link builder ────────────────────────────────────────────
 function platformUrl(platform, event) {
-  const q = encodeURIComponent(event.title);
+  // Build the most specific query: prefer "Home vs Away Date" over generic title
+  const parts = [];
+  if (event.home && event.away) {
+    parts.push(event.home, 'vs', event.away);
+  } else if (event.home) {
+    parts.push(event.home, 'tickets');
+  } else {
+    parts.push(event.title);
+  }
+  if (event.date) parts.push(event.date);
+  const q = encodeURIComponent(parts.join(' '));
+
   if (platform === 'Ticketmaster') return `https://www.ticketmaster.com/search?q=${q}`;
   if (platform === 'StubHub')      return `https://www.stubhub.com/find/s/?q=${q}`;
   if (platform === 'SeatGeek')     return `https://seatgeek.com/search?q=${q}`;
@@ -813,7 +824,7 @@ function init() {
   badge.className   = `sport-badge sport-${event.sport}`;
   document.getElementById('eventTitle').textContent = event.title;
   document.getElementById('eventMeta').textContent  = `📍 ${event.venue}  ·  📅 ${event.date}`;
-  document.title = `${event.title} — Tickets · TicketCompare`;
+  document.title = `${event.title} — Tickets · TicketCompass`;
 
   renderPhoto(event);
   renderAccordion(event);

@@ -1,0 +1,426 @@
+/* ── Page layout ── */
+.hiw-page { padding: 0 0 80px; }
+
+/* ── Hero ── */
+.hiw-hero {
+  text-align: center;
+  padding: 52px 0 44px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 56px;
+}
+
+.hiw-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -.4px;
+}
+
+.hiw-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
+/* ── Flow container ── */
+.hiw-flow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* ── Arrow between steps ── */
+.hiw-arrow {
+  font-size: 2rem;
+  color: var(--primary);
+  line-height: 1;
+  padding: 10px 0;
+}
+
+/* ── Step card ── */
+.hiw-step {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 28px 28px 24px;
+}
+
+.hiw-step-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.hiw-num {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: #fff;
+  font-size: 1.15rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(22,163,74,.4);
+}
+
+.hiw-step-title {
+  font-size: 1.08rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.hiw-step-desc {
+  font-size: .88rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ── Mock browser frame ── */
+.mock-browser {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #0c0c10;
+}
+
+.mock-bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  background: #1a1a22;
+  border-bottom: 1px solid var(--border);
+}
+
+.mock-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #3a3a4a;
+  flex-shrink: 0;
+}
+
+.mock-url {
+  font-size: .6rem;
+  color: var(--muted);
+  margin-left: 6px;
+  font-family: monospace;
+}
+
+.mock-body {
+  padding: 14px 16px;
+}
+
+/* ── Step 1: Sport grid ── */
+.mock-section-label {
+  font-size: .62rem;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.mock-sport-grid {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.mock-sport-tile {
+  flex: 1;
+  min-width: 48px;
+  background: var(--surface);
+  border: 1.5px solid;
+  border-radius: 9px;
+  padding: 9px 4px;
+  text-align: center;
+  font-size: .95rem;
+  cursor: default;
+}
+
+.mock-sport-tile div {
+  font-size: .52rem;
+  font-weight: 800;
+  margin-top: 4px;
+  color: var(--text);
+  letter-spacing: .3px;
+}
+
+/* ── Step 2: Browse + games ── */
+.mock-browse-cats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.mock-browse-cat {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: .85rem;
+}
+
+.mock-browse-cat div {
+  font-size: .52rem;
+  font-weight: 700;
+  margin-top: 3px;
+  color: var(--muted);
+}
+
+.mock-game-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+
+.mock-game-date {
+  text-align: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 4px 7px;
+  min-width: 34px;
+}
+
+.mock-date-month {
+  font-size: .5rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+.mock-date-day {
+  font-size: .95rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.mock-game-info { flex: 1; min-width: 0; }
+.mock-game-title { font-size: .68rem; font-weight: 700; }
+.mock-game-venue { font-size: .55rem; color: var(--muted); margin-top: 1px; }
+
+.mock-game-price {
+  font-size: .62rem;
+  font-weight: 800;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+/* ── Step 3: Filters ── */
+.mock-filters {
+  display: flex;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.mock-filter-left  { flex: 2; padding: 12px 14px; }
+.mock-filter-right { flex: 1; padding: 12px 10px; }
+
+.mock-filter-divider {
+  width: 1px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.mock-filter-label {
+  font-size: .65rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.mock-filter-value {
+  font-size: .6rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin-top: 5px;
+}
+
+.mock-slider-track {
+  position: relative;
+  height: 4px;
+  background: var(--border);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.mock-slider-fill {
+  position: absolute;
+  left: 0; top: 0;
+  height: 100%;
+  background: var(--primary);
+  border-radius: 4px;
+}
+
+.mock-slider-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 13px;
+  height: 13px;
+  background: var(--primary);
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  box-shadow: 0 0 0 1.5px var(--primary);
+}
+
+.mock-seat-tiles {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.mock-seat-tile {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  font-size: .6rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.mock-seat-tile.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+
+/* ── Step 4: Accordion ── */
+.mock-accordion {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  overflow: hidden;
+  margin-bottom: 7px;
+}
+
+.mock-accordion.open { border-color: var(--primary); }
+
+.mock-acc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 12px;
+}
+
+.mock-acc-title { font-size: .68rem; font-weight: 800; }
+.mock-acc-avail { font-size: .6rem; color: var(--primary); font-weight: 600; }
+
+.mock-acc-body { border-top: 1px solid var(--border); padding: 8px 12px; }
+
+.mock-row-label {
+  font-size: .56rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.mock-ticket-entry {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 8px;
+  background: var(--surface2);
+  border-radius: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.mock-seat-lbl {
+  font-size: .6rem;
+  font-weight: 700;
+  min-width: 40px;
+}
+
+.mock-pill {
+  font-size: .55rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 999px;
+  color: #fff;
+  white-space: nowrap;
+}
+.mock-pill.tm { background: #026cdf; }
+.mock-pill.sh { background: #5f259f; }
+.mock-pill.sg { background: #f4811f; }
+
+.mock-caution {
+  font-size: .53rem;
+  font-weight: 700;
+  background: rgba(245,158,11,.15);
+  color: #d97706;
+  border: 1px solid rgba(245,158,11,.35);
+  padding: 2px 6px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+/* ── Step 5: Checkout ── */
+.mock-checkout-body { text-align: center; }
+
+.mock-redirect-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mock-redirect-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid;
+  border-radius: 9px;
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.mock-redirect-name {
+  font-size: .65rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.mock-redirect-btn {
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 6px;
+  font-size: .55rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.mock-redirect-note {
+  font-size: .6rem;
+  color: var(--muted);
+}
+
+/* ── Responsive ── */
+@media (max-width: 560px) {
+  .hiw-title        { font-size: 1.7rem; }
+  .hiw-step         { padding: 20px 18px 18px; }
+  .hiw-step-title   { font-size: 1rem; }
+  .hiw-step-desc    { font-size: .84rem; }
+  .mock-sport-tile  { min-width: 38px; font-size: .8rem; }
+  .mock-redirect-row{ flex-direction: column; }
+}

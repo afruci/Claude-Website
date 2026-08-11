@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — TicketCompass</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .contact-hero {
+      background: #0f172a;
+      padding: 64px 0 72px;
+      text-align: center;
+    }
+    .contact-hero h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #f1f5f9;
+      margin-bottom: 12px;
+    }
+    .contact-hero p {
+      color: #94a3b8;
+      font-size: 1.0625rem;
+      max-width: 520px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    .contact-body {
+      padding: 56px 0 80px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 640px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    .contact-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .contact-card-icon {
+      font-size: 1.75rem;
+      margin-bottom: 10px;
+    }
+    .contact-card-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #64748b;
+      margin-bottom: 4px;
+    }
+    .contact-card-title {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      color: #f1f5f9;
+    }
+    .contact-card-desc {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+    .contact-card a {
+      display: inline-block;
+      margin-top: 14px;
+      background: #16a34a;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.875rem;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .contact-card a:hover { background: #15803d; }
+
+    .contact-note {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 14px;
+      padding: 28px 28px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .contact-note-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+    .contact-note-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 6px;
+    }
+    .contact-note-body p {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.65;
+      margin-bottom: 0;
+    }
+    .contact-note-body a {
+      color: #4ade80;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .contact-note-body a:hover { text-decoration: underline; }
+
+    .contact-body h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text, #0f172a);
+      margin-bottom: 20px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .contact-body h2 { color: #f1f5f9; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="#16a34a"/>
+          <ellipse cx="14" cy="14" rx="7" ry="7" stroke="#fff" stroke-width="1.5" fill="none"/>
+          <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="21" cy="8" r="3" fill="#f59e0b"/>
+        </svg>
+        <span>TicketCompass</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Sports</a>
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="privacy-policy.html" class="nav-link">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="contact-hero">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>Partner inquiries, affiliate applications, press, or general questions — we'll get back to you promptly.</p>
+    </div>
+  </div>
+
+  <!-- Contact cards -->
+  <div class="contact-body">
+    <div class="container">
+
+      <h2>Get in touch</h2>
+
+      <div class="contact-grid">
+
+        <div class="contact-card">
+          <div class="contact-card-icon">🤝</div>
+          <div class="contact-card-label">Partner &amp; Affiliate Inquiries</div>
+          <div class="contact-card-title">Affiliate &amp; Business</div>
+          <div class="contact-card-desc">Interested in partnering with TicketCompass, discussing affiliate programs, or exploring a business relationship?</div>
+          <a href="mailto:ceo@ticketcompasses.com?subject=Partnership Inquiry">Email us</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">📰</div>
+          <div class="contact-card-label">Media &amp; Press</div>
+          <div class="contact-card-title">Press Inquiries</div>
+          <div class="contact-card-desc">Media requests, interview inquiries, or press information about TicketCompass and the ticket comparison space.</div>
+          <a href="mailto:ceo@ticketcompasses.com?subject=Press Inquiry">Email us</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">❓</div>
+          <div class="contact-card-label">Support</div>
+          <div class="contact-card-title">General Questions</div>
+          <div class="contact-card-desc">Questions about how the site works, pricing data, or anything else about TicketCompass.</div>
+          <a href="mailto:ceo@ticketcompasses.com?subject=General Question">Email us</a>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-icon">⚖️</div>
+          <div class="contact-card-label">Legal &amp; Privacy</div>
+          <div class="contact-card-title">Legal &amp; Privacy</div>
+          <div class="contact-card-desc">Questions about our privacy policy, affiliate disclosures, or data practices.</div>
+          <a href="mailto:ceo@ticketcompasses.com?subject=Legal / Privacy">Email us</a>
+        </div>
+
+      </div>
+
+      <div class="contact-note">
+        <div class="contact-note-icon">📬</div>
+        <div class="contact-note-body">
+          <h3>Direct email: ceo@ticketcompasses.com</h3>
+          <p>All inquiries go to the same inbox. We aim to respond within 1–2 business days. For platform-specific ticket issues (refunds, delivery, order problems), please contact <a href="https://help.ticketmaster.com" target="_blank" rel="noopener noreferrer">Ticketmaster</a>, <a href="https://www.stubhub.com/help" target="_blank" rel="noopener noreferrer">StubHub</a>, or <a href="https://seatgeek.com/help" target="_blank" rel="noopener noreferrer">SeatGeek</a> directly — we are not a ticket seller and cannot assist with order issues.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-disclosure">TicketCompass earns a commission when you purchase tickets through links on this site. This does not affect the price you pay.</p>
+      <p class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+        <a href="privacy-policy.html#affiliate-disclosure">Affiliate Disclosure</a> &nbsp;·&nbsp;
+        <a href="how-it-works.html">How It Works</a> &nbsp;·&nbsp;
+        <a href="contact.html">Contact</a>
+      </p>
+      <p>© 2026 TicketCompass. An independent price comparison service. Not affiliated with any sports league, team, or ticket platform.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

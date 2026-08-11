@@ -26,6 +26,14 @@
 
   <div class="map-page">
 
+    <!-- Full-width stadium hero (always shows emoji + venue name) -->
+    <div class="stadium-hero" id="stadiumHero">
+      <div class="stadium-hero-fallback">
+        <span class="hero-fallback-icon">🏟️</span>
+        <span id="heroFallbackName" class="hero-fallback-name"></span>
+      </div>
+    </div>
+
     <div class="container">
 
       <!-- Event header -->
@@ -36,9 +44,6 @@
           <p id="eventMeta" class="map-event-meta"></p>
         </div>
       </div>
-
-      <!-- Playing-surface diagram — injected by renderFieldDiagram() -->
-      <div id="fieldDiagram" class="field-diagram"></div>
 
       <!-- Toolbar: platform legend + Expand All -->
       <div class="tickets-toolbar">

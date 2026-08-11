@@ -2,27 +2,38 @@
 .map-page { padding: 0 0 72px; }
 
 
-/* ── Playing-surface field diagram ── */
-.field-diagram {
+
+/* ── Stadium hero ── */
+.stadium-hero {
+  position: relative;
   width: 100%;
-  border-radius: 14px;
+  height: 340px;
   overflow: hidden;
-  margin: 18px 0 22px;
-  box-shadow: 0 3px 16px rgba(0,0,0,.18);
-  line-height: 0; /* remove inline-block gap */
 }
-.field-diagram svg,
-.field-diagram img {
+
+.stadium-hero-fallback {
   width: 100%;
-  height: auto;
-  max-height: 300px;
-  object-fit: cover;
-  display: block;
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
 }
-.field-diagram:empty { display: none; }
+
+.hero-fallback-icon { font-size: 3.5rem; }
+
+.hero-fallback-name {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+  padding: 0 24px;
+}
 
 @media (max-width: 640px) {
-  .field-diagram svg { max-height: 160px; }
+  .stadium-hero { height: 220px; }
 }
 
 /* ── Event topbar ── */

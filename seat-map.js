@@ -1058,7 +1058,10 @@ async function init() {
   document.getElementById('eventMeta').textContent  = `📍 ${event.venue}  ·  📅 ${event.date}`;
   document.title = `${event.title} — Tickets · TicketCompass`;
 
-  renderFieldDiagram(event.sport, event.venue_key);
+  // Set venue name in hero banner
+  const heroName = document.getElementById('heroFallbackName');
+  if (heroName) heroName.textContent = event.venue.split('·')[0].trim();
+
   renderAccordion(event);
   buildFilters(event);
 }

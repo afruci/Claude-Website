@@ -828,7 +828,7 @@ function renderPhoto(event) {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-function init() {
+async function init() {
   const idParam = new URLSearchParams(window.location.search).get('id');
   // API event IDs are strings (e.g. "api_mlb_824240"); static IDs are integers
   const id = /^\d+$/.test(idParam) ? parseInt(idParam, 10) : idParam;
@@ -840,8 +840,14 @@ function init() {
   if (!event && typeof NHL_GAMES       !== 'undefined') event = NHL_GAMES.find(e => e.id === id);
   if (!event && typeof WORLDCUP_GAMES  !== 'undefined') event = WORLDCUP_GAMES.find(e => e.id === id);
   if (!event && typeof MLS_GAMES       !== 'undefined') event = MLS_GAMES.find(e => e.id === id);
-  // Fall back to API-fetched event stored in localStorage by schedule-api.js
+  // Try localStorage cache populated by schedule-api.js
   if (!event && typeof window.getCachedEvent === 'function') event = window.getCachedEvent(id);
+  // Last resort: fetch the schedule directly (handles cold loads with no localStorage)
+  if (!event && typeof id === 'string' && id.startsWith('api_') && typeof window.loadSchedule === 'function') {
+    const sport = id.split('_')[1]; // 'api_mlb_824882' → 'mlb'
+    const games = await window.loadSchedule(sport);
+    if (games) event = games.find(e => e.id === id) || null;
+  }
 
   if (!event) {
     document.getElementById('eventTitle').textContent = 'Event not found';

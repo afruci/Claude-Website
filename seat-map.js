@@ -828,6 +828,245 @@ function renderPhoto(event) {
   // onload / onerror attributes on the <img> stop the shimmer and show fallback
 }
 
+// ── Sport playing-surface diagrams ───────────────────────────────────────────
+// Inline SVG overhead diagrams — no external images, always displays correctly.
+const FIELD_DIAGRAMS = {
+
+  mlb: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="Baseball field">
+    <!-- Outfield grass -->
+    <rect width="520" height="360" fill="#1f6b1f"/>
+    <!-- Warning track -->
+    <path d="M260,330 L16,36 Q260,2 504,36 Z" fill="none" stroke="#a07840" stroke-width="28" opacity="0.7"/>
+    <!-- Infield dirt -->
+    <path d="M260,318 L102,162 Q260,48 418,162 Z" fill="#b8926a"/>
+    <!-- Infield grass -->
+    <circle cx="260" cy="188" r="100" fill="#237023"/>
+    <!-- Foul lines -->
+    <line x1="260" y1="330" x2="0"   y2="0"   stroke="white" stroke-width="1.5" opacity="0.9"/>
+    <line x1="260" y1="330" x2="520" y2="0"   stroke="white" stroke-width="1.5" opacity="0.9"/>
+    <!-- Pitcher mound -->
+    <circle cx="260" cy="188" r="16" fill="#b8926a"/>
+    <!-- Home plate dirt circle -->
+    <circle cx="260" cy="318" r="22" fill="#b8926a"/>
+    <!-- Home plate -->
+    <polygon points="260,328 251,319 251,309 269,309 269,319" fill="white"/>
+    <!-- 1B -->
+    <rect x="404" y="154" width="16" height="16" fill="white" transform="rotate(45 412 162)"/>
+    <!-- 2B -->
+    <rect x="252" y="65"  width="16" height="16" fill="white" transform="rotate(45 260 73)"/>
+    <!-- 3B -->
+    <rect x="106" y="154" width="16" height="16" fill="white" transform="rotate(45 114 162)"/>
+  </svg>`,
+
+  nfl: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 280" role="img" aria-label="Football field">
+    <!-- Field -->
+    <rect width="560" height="280" fill="#2d7a2d"/>
+    <!-- Alternating strips -->
+    <rect x="40"  y="0" width="48" height="280" fill="#246424" opacity="0.55"/>
+    <rect x="136" y="0" width="48" height="280" fill="#246424" opacity="0.55"/>
+    <rect x="232" y="0" width="48" height="280" fill="#246424" opacity="0.55"/>
+    <rect x="328" y="0" width="48" height="280" fill="#246424" opacity="0.55"/>
+    <rect x="424" y="0" width="48" height="280" fill="#246424" opacity="0.55"/>
+    <!-- End zones -->
+    <rect x="0"   y="0" width="40"  height="280" fill="#1a3d8a" opacity="0.9"/>
+    <rect x="520" y="0" width="40"  height="280" fill="#1a3d8a" opacity="0.9"/>
+    <!-- Yard lines -->
+    <line x1="40"  y1="0" x2="40"  y2="280" stroke="white" stroke-width="2.5"/>
+    <line x1="88"  y1="14" x2="88"  y2="266" stroke="white" stroke-width="1"/>
+    <line x1="136" y1="0" x2="136" y2="280" stroke="white" stroke-width="2"/>
+    <line x1="184" y1="14" x2="184" y2="266" stroke="white" stroke-width="1"/>
+    <line x1="232" y1="0" x2="232" y2="280" stroke="white" stroke-width="2"/>
+    <line x1="280" y1="0" x2="280" y2="280" stroke="white" stroke-width="3"/>
+    <line x1="328" y1="14" x2="328" y2="266" stroke="white" stroke-width="1"/>
+    <line x1="376" y1="0" x2="376" y2="280" stroke="white" stroke-width="2"/>
+    <line x1="424" y1="14" x2="424" y2="266" stroke="white" stroke-width="1"/>
+    <line x1="472" y1="0" x2="472" y2="280" stroke="white" stroke-width="2"/>
+    <line x1="520" y1="0" x2="520" y2="280" stroke="white" stroke-width="2.5"/>
+    <!-- Yard numbers -->
+    <text x="112" y="46"  font-size="20" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.85">10</text>
+    <text x="208" y="46"  font-size="20" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.85">20</text>
+    <text x="256" y="46"  font-size="20" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.85">50</text>
+    <text x="304" y="46"  font-size="20" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.85">40</text>
+    <text x="400" y="46"  font-size="20" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.85">20</text>
+    <text x="448" y="46"  font-size="20" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.85">10</text>
+    <!-- Goal posts -->
+    <line x1="20" y1="280" x2="20" y2="230" stroke="#f5c518" stroke-width="3"/>
+    <line x1="9"  y1="230" x2="31" y2="230" stroke="#f5c518" stroke-width="3"/>
+    <line x1="540" y1="280" x2="540" y2="230" stroke="#f5c518" stroke-width="3"/>
+    <line x1="529" y1="230" x2="551" y2="230" stroke="#f5c518" stroke-width="3"/>
+  </svg>`,
+
+  nba: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 294" role="img" aria-label="Basketball court">
+    <!-- Hardwood floor -->
+    <rect width="560" height="294" fill="#c8963e"/>
+    <!-- Floor grain lines -->
+    <line x1="0" y1="49"  x2="560" y2="49"  stroke="#b8822e" stroke-width="0.6" opacity="0.5"/>
+    <line x1="0" y1="98"  x2="560" y2="98"  stroke="#b8822e" stroke-width="0.6" opacity="0.5"/>
+    <line x1="0" y1="147" x2="560" y2="147" stroke="#b8822e" stroke-width="0.6" opacity="0.5"/>
+    <line x1="0" y1="196" x2="560" y2="196" stroke="#b8822e" stroke-width="0.6" opacity="0.5"/>
+    <line x1="0" y1="245" x2="560" y2="245" stroke="#b8822e" stroke-width="0.6" opacity="0.5"/>
+    <!-- Court outline -->
+    <rect x="4" y="4" width="552" height="286" fill="none" stroke="white" stroke-width="2.5"/>
+    <!-- Half-court line -->
+    <line x1="280" y1="4" x2="280" y2="290" stroke="white" stroke-width="2"/>
+    <!-- Center circle -->
+    <circle cx="280" cy="147" r="30" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Left paint -->
+    <rect x="4" y="99" width="90" height="96" fill="#b5822e" stroke="white" stroke-width="2"/>
+    <!-- Left restricted area -->
+    <path d="M4,123 A28,28 0 0,1 4,171" stroke="white" stroke-width="1.5" fill="none" stroke-dasharray="5 4"/>
+    <!-- Left 3pt line -->
+    <line x1="4"  y1="52" x2="45" y2="52"  stroke="white" stroke-width="2"/>
+    <line x1="4"  y1="242" x2="45" y2="242" stroke="white" stroke-width="2"/>
+    <path d="M45,52 A115,115 0 0,1 45,242" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Left free-throw circle -->
+    <circle cx="94" cy="147" r="30" fill="none" stroke="white" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <!-- Left basket + backboard -->
+    <line x1="4"  y1="138" x2="4"  y2="156" stroke="white" stroke-width="4"/>
+    <line x1="4"  y1="147" x2="42" y2="147" stroke="white" stroke-width="1.5"/>
+    <circle cx="47" cy="147" r="9" fill="none" stroke="#e07820" stroke-width="2.5"/>
+    <!-- Right paint -->
+    <rect x="466" y="99" width="90" height="96" fill="#b5822e" stroke="white" stroke-width="2"/>
+    <!-- Right restricted area -->
+    <path d="M556,123 A28,28 0 0,0 556,171" stroke="white" stroke-width="1.5" fill="none" stroke-dasharray="5 4"/>
+    <!-- Right 3pt line -->
+    <line x1="556" y1="52"  x2="515" y2="52"  stroke="white" stroke-width="2"/>
+    <line x1="556" y1="242" x2="515" y2="242" stroke="white" stroke-width="2"/>
+    <path d="M515,52 A115,115 0 0,0 515,242" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Right free-throw circle -->
+    <circle cx="466" cy="147" r="30" fill="none" stroke="white" stroke-width="1.5" stroke-dasharray="7 5"/>
+    <!-- Right basket + backboard -->
+    <line x1="556" y1="138" x2="556" y2="156" stroke="white" stroke-width="4"/>
+    <line x1="518" y1="147" x2="556" y2="147" stroke="white" stroke-width="1.5"/>
+    <circle cx="513" cy="147" r="9" fill="none" stroke="#e07820" stroke-width="2.5"/>
+  </svg>`,
+
+  nhl: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 270" role="img" aria-label="Hockey rink">
+    <!-- Ice surface -->
+    <rect width="560" height="270" rx="50" fill="#d8eef8"/>
+    <!-- Red center line -->
+    <line x1="280" y1="0" x2="280" y2="270" stroke="#cc1111" stroke-width="4.5"/>
+    <!-- Blue lines -->
+    <line x1="182" y1="0" x2="182" y2="270" stroke="#1155bb" stroke-width="4"/>
+    <line x1="378" y1="0" x2="378" y2="270" stroke="#1155bb" stroke-width="4"/>
+    <!-- Goal lines -->
+    <line x1="52"  y1="38" x2="52"  y2="232" stroke="#cc1111" stroke-width="2.5"/>
+    <line x1="508" y1="38" x2="508" y2="232" stroke="#cc1111" stroke-width="2.5"/>
+    <!-- Center circle + dot -->
+    <circle cx="280" cy="135" r="35" fill="none" stroke="#cc1111" stroke-width="2.5"/>
+    <circle cx="280" cy="135" r="4"  fill="#cc1111"/>
+    <!-- Left zone face-off circles -->
+    <circle cx="112" cy="76"  r="28" fill="none" stroke="#cc1111" stroke-width="2"/>
+    <circle cx="112" cy="76"  r="4"  fill="#cc1111"/>
+    <circle cx="112" cy="194" r="28" fill="none" stroke="#cc1111" stroke-width="2"/>
+    <circle cx="112" cy="194" r="4"  fill="#cc1111"/>
+    <!-- Right zone face-off circles -->
+    <circle cx="448" cy="76"  r="28" fill="none" stroke="#cc1111" stroke-width="2"/>
+    <circle cx="448" cy="76"  r="4"  fill="#cc1111"/>
+    <circle cx="448" cy="194" r="28" fill="none" stroke="#cc1111" stroke-width="2"/>
+    <circle cx="448" cy="194" r="4"  fill="#cc1111"/>
+    <!-- Neutral zone dots -->
+    <circle cx="210" cy="135" r="4" fill="#cc1111"/>
+    <circle cx="350" cy="135" r="4" fill="#cc1111"/>
+    <!-- Left goal crease -->
+    <path d="M52,112 Q88,112 88,135 Q88,158 52,158" fill="#aad0f0" stroke="#cc1111" stroke-width="2"/>
+    <!-- Left net -->
+    <rect x="30" y="117" width="22" height="36" rx="2" fill="none" stroke="#777" stroke-width="2"/>
+    <!-- Right goal crease -->
+    <path d="M508,112 Q472,112 472,135 Q472,158 508,158" fill="#aad0f0" stroke="#cc1111" stroke-width="2"/>
+    <!-- Right net -->
+    <rect x="508" y="117" width="22" height="36" rx="2" fill="none" stroke="#777" stroke-width="2"/>
+  </svg>`,
+
+  mls:      _soccerSVG(),
+  worldcup: _soccerSVG(),
+  ufc: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" role="img" aria-label="UFC octagon">
+    <!-- Canvas -->
+    <rect width="400" height="400" fill="#1a1a1a"/>
+    <!-- Octagon mat -->
+    <polygon points="200,20 340,80 380,220 320,360 80,360 20,220 60,80 200,20" fill="#c8a040"/>
+    <!-- Octagon fence line -->
+    <polygon points="200,30 330,86 368,218 312,350 88,350 32,218 70,86 200,30" fill="none" stroke="white" stroke-width="3"/>
+    <!-- Center UFC logo circle -->
+    <circle cx="200" cy="200" r="60" fill="none" stroke="white" stroke-width="2"/>
+    <text x="200" y="208" font-size="22" fill="white" text-anchor="middle" font-family="Arial Black,sans-serif" font-weight="900" opacity="0.9">UFC</text>
+    <!-- Corner markers -->
+    <circle cx="200" cy="30"  r="5" fill="#cc1111"/>
+    <circle cx="200" cy="370" r="5" fill="#1155bb"/>
+  </svg>`,
+};
+
+function _soccerSVG() {
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 340" role="img" aria-label="Soccer pitch">
+    <!-- Pitch -->
+    <rect width="560" height="340" fill="#2a7a2a"/>
+    <!-- Stripe overlay -->
+    <rect x="0"   y="0" width="56" height="340" fill="#246424" opacity="0.5"/>
+    <rect x="112" y="0" width="56" height="340" fill="#246424" opacity="0.5"/>
+    <rect x="224" y="0" width="56" height="340" fill="#246424" opacity="0.5"/>
+    <rect x="336" y="0" width="56" height="340" fill="#246424" opacity="0.5"/>
+    <rect x="448" y="0" width="56" height="340" fill="#246424" opacity="0.5"/>
+    <!-- Boundary -->
+    <rect x="5" y="5" width="550" height="330" fill="none" stroke="white" stroke-width="2.5"/>
+    <!-- Halfway line -->
+    <line x1="280" y1="5" x2="280" y2="335" stroke="white" stroke-width="2"/>
+    <!-- Center circle + spot -->
+    <circle cx="280" cy="170" r="46" fill="none" stroke="white" stroke-width="2"/>
+    <circle cx="280" cy="170" r="3.5" fill="white"/>
+    <!-- Left penalty area -->
+    <rect x="5" y="96" width="90" height="148" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Left goal area -->
+    <rect x="5" y="130" width="36" height="80" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Left penalty spot + arc -->
+    <circle cx="60" cy="170" r="3.5" fill="white"/>
+    <path d="M95,145 A48,48 0 0,1 95,195" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Left goal -->
+    <rect x="0" y="148" width="5" height="44" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Right penalty area -->
+    <rect x="465" y="96" width="90" height="148" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Right goal area -->
+    <rect x="519" y="130" width="36" height="80" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Right penalty spot + arc -->
+    <circle cx="500" cy="170" r="3.5" fill="white"/>
+    <path d="M465,145 A48,48 0 0,0 465,195" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Right goal -->
+    <rect x="555" y="148" width="5" height="44" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Corner arcs -->
+    <path d="M5,18 A13,13 0 0,1 18,5"    fill="none" stroke="white" stroke-width="2"/>
+    <path d="M542,5  A13,13 0 0,1 555,18" fill="none" stroke="white" stroke-width="2"/>
+    <path d="M5,322 A13,13 0 0,0 18,335"  fill="none" stroke="white" stroke-width="2"/>
+    <path d="M542,335 A13,13 0 0,0 555,322" fill="none" stroke="white" stroke-width="2"/>
+  </svg>`;
+}
+
+// ── Venue interior photos (Wikimedia Commons) ────────────────────────────────
+// Maps venue_key → Commons filename for a game-day interior shot.
+// renderFieldDiagram tries the photo first; on error it falls back to the SVG.
+const INTERIOR_PHOTOS = {
+  allegiant_stadium: '2022_Las_Vegas_Bowl_Allegiant_Stadium.jpg',
+};
+
+function renderFieldDiagram(sport, venueKey) {
+  const el = document.getElementById('fieldDiagram');
+  if (!el) return;
+
+  const filename = INTERIOR_PHOTOS[venueKey];
+  if (filename) {
+    const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}?width=1280`;
+    const img = document.createElement('img');
+    img.alt   = venueKey.replace(/_/g, ' ');
+    img.style.cssText = 'width:100%;height:auto;max-height:340px;object-fit:cover;display:block;';
+    img.onerror = () => { el.innerHTML = FIELD_DIAGRAMS[sport] || FIELD_DIAGRAMS.mlb; };
+    img.src = url;
+    el.innerHTML = '';
+    el.appendChild(img);
+    return;
+  }
+
+  // No interior photo — use the SVG diagram for this sport
+  el.innerHTML = FIELD_DIAGRAMS[sport] || FIELD_DIAGRAMS.mlb;
+}
+
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
   const idParam = new URLSearchParams(window.location.search).get('id');
@@ -865,6 +1104,7 @@ async function init() {
   document.title = `${event.title} — Tickets · TicketCompass`;
 
   renderPhoto(event);
+  renderFieldDiagram(event.sport, event.venue_key);
   renderAccordion(event);
   buildFilters(event);
 }

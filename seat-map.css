@@ -69,6 +69,29 @@
   letter-spacing: -.2px;
 }
 
+/* ── Playing-surface field diagram ── */
+.field-diagram {
+  width: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+  margin: 18px 0 22px;
+  box-shadow: 0 3px 16px rgba(0,0,0,.18);
+  line-height: 0; /* remove inline-block gap */
+}
+.field-diagram svg,
+.field-diagram img {
+  width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+}
+.field-diagram:empty { display: none; }
+
+@media (max-width: 640px) {
+  .field-diagram svg { max-height: 160px; }
+}
+
 /* ── Event topbar ── */
 .map-topbar {
   display: flex;

@@ -116,32 +116,21 @@
           <div class="tile-sub">Hockey</div>
         </a>
 
-        <!-- World Cup -->
-        <a class="sport-tile sport-wc-tile" href="sport.html?sport=worldcup">
+        <!-- MLS -->
+        <a class="sport-tile sport-mls-tile" href="sport.html?sport=mls">
           <div class="tile-logo">
             <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="36" cy="36" r="28" fill="white" stroke="#d0d0d0" stroke-width="1.5"/>
-              <!-- Classic soccer ball black patches -->
-              <!-- Top pentagon -->
-              <polygon points="36,11 44,17 41,27 31,27 28,17" fill="#111"/>
-              <!-- Upper right -->
-              <polygon points="56,27 62,36 56,45 46,42 46,30" fill="#111"/>
-              <!-- Lower right -->
-              <polygon points="49,55 39,63 31,57 33,46 44,44" fill="#111"/>
-              <!-- Lower left -->
-              <polygon points="23,55 15,47 19,36 29,38 29,50" fill="#111"/>
-              <!-- Upper left -->
-              <polygon points="16,27 26,30 26,42 16,45 10,36" fill="#111"/>
-              <!-- Center connector lines -->
-              <line x1="36" y1="27" x2="46" y2="30" stroke="#999" stroke-width="1"/>
-              <line x1="46" y1="30" x2="44" y2="44" stroke="#999" stroke-width="1"/>
-              <line x1="44" y1="44" x2="33" y2="46" stroke="#999" stroke-width="1"/>
-              <line x1="33" y1="46" x2="26" y2="42" stroke="#999" stroke-width="1"/>
-              <line x1="26" y1="42" x2="28" y2="27" stroke="#999" stroke-width="1"/>
-              <line x1="28" y1="27" x2="36" y2="27" stroke="#999" stroke-width="1"/>
+              <!-- Shield background -->
+              <path d="M36 8 L60 18 L60 42 Q60 58 36 66 Q12 58 12 42 L12 18 Z" fill="#1a2d5a" stroke="#2a4080" stroke-width="1.5"/>
+              <!-- Red chevron -->
+              <path d="M16 32 L36 46 L56 32 L56 38 L36 52 L16 38 Z" fill="#cc2222"/>
+              <!-- White star -->
+              <polygon points="36,16 38.5,23 46,23 40,28 42.5,35 36,31 29.5,35 32,28 26,23 33.5,23" fill="white"/>
+              <!-- MLS text -->
+              <text x="36" y="61" text-anchor="middle" font-size="7" font-weight="900" fill="white" font-family="Arial,sans-serif" letter-spacing="1">MLS</text>
             </svg>
           </div>
-          <div class="tile-name">World Cup</div>
+          <div class="tile-name">MLS</div>
           <div class="tile-sub">Soccer · 2026</div>
         </a>
 
@@ -213,7 +202,7 @@
 
         <details class="faq-item">
           <summary class="faq-q">What sports are covered?</summary>
-          <div class="faq-a"><span class="faq-label">Answer:</span> We currently cover NFL, MLB, NBA, NHL, and FIFA World Cup 2026. We're actively working on adding more sports and events.</div>
+          <div class="faq-a"><span class="faq-label">Answer:</span> We currently cover NFL, MLB, NBA, NHL, MLS, and FIFA World Cup 2026. We're actively working on adding more sports and events.</div>
         </details>
 
       </div>
@@ -232,6 +221,7 @@
   <script src="mlb-schedule.js"></script>
   <script src="nhl-schedule.js"></script>
   <script src="worldcup-schedule.js"></script>
+  <script src="mls-schedule.js"></script>
   <script>
     (function () {
       const today = new Date();
@@ -247,7 +237,8 @@
         (typeof NFL_GAMES       !== 'undefined' ? NFL_GAMES.filter(upcoming).length       : 0) +
         (typeof MLB_GAMES       !== 'undefined' ? MLB_GAMES.filter(upcoming).length       : 0) +
         (typeof NHL_GAMES       !== 'undefined' ? NHL_GAMES.filter(upcoming).length       : 0) +
-        (typeof WORLDCUP_GAMES  !== 'undefined' ? WORLDCUP_GAMES.filter(upcoming).length  : 0);
+        (typeof WORLDCUP_GAMES  !== 'undefined' ? WORLDCUP_GAMES.filter(upcoming).length  : 0) +
+        (typeof MLS_GAMES       !== 'undefined' ? MLS_GAMES.filter(upcoming).length       : 0);
 
       const el = document.getElementById('events-count');
       if (el) el.textContent = featured + schedule;

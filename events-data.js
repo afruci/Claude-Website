@@ -16,8 +16,6 @@ const EVENTS = [
     prices:[{platform:"Ticketmaster",base:295,fees:50},{platform:"StubHub",base:278,fees:44},{platform:"SeatGeek",base:261,fees:38}] },
   { id:5,  title:"LAFC vs. LA Galaxy — El Tráfico", venue:"BMO Stadium · Los Angeles, CA",            date:"Aug 2, 2026",   sport:"mls", emoji:"⚽", color:"#c39b3b", venue_key:"bmo_stadium", home:"LAFC", away:"LA Galaxy",
     prices:[{platform:"Ticketmaster",base:95,fees:16},{platform:"StubHub",base:108,fees:18},{platform:"SeatGeek",base:88,fees:12}] },
-  { id:6,  title:"Cowboys vs. Eagles — Week 1",     venue:"AT&T Stadium · Arlington, TX",             date:"Sep 13, 2026",  sport:"nfl", emoji:"🏈", color:"#003594", venue_key:"att_stadium", home:"Dallas Cowboys", away:"Philadelphia Eagles", week:1,
-    prices:[{platform:"Ticketmaster",base:385,fees:64},{platform:"StubHub",base:358,fees:56},{platform:"SeatGeek",base:342,fees:50}] },
   { id:7,  title:"MLB Wild Card — Game 3",           venue:"Wrigley Field · Chicago, IL",              date:"Oct 2, 2026",   sport:"mlb", emoji:"⚾", color:"#0e3386", venue_key:"wrigley_field",
     prices:[{platform:"Ticketmaster",base:210,fees:36},{platform:"StubHub",base:225,fees:38},{platform:"SeatGeek",base:198,fees:29}] },
   { id:8,  title:"Chiefs vs. Bills — Week 6",       venue:"GEHA Field at Arrowhead · Kansas City, MO",date:"Oct 11, 2026",  sport:"nfl", emoji:"🏈", color:"#e31837", venue_key:"arrowhead_stadium", home:"Kansas City Chiefs", away:"Buffalo Bills", week:6,

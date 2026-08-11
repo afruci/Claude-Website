@@ -15,7 +15,8 @@
       "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\12814\\\\Desktop\\\\Claude Website\\\\nhl-schedule.js\"\\); $idx = [Array]::IndexOf\\($bytes, [byte]26\\); \"Ctrl-Z at byte: $idx\")",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(node -e ' *)"
     ]
   }
 }

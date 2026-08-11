@@ -815,7 +815,8 @@ function renderPhoto(event) {
   document.getElementById('heroVenueName').textContent    = shortName;
   document.getElementById('heroFallbackName').textContent = shortName;
 
-  const filename = STADIUM_PHOTOS[event.venue_key];
+  // Prefer a real interior/game-day photo; fall back to exterior shot
+  const filename = INTERIOR_PHOTOS[event.venue_key] || STADIUM_PHOTOS[event.venue_key];
   if (!filename) {
     img.style.display      = 'none';
     fallback.style.display = 'flex';
@@ -823,6 +824,9 @@ function renderPhoto(event) {
     return;
   }
 
+  // Reset any display:none set by the initial empty-src onerror, then load the photo
+  img.style.display      = '';
+  fallback.style.display = 'none';
   img.alt = shortName;
   img.src = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}?width=1280`;
   // onload / onerror attributes on the <img> stop the shimmer and show fallback
@@ -1049,21 +1053,7 @@ const INTERIOR_PHOTOS = {
 function renderFieldDiagram(sport, venueKey) {
   const el = document.getElementById('fieldDiagram');
   if (!el) return;
-
-  const filename = INTERIOR_PHOTOS[venueKey];
-  if (filename) {
-    const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}?width=1280`;
-    const img = document.createElement('img');
-    img.alt   = venueKey.replace(/_/g, ' ');
-    img.style.cssText = 'width:100%;height:auto;max-height:340px;object-fit:cover;display:block;';
-    img.onerror = () => { el.innerHTML = FIELD_DIAGRAMS[sport] || FIELD_DIAGRAMS.mlb; };
-    img.src = url;
-    el.innerHTML = '';
-    el.appendChild(img);
-    return;
-  }
-
-  // No interior photo — use the SVG diagram for this sport
+  // Interior photos now load in the hero; the diagram strip always shows the SVG
   el.innerHTML = FIELD_DIAGRAMS[sport] || FIELD_DIAGRAMS.mlb;
 }
 

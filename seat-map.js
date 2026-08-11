@@ -802,35 +802,6 @@ function applyFilters(scope) {
   });
 }
 
-// ── Render hero stadium photo ─────────────────────────────────────────────────
-// Sets img.src to a Wikimedia Commons Special:FilePath redirect URL.
-// The browser follows the 302 → upload.wikimedia.org CDN image automatically.
-// No JS fetch needed; onerror on the <img> handles any bad filenames.
-function renderPhoto(event) {
-  const img       = document.getElementById('stadiumHeroImg');
-  const fallback  = document.getElementById('stadiumHeroFallback');
-  const heroEl    = document.getElementById('stadiumHero');
-  const shortName = event.venue.split('·')[0].trim();
-
-  document.getElementById('heroVenueName').textContent    = shortName;
-  document.getElementById('heroFallbackName').textContent = shortName;
-
-  // Prefer a real interior/game-day photo; fall back to exterior shot
-  const filename = INTERIOR_PHOTOS[event.venue_key] || STADIUM_PHOTOS[event.venue_key];
-  if (!filename) {
-    img.style.display      = 'none';
-    fallback.style.display = 'flex';
-    heroEl.style.animation = 'none';
-    return;
-  }
-
-  // Reset any display:none set by the initial empty-src onerror, then load the photo
-  img.style.display      = '';
-  fallback.style.display = 'none';
-  img.alt = shortName;
-  img.src = `https://commons.wikimedia.org/wiki/Special:FilePath/${filename}?width=1280`;
-  // onload / onerror attributes on the <img> stop the shimmer and show fallback
-}
 
 // ── Sport playing-surface diagrams ───────────────────────────────────────────
 // Inline SVG overhead diagrams — no external images, always displays correctly.
@@ -1043,12 +1014,6 @@ function _soccerSVG() {
   </svg>`;
 }
 
-// ── Venue interior photos (Wikimedia Commons) ────────────────────────────────
-// Maps venue_key → Commons filename for a game-day interior shot.
-// renderFieldDiagram tries the photo first; on error it falls back to the SVG.
-const INTERIOR_PHOTOS = {
-  allegiant_stadium: '2022_Las_Vegas_Bowl_Allegiant_Stadium.jpg',
-};
 
 function renderFieldDiagram(sport, venueKey) {
   const el = document.getElementById('fieldDiagram');
@@ -1093,7 +1058,6 @@ async function init() {
   document.getElementById('eventMeta').textContent  = `📍 ${event.venue}  ·  📅 ${event.date}`;
   document.title = `${event.title} — Tickets · TicketCompass`;
 
-  renderPhoto(event);
   renderFieldDiagram(event.sport, event.venue_key);
   renderAccordion(event);
   buildFilters(event);

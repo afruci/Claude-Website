@@ -497,7 +497,9 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
         ` data-section="Section&nbsp;${secId}" data-row="Row&nbsp;${letter}"` +
         ` data-seat="Seat&nbsp;${s}" data-price="${minSeatPrice}" data-platform="${bestPlatform}"` +
         ` onclick="openAlertModal(this)">` +
-        `<i class="ti ti-bell" aria-hidden="true"></i></button>`;
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">` +
+        `<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>` +
+        `</svg></button>`;
 
       rowHtml +=
         `<div class="ticket-entry${multi ? ' multi-listed' : ''}" data-price="${minSeatPrice}">` +

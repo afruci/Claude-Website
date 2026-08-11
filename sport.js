@@ -354,14 +354,98 @@ function renderGames(by, val) {
          <p class="empty-sub">Check back soon — more games may be announced.</p>
        </div>`;
 
+  const wlCount = getWatchlist().size;
+
   document.getElementById('browseArea').innerHTML = `
     <div class="browse-nav-bar">
       <button class="browse-back-btn" onclick="history.back()">← Back</button>
       <span class="browse-nav-label">${escHtml(heading)} &middot; ${count} game${count !== 1 ? 's' : ''}</span>
     </div>
-    <div class="games-list">${gamesHtml}</div>`;
+    <div class="wl-tabs">
+      <button class="wl-tab wl-tab-active" id="allGamesTab" onclick="switchToAllGames()">All Games</button>
+      <button class="wl-tab" id="watchlistTabBtn" onclick="switchToWatchlist()">
+        Watchlist
+        <span class="wl-badge" id="wlBadge" style="display:${wlCount ? 'inline-flex' : 'none'}">${wlCount}</span>
+      </button>
+    </div>
+    <div id="allGamesPanel"><div class="games-list">${gamesHtml}</div></div>
+    <div id="watchlistPanel" class="wl-panel" style="display:none"></div>`;
 
   setBannerSub(count);
+}
+
+// ── Watchlist (localStorage) ─────────────────────────────────────────────────
+const WATCHLIST_KEY = 'tc_watchlist';
+
+function getWatchlist() {
+  try { return new Set(JSON.parse(localStorage.getItem(WATCHLIST_KEY)) || []); }
+  catch { return new Set(); }
+}
+
+function saveWatchlist(set) {
+  localStorage.setItem(WATCHLIST_KEY, JSON.stringify([...set]));
+}
+
+function toggleWatchlist(id) {
+  const wl = getWatchlist();
+  const adding = !wl.has(id);
+  adding ? wl.add(id) : wl.delete(id);
+  saveWatchlist(wl);
+
+  // Update all bookmark buttons for this event
+  document.querySelectorAll(`.bmark-btn[data-id="${id}"]`).forEach(btn => {
+    btn.classList.toggle('saved', adding);
+    btn.setAttribute('aria-label', adding ? 'Remove from watchlist' : 'Save to watchlist');
+    btn.innerHTML = bookmarkSVG(adding);
+  });
+
+  // Update watchlist tab badge
+  updateWatchlistBadge();
+  showWatchlistToast(adding);
+
+  // If we're on the watchlist tab, re-render it
+  if (document.getElementById('watchlistPanel')?.classList.contains('wl-active')) {
+    renderWatchlistPanel();
+  }
+}
+
+function bookmarkSVG(filled) {
+  return `<svg width="15" height="15" viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>`;
+}
+
+function updateWatchlistBadge() {
+  const badge = document.getElementById('wlBadge');
+  if (!badge) return;
+  const count = getWatchlist().size;
+  badge.textContent = count;
+  badge.style.display = count ? 'inline-flex' : 'none';
+}
+
+let _toastTimer;
+function showWatchlistToast(adding) {
+  let toast = document.getElementById('wlToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'wlToast';
+    toast.className = 'wl-toast';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = adding ? '🔖 Saved to watchlist' : 'Removed from watchlist';
+  toast.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+}
+
+// ── Countdown label ───────────────────────────────────────────────────────────
+function countdownLabel(dateStr) {
+  const today    = new Date(); today.setHours(0,0,0,0);
+  const eventDay = new Date(dateStr); eventDay.setHours(0,0,0,0);
+  const days     = Math.round((eventDay - today) / 86400000);
+  if (days < 0)   return null;
+  if (days === 0) return { text: 'Today',         cls: 'cd-today' };
+  if (days === 1) return { text: 'Tomorrow',      cls: 'cd-tomorrow' };
+  if (days <= 7)  return { text: `${days} days`,  cls: 'cd-soon' };
+  return           { text: `${days} days away`,   cls: 'cd-future' };
 }
 
 // ── Game row card ─────────────────────────────────────────────────────────────
@@ -386,6 +470,18 @@ function buildGameRow(event) {
     ? `<span class="week-badge">Wk&nbsp;${event.week}</span>`
     : '';
 
+  const cd = countdownLabel(event.date);
+  const countdownHtml = cd
+    ? `<span class="countdown-pill ${cd.cls}">${cd.text}</span>`
+    : '';
+
+  const isSaved   = getWatchlist().has(event.id);
+  const bmarkHtml =
+    `<button class="bmark-btn ${isSaved ? 'saved' : ''}" data-id="${event.id}"` +
+    ` onclick="toggleWatchlist('${event.id}')"` +
+    ` aria-label="${isSaved ? 'Remove from watchlist' : 'Save to watchlist'}">` +
+    `${bookmarkSVG(isSaved)}</button>`;
+
   return `
     <div class="game-row">
       <div class="game-date">
@@ -396,10 +492,49 @@ function buildGameRow(event) {
       <div class="game-info">
         <div class="game-title">${escHtml(event.title)}${weekBadge}</div>
         <div class="game-venue"><span class="game-venue-icon">📍</span>${escHtml(event.venue)}</div>
+        ${countdownHtml}
       </div>
       <div class="game-prices">${priceRows}</div>
-      <a class="see-tickets-btn" href="seat-map.html?id=${event.id}">See Tickets →</a>
+      <div class="game-actions">
+        <a class="see-tickets-btn" href="seat-map.html?id=${event.id}">See Tickets →</a>
+        ${bmarkHtml}
+      </div>
     </div>`;
+}
+
+// ── Watchlist tab panel ───────────────────────────────────────────────────────
+function renderWatchlistPanel() {
+  const panel = document.getElementById('watchlistPanel');
+  if (!panel) return;
+  const wl       = getWatchlist();
+  const wlEvents = _allEvents.filter(e => wl.has(e.id));
+  if (wlEvents.length === 0) {
+    panel.innerHTML = `
+      <div class="wl-empty">
+        <div class="wl-empty-icon">🔖</div>
+        <div class="wl-empty-title">No saved games yet</div>
+        <div class="wl-empty-sub">Tap the bookmark on any game to save it here</div>
+      </div>`;
+  } else {
+    panel.innerHTML = `<div class="games-list">${wlEvents.map(buildGameRow).join('')}</div>`;
+  }
+}
+
+function switchToWatchlist() {
+  document.getElementById('allGamesTab').classList.remove('wl-tab-active');
+  document.getElementById('watchlistTabBtn').classList.add('wl-tab-active');
+  document.getElementById('allGamesPanel').style.display = 'none';
+  document.getElementById('watchlistPanel').classList.add('wl-active');
+  document.getElementById('watchlistPanel').style.display = '';
+  renderWatchlistPanel();
+}
+
+function switchToAllGames() {
+  document.getElementById('watchlistTabBtn').classList.remove('wl-tab-active');
+  document.getElementById('allGamesTab').classList.add('wl-tab-active');
+  document.getElementById('watchlistPanel').style.display = 'none';
+  document.getElementById('watchlistPanel').classList.remove('wl-active');
+  document.getElementById('allGamesPanel').style.display = '';
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────

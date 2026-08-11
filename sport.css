@@ -158,6 +158,125 @@
   letter-spacing: .3px;
 }
 
+/* Game actions: see-tickets + bookmark together */
+.game-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Bookmark button */
+.bmark-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.bmark-btn:hover {
+  color: #d97706;
+  border-color: #d97706;
+  background: rgba(245,158,11,.08);
+}
+.bmark-btn.saved {
+  color: #d97706;
+  border-color: #d97706;
+  background: rgba(245,158,11,.12);
+}
+
+/* Countdown pill */
+.countdown-pill {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+.countdown-pill.cd-today    { background: rgba(239,68,68,.15);  color: #ef4444; }
+.countdown-pill.cd-tomorrow { background: rgba(245,158,11,.15); color: #d97706; }
+.countdown-pill.cd-soon     { background: rgba(99,102,241,.15); color: #818cf8; }
+.countdown-pill.cd-future   { background: rgba(100,116,139,.1); color: var(--muted); }
+
+/* Watchlist tab bar */
+.wl-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.wl-tab {
+  padding: 9px 18px;
+  font-size: .875rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color .15s, border-color .15s;
+}
+.wl-tab:hover { color: var(--text); }
+.wl-tab.wl-tab-active { color: var(--primary); border-bottom-color: var(--primary); }
+
+.wl-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 800;
+  border-radius: 999px;
+  min-width: 17px;
+  height: 17px;
+  padding: 0 4px;
+}
+
+/* Watchlist empty state */
+.wl-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--muted);
+}
+.wl-empty-icon  { font-size: 2.5rem; margin-bottom: 10px; }
+.wl-empty-title { font-size: .95rem; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.wl-empty-sub   { font-size: .85rem; }
+
+/* Toast notification */
+.wl-toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(70px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: .85rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  transition: transform .25s ease;
+  z-index: 999;
+  pointer-events: none;
+}
+.wl-toast.show { transform: translateX(-50%) translateY(0); }
+
 /* See Tickets button */
 .see-tickets-btn {
   display: inline-flex;
@@ -414,10 +533,11 @@
     gap: 8px;
     min-width: unset;
   }
-  .see-tickets-btn {
+  .game-actions {
     grid-column: 1 / -1;
     justify-content: center;
   }
+  .see-tickets-btn { flex: 1; justify-content: center; }
 }
 
 @media (max-width: 560px) {

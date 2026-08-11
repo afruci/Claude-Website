@@ -219,7 +219,8 @@
   <script src="events-data.js"></script>
   <script src="nfl-schedule.js"></script>
   <script src="mlb-schedule.js"></script>
-  <script src="nhl-schedule.js"></script>
+  <script src="nba-schedule.js"></script>
+  <script src="nhl-schedule.js?v=2"></script>
   <script src="worldcup-schedule.js"></script>
   <script src="mls-schedule.js"></script>
   <script>
@@ -236,6 +237,7 @@
       const schedule =
         (typeof NFL_GAMES       !== 'undefined' ? NFL_GAMES.filter(upcoming).length       : 0) +
         (typeof MLB_GAMES       !== 'undefined' ? MLB_GAMES.filter(upcoming).length       : 0) +
+        (typeof NBA_GAMES       !== 'undefined' ? NBA_GAMES.filter(upcoming).length       : 0) +
         (typeof NHL_GAMES       !== 'undefined' ? NHL_GAMES.filter(upcoming).length       : 0) +
         (typeof WORLDCUP_GAMES  !== 'undefined' ? WORLDCUP_GAMES.filter(upcoming).length  : 0) +
         (typeof MLS_GAMES       !== 'undefined' ? MLS_GAMES.filter(upcoming).length       : 0);

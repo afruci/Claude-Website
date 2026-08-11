@@ -114,8 +114,10 @@ function getAllEvents(sport) {
   let all = EVENTS.filter(e => e.sport === sport);
   if (sport === 'nfl'      && typeof NFL_GAMES       !== 'undefined') all = all.concat(NFL_GAMES);
   if (sport === 'mlb'      && typeof MLB_GAMES       !== 'undefined') all = all.concat(MLB_GAMES);
+  if (sport === 'nba'      && typeof NBA_GAMES       !== 'undefined') all = all.concat(NBA_GAMES);
   if (sport === 'nhl'      && typeof NHL_GAMES       !== 'undefined') all = all.concat(NHL_GAMES);
   if (sport === 'worldcup' && typeof WORLDCUP_GAMES  !== 'undefined') all = all.concat(WORLDCUP_GAMES);
+  if (sport === 'mls'      && typeof MLS_GAMES       !== 'undefined') all = all.concat(MLS_GAMES);
 
   return all
     .filter(e => new Date(e.date) >= today)

@@ -477,15 +477,23 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
       const seatBase = baseAvg * lvlMult * rowMult * (1 + Math.sin(seed * 41) * 0.08);
       const multi    = pIdxs.length > 1;
 
+      // First pass: compute prices so we know the cheapest before building HTML
       let minSeatPrice = Infinity;
       let bestPlatform = '';
-      const platsHtml = pIdxs.map(pi => {
-        const ep  = event.prices[pi];
-        const cls = ep.platform.toLowerCase().replace(/\s+/g, '');
-        const px  = Math.max(1, Math.round(seatBase * (ep.base + ep.fees) / baseAvg));
+      const seatPrices = pIdxs.map(pi => {
+        const ep = event.prices[pi];
+        const px = Math.max(1, Math.round(seatBase * (ep.base + ep.fees) / baseAvg));
         if (px < minSeatPrice) { minSeatPrice = px; bestPlatform = ep.platform; }
-        const url = platformUrl(ep.platform, event);
-        return `<a class="te-plat ${cls}" href="${url}" target="_blank" rel="noopener noreferrer">${ep.platform} — ${fmt(px)}</a>`;
+        return { ep, px };
+      });
+
+      // Second pass: build pill HTML, badge the cheapest when multiple platforms
+      const platsHtml = seatPrices.map(({ ep, px }) => {
+        const cls    = ep.platform.toLowerCase().replace(/\s+/g, '');
+        const url    = platformUrl(ep.platform, event);
+        const isBest = multi && px === minSeatPrice;
+        const badge  = isBest ? '<span class="te-best">Best</span>' : '';
+        return `<a class="te-plat ${cls}" href="${url}" target="_blank" rel="noopener noreferrer">${ep.platform} — ${fmt(px)}${badge}</a>`;
       }).join('');
 
       const caution = multi
@@ -581,6 +589,35 @@ window.expandAll = function() {
   if (btn) btn.textContent = _expandedAll ? 'Collapse All' : 'Expand All';
 };
 
+// ── Section minimum price (for header display) ────────────────────────────────
+function getSectionMinPrice(secId, level, globalIdx, cfg, event) {
+  const n       = parseInt(String(secId), 10) || (globalIdx + 1);
+  const baseAvg = event.prices.reduce((s, p) => s + p.base + p.fees, 0) / event.prices.length;
+  const lvlMult = level === 'lower' ? 1.12 : 0.88;
+  let   minPrice = Infinity;
+
+  cfg.rows.forEach((_, ri) => {
+    const rowMult = 1 + (1 - ri / cfg.rows.length) * 0.18;
+    for (let s = 1; s <= cfg.seatsPerRow; s++) {
+      const seed = n * 1000 + ri * 100 + s;
+      if (Math.abs(Math.sin(seed * 17 + ri * 31)) <= 0.28) continue;
+      const seatBase = baseAvg * lvlMult * rowMult * (1 + Math.sin(seed * 41) * 0.08);
+      const ms = Math.abs(Math.cos(seed * 7 + globalIdx * 13));
+      let pIdxs = ms > 0.92 ? [0,1,2]
+        : ms > 0.78 ? [[0,1],[0,2],[1,2]][Math.floor(ms*10)%3]
+        : [Math.floor(Math.abs(Math.sin(seed*23))*3)%3];
+      pIdxs = [].concat(pIdxs).filter(pi => pi < event.prices.length);
+      if (!pIdxs.length) pIdxs = [0];
+      pIdxs.forEach(pi => {
+        const ep = event.prices[pi];
+        const px = Math.max(1, Math.round(seatBase * (ep.base + ep.fees) / baseAvg));
+        if (px < minPrice) minPrice = px;
+      });
+    }
+  });
+  return minPrice === Infinity ? null : minPrice;
+}
+
 // ── Render section accordion ──────────────────────────────────────────────────
 function renderAccordion(event) {
   const cfg       = VENUE_CONFIGS[event.venue_key] || DEFAULT_VENUE;
@@ -602,11 +639,15 @@ function renderAccordion(event) {
       const gi      = globalIdx++;
       const avail   = estimateAvailCount(secId, gi, cfg);
       const bodyHtml = generateSectionBody(secId, level, gi, cfg, event);
+      const minPrice = getSectionMinPrice(secId, level, gi, cfg, event);
 
       const availText  = avail > 0
         ? `${avail} seat${avail !== 1 ? 's' : ''} available`
         : 'No availability';
-      const levelLabel = level === 'lower' ? 'Lower Bowl' : 'Upper Bowl';
+      const levelLabel  = level === 'lower' ? 'Lower Bowl' : 'Upper Bowl';
+      const fromPriceHtml = minPrice
+        ? `<span class="sh-from">From ${fmt(minPrice)}</span>`
+        : '';
 
       const item = document.createElement('div');
       item.className = 'section-item';
@@ -617,6 +658,7 @@ function renderAccordion(event) {
             `<span class="sh-level">${levelLabel}</span>` +
           `</div>` +
           `<div class="sh-right">` +
+            `${fromPriceHtml}` +
             `<span class="sh-avail">${availText}</span>` +
             `<span class="sh-arrow">▶</span>` +
           `</div>` +

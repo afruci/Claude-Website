@@ -199,6 +199,13 @@
   flex-shrink: 0;
 }
 
+.sh-from {
+  font-size: .78rem;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+
 .sh-avail {
   font-size: .78rem;
   color: var(--primary);
@@ -292,6 +299,19 @@
 .te-plat.ticketmaster { background: #026cdf; }
 .te-plat.stubhub      { background: #5f259f; }
 .te-plat.seatgeek     { background: #f4811f; }
+
+/* Best price badge inside a platform pill */
+.te-best {
+  display: inline-block;
+  font-size: .65rem;
+  font-weight: 800;
+  background: rgba(255,255,255,.25);
+  border-radius: 999px;
+  padding: 1px 5px;
+  margin-left: 5px;
+  letter-spacing: .3px;
+  vertical-align: middle;
+}
 
 /* Multi-platform caution badge */
 .te-caution {

@@ -323,20 +323,24 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: none;
-  border: 1px solid var(--border);
+  background: rgba(234,179,8,.12) !important;
+  border: 1px solid #d97706 !important;
   border-radius: 6px;
-  color: var(--muted);
+  color: #d97706 !important;
   cursor: pointer;
-  font-size: .8rem;
+  font-size: .85rem;
   transition: color .15s, border-color .15s, background .15s;
   margin-left: auto;
 }
-.te-bell:hover,
+.te-bell:hover {
+  background: rgba(234,179,8,.25) !important;
+  border-color: #b45309 !important;
+  color: #b45309 !important;
+}
 .te-bell.active {
-  color: #16a34a;
-  border-color: #16a34a;
-  background: rgba(22,163,74,.08);
+  background: #d97706 !important;
+  border-color: #b45309 !important;
+  color: #fff !important;
 }
 
 /* ── Alert modal overlay ── */

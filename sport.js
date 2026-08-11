@@ -403,7 +403,7 @@ function buildGameRow(event) {
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
-function init() {
+async function init() {
   _sport = new URLSearchParams(window.location.search).get('sport') || 'nfl';
   const meta = SPORT_META[_sport];
 
@@ -413,9 +413,9 @@ function init() {
     return;
   }
 
+  // Show static/cached data immediately
   _allEvents = getAllEvents(_sport);
   buildBanner(meta, _allEvents.length);
-
   window.addEventListener('popstate', renderView);
   renderView();
 
@@ -425,6 +425,16 @@ function init() {
     window.addEventListener('scroll', () => {
       btt.classList.toggle('visible', window.scrollY > 320);
     }, { passive: true });
+  }
+
+  // Fetch real schedule from API (MLB, NFL, NHL, MLS); NBA keeps static
+  if (typeof window.loadSchedule === 'function' && _sport !== 'nba' && _sport !== 'worldcup') {
+    const apiEvents = await window.loadSchedule(_sport);
+    if (apiEvents && apiEvents.length > 0) {
+      _allEvents = apiEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+      buildBanner(meta, _allEvents.length);
+      renderView();
+    }
   }
 }
 

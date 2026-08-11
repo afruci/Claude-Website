@@ -829,7 +829,9 @@ function renderPhoto(event) {
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 function init() {
-  const id = parseInt(new URLSearchParams(window.location.search).get('id'), 10);
+  const idParam = new URLSearchParams(window.location.search).get('id');
+  // API event IDs are strings (e.g. "api_mlb_824240"); static IDs are integers
+  const id = /^\d+$/.test(idParam) ? parseInt(idParam, 10) : idParam;
 
   let event = EVENTS.find(e => e.id === id);
   if (!event && typeof NFL_GAMES       !== 'undefined') event = NFL_GAMES.find(e => e.id === id);
@@ -838,6 +840,8 @@ function init() {
   if (!event && typeof NHL_GAMES       !== 'undefined') event = NHL_GAMES.find(e => e.id === id);
   if (!event && typeof WORLDCUP_GAMES  !== 'undefined') event = WORLDCUP_GAMES.find(e => e.id === id);
   if (!event && typeof MLS_GAMES       !== 'undefined') event = MLS_GAMES.find(e => e.id === id);
+  // Fall back to API-fetched event stored in localStorage by schedule-api.js
+  if (!event && typeof window.getCachedEvent === 'function') event = window.getCachedEvent(id);
 
   if (!event) {
     document.getElementById('eventTitle').textContent = 'Event not found';

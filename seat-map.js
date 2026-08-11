@@ -834,8 +834,10 @@ function init() {
   let event = EVENTS.find(e => e.id === id);
   if (!event && typeof NFL_GAMES       !== 'undefined') event = NFL_GAMES.find(e => e.id === id);
   if (!event && typeof MLB_GAMES       !== 'undefined') event = MLB_GAMES.find(e => e.id === id);
+  if (!event && typeof NBA_GAMES       !== 'undefined') event = NBA_GAMES.find(e => e.id === id);
   if (!event && typeof NHL_GAMES       !== 'undefined') event = NHL_GAMES.find(e => e.id === id);
   if (!event && typeof WORLDCUP_GAMES  !== 'undefined') event = WORLDCUP_GAMES.find(e => e.id === id);
+  if (!event && typeof MLS_GAMES       !== 'undefined') event = MLS_GAMES.find(e => e.id === id);
 
   if (!event) {
     document.getElementById('eventTitle').textContent = 'Event not found';

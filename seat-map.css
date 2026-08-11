@@ -315,6 +315,226 @@
   text-align: center;
 }
 
+/* ── Per-seat alert bell button ── */
+.te-bell {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: .8rem;
+  transition: color .15s, border-color .15s, background .15s;
+  margin-left: auto;
+}
+.te-bell:hover,
+.te-bell.active {
+  color: #16a34a;
+  border-color: #16a34a;
+  background: rgba(22,163,74,.08);
+}
+
+/* ── Alert modal overlay ── */
+.alert-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.alert-overlay.open { display: flex; }
+
+/* ── Alert modal panel ── */
+.alert-modal {
+  display: none;
+  background: var(--surface, #fff);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 400px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.28);
+}
+.alert-modal.open { display: block; }
+
+.alert-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+.alert-modal-title { font-size: .95rem; font-weight: 700; }
+.alert-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--muted);
+  line-height: 1;
+  padding: 0;
+}
+.alert-close-btn:hover { color: var(--text); }
+
+.alert-modal-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Seat context chip */
+.alert-seat-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface2, #f8fafc);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.alert-seat-icon { font-size: 1.1rem; }
+.alert-seat-main { font-size: .88rem; font-weight: 700; }
+.alert-seat-sub  { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+
+/* Alert type pills */
+.alert-field-label { font-size: .82rem; font-weight: 700; margin-bottom: 8px; }
+.alert-field-sub   { font-weight: 400; color: var(--muted); }
+
+.alert-type-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.alert-type-pill {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: none;
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+}
+.alert-type-pill:hover { border-color: #16a34a; color: #16a34a; }
+.alert-type-pill.active {
+  border-color: #16a34a;
+  background: rgba(22,163,74,.1);
+  color: #16a34a;
+}
+
+/* Price input */
+.alert-price-wrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--surface2, #f8fafc);
+  margin-bottom: 8px;
+}
+.alert-price-dollar {
+  padding: 0 10px;
+  font-size: .9rem;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  height: 38px;
+  display: flex;
+  align-items: center;
+}
+.alert-price-wrap input {
+  border: none;
+  background: none;
+  padding: 8px 12px;
+  font-size: .9rem;
+  color: var(--text);
+  width: 100%;
+  outline: none;
+}
+
+.alert-price-note {
+  font-size: .78rem;
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+.alert-price-note.in-range { background: rgba(22,163,74,.1);  color: #15803d; }
+.alert-price-note.away     { background: rgba(245,158,11,.1); color: #b45309; }
+
+/* Email input */
+.alert-email-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: .88rem;
+  background: var(--surface2, #f8fafc);
+  color: var(--text);
+  box-sizing: border-box;
+  outline: none;
+}
+.alert-email-input:focus { border-color: #16a34a; }
+
+/* Modal footer */
+.alert-modal-foot {
+  padding: 0 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.alert-submit-btn {
+  width: 100%;
+  padding: 11px;
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: .9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s;
+}
+.alert-submit-btn:hover { background: #15803d; }
+.alert-fine-print { font-size: .72rem; color: var(--muted); text-align: center; }
+
+/* Confirmation screen */
+.alert-confirm-body {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.alert-confirm-check {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(22,163,74,.12);
+  color: #16a34a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.alert-confirm-title { font-size: 1.1rem; font-weight: 800; }
+.alert-confirm-text  { font-size: .88rem; color: var(--muted); line-height: 1.6; }
+.alert-confirm-sub   { font-size: .78rem; color: var(--muted); }
+.alert-confirm-back  {
+  margin-top: 8px;
+  background: none;
+  border: none;
+  color: #16a34a;
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 /* ── Combined filters bar (max price + seats together) ── */
 .sm-filters-bar {
   display: flex;

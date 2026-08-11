@@ -80,6 +80,68 @@
     </div>
   </footer>
 
+  <!-- ── Price alert modal ── -->
+  <div id="alertOverlay" class="alert-overlay" onclick="if(event.target===this)closeAlertModal()">
+
+    <!-- Step 1: Set alert -->
+    <div id="alertModal" class="alert-modal">
+      <div class="alert-modal-head">
+        <span class="alert-modal-title">Set a seat alert</span>
+        <button class="alert-close-btn" onclick="closeAlertModal()" aria-label="Close">&#x2715;</button>
+      </div>
+      <div class="alert-modal-body">
+
+        <div class="alert-seat-chip">
+          <span class="alert-seat-icon">🪑</span>
+          <div class="alert-seat-detail">
+            <div id="alertSeatLabel" class="alert-seat-main"></div>
+            <div id="alertEventLabel" class="alert-seat-sub"></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="alert-field-label">Alert me when</div>
+          <div class="alert-type-pills">
+            <button class="alert-type-pill active" id="apt-drop"    data-type="drop"      onclick="selectAlertType('drop')">Price drops</button>
+            <button class="alert-type-pill"         id="apt-threshold" data-type="threshold" onclick="selectAlertType('threshold')">Under my price</button>
+            <button class="alert-type-pill"         id="apt-sell"   data-type="sell"      onclick="selectAlertType('sell')">Sells out</button>
+          </div>
+        </div>
+
+        <div id="alertPriceBlock">
+          <div class="alert-field-label">Your max price <span class="alert-field-sub">· all-in per seat</span></div>
+          <div class="alert-price-wrap">
+            <span class="alert-price-dollar">$</span>
+            <input type="number" id="alertMaxPrice" min="1" max="9999" step="1" oninput="alertUpdateNote()">
+          </div>
+          <div id="alertPriceNote" class="alert-price-note away"></div>
+        </div>
+
+        <div>
+          <div class="alert-field-label">Your email</div>
+          <input type="email" id="alertEmailInput" class="alert-email-input" placeholder="you@example.com">
+        </div>
+
+      </div>
+      <div class="alert-modal-foot">
+        <button class="alert-submit-btn" onclick="submitAlertForm()">🔔 Create alert</button>
+        <div class="alert-fine-print">One email per alert. No account needed. Unsubscribe anytime.</div>
+      </div>
+    </div>
+
+    <!-- Step 2: Confirmation -->
+    <div id="alertConfirm" class="alert-modal">
+      <div class="alert-confirm-body">
+        <div class="alert-confirm-check">✓</div>
+        <div class="alert-confirm-title">Alert set</div>
+        <div id="alertConfirmText" class="alert-confirm-text"></div>
+        <div class="alert-confirm-sub">Check your inbox to confirm.</div>
+        <button class="alert-confirm-back" onclick="closeAlertModal()">← Back to tickets</button>
+      </div>
+    </div>
+
+  </div>
+
   <script src="events-data.js?v=2"></script>
   <script src="nfl-schedule.js"></script>
   <script src="mlb-schedule.js"></script>

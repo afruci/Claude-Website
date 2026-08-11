@@ -478,11 +478,12 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
       const multi    = pIdxs.length > 1;
 
       let minSeatPrice = Infinity;
+      let bestPlatform = '';
       const platsHtml = pIdxs.map(pi => {
         const ep  = event.prices[pi];
         const cls = ep.platform.toLowerCase().replace(/\s+/g, '');
         const px  = Math.max(1, Math.round(seatBase * (ep.base + ep.fees) / baseAvg));
-        if (px < minSeatPrice) minSeatPrice = px;
+        if (px < minSeatPrice) { minSeatPrice = px; bestPlatform = ep.platform; }
         const url = platformUrl(ep.platform, event);
         return `<a class="te-plat ${cls}" href="${url}" target="_blank" rel="noopener noreferrer">${ep.platform} — ${fmt(px)}</a>`;
       }).join('');
@@ -491,10 +492,18 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
         ? `<span class="te-caution">⚠️ Listed on ${pIdxs.length} platforms</span>`
         : '';
 
+      const bellBtn =
+        `<button class="te-bell" aria-label="Set price alert for seat ${s}"` +
+        ` data-section="Section&nbsp;${secId}" data-row="Row&nbsp;${letter}"` +
+        ` data-seat="Seat&nbsp;${s}" data-price="${minSeatPrice}" data-platform="${bestPlatform}"` +
+        ` onclick="openAlertModal(this)">` +
+        `<i class="ti ti-bell" aria-hidden="true"></i></button>`;
+
       rowHtml +=
         `<div class="ticket-entry${multi ? ' multi-listed' : ''}" data-price="${minSeatPrice}">` +
         `<span class="te-seat">Seat&nbsp;${s}</span>` +
         `<div class="te-platforms">${platsHtml}${caution}</div>` +
+        `${bellBtn}` +
         `</div>`;
     }
 
@@ -1067,3 +1076,106 @@ async function init() {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
+// ── Price alert modal ─────────────────────────────────────────────────────────
+
+let _alertSeat = {};
+
+function openAlertModal(btn) {
+  _alertSeat = {
+    section:  btn.dataset.section,
+    row:      btn.dataset.row,
+    seat:     btn.dataset.seat,
+    price:    parseInt(btn.dataset.price, 10),
+    platform: btn.dataset.platform,
+  };
+
+  // Mark bell as active
+  document.querySelectorAll('.te-bell.active').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Fill modal context
+  document.getElementById('alertSeatLabel').textContent =
+    `${_alertSeat.section} · ${_alertSeat.row} · ${_alertSeat.seat}`;
+  document.getElementById('alertEventLabel').textContent =
+    document.getElementById('eventTitle').textContent + ' · ' +
+    document.getElementById('eventMeta').textContent.split('·')[1]?.trim() || '';
+
+  // Default price input to $10 below current lowest
+  const defaultMax = Math.max(1, _alertSeat.price - 10);
+  document.getElementById('alertMaxPrice').value = defaultMax;
+  alertUpdateNote();
+
+  // Show price field by default (alert type = price-drops)
+  selectAlertType('drop');
+
+  document.getElementById('alertModal').classList.add('open');
+  document.getElementById('alertConfirm').classList.remove('open');
+  document.getElementById('alertOverlay').classList.add('open');
+  document.getElementById('alertEmailInput').value = '';
+}
+
+function closeAlertModal() {
+  document.getElementById('alertOverlay').classList.remove('open');
+  document.querySelectorAll('.te-bell.active').forEach(b => b.classList.remove('active'));
+}
+
+function selectAlertType(type) {
+  document.querySelectorAll('.alert-type-pill').forEach(p => p.classList.remove('active'));
+  const pill = document.getElementById('apt-' + type);
+  if (pill) pill.classList.add('active');
+  document.getElementById('alertPriceBlock').style.display =
+    type === 'sell' ? 'none' : 'block';
+}
+
+function alertUpdateNote() {
+  const val = parseInt(document.getElementById('alertMaxPrice').value, 10) || 0;
+  const cur = _alertSeat.price;
+  const note = document.getElementById('alertPriceNote');
+  if (val >= cur) {
+    note.textContent = `Currently ${fmt(cur)} on ${_alertSeat.platform} — in range now`;
+    note.className = 'alert-price-note in-range';
+  } else {
+    note.textContent = `Currently ${fmt(cur)} on ${_alertSeat.platform} — ${fmt(cur - val)} away`;
+    note.className = 'alert-price-note away';
+  }
+}
+
+function submitAlertForm() {
+  const email = document.getElementById('alertEmailInput').value.trim();
+  if (!email || !email.includes('@')) {
+    document.getElementById('alertEmailInput').focus();
+    return;
+  }
+
+  const activeType = document.querySelector('.alert-type-pill.active')?.dataset.type || 'drop';
+  const maxPrice   = document.getElementById('alertMaxPrice').value;
+
+  // ── Submit to Formspree ───────────────────────────────────────────────────
+  // Replace 'YOUR_FORM_ID' with your Formspree form ID after creating a free
+  // account at https://formspree.io — takes about 60 seconds.
+  fetch('https://formspree.io/f/YOUR_FORM_ID', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      email,
+      event:    document.getElementById('eventTitle').textContent,
+      section:  _alertSeat.section,
+      row:      _alertSeat.row,
+      seat:     _alertSeat.seat,
+      alertType: activeType,
+      maxPrice: activeType !== 'sell' ? maxPrice : 'N/A',
+      currentPrice: fmt(_alertSeat.price),
+      platform: _alertSeat.platform,
+    }),
+  }).catch(() => {}); // silently ignore network errors for now
+
+  // Show confirmation
+  const typeLabel = { drop: 'drops in price', threshold: 'reaches your price', sell: 'sells out' };
+  document.getElementById('alertConfirmText').innerHTML =
+    `We'll email you when <strong>${_alertSeat.section} · ${_alertSeat.row} · ${_alertSeat.seat}</strong> ` +
+    (activeType !== 'sell' ? `drops below <strong>${fmt(+maxPrice)}</strong>` : 'sells out') + '.';
+
+  document.getElementById('alertModal').classList.remove('open');
+  document.getElementById('alertConfirm').classList.add('open');
+}

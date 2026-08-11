@@ -171,27 +171,27 @@ const VENUE_CONFIGS = {
 
   // ── MLB ───────────────────────────────────────────────────────────────────
   yankee_stadium: {
-    // Yankee Stadium: main level 101–236, grandstand 201–236
+    // Yankee Stadium: main level 101–136, grandstand 201–236; rows numbered
     lower: numRange(101, 136),
     upper: numRange(201, 236),
     rings: RINGS_BASEBALL,
-    rows: 'ABCDEFGHIJKLMNOPQR'.split(''),
+    rows: numRange(1, 22),
     seatsPerRow: 22,
   },
   wrigley_field: {
-    // Wrigley Field: field box/terrace 1–32, upper reserved 400–432
+    // Wrigley Field: field box/terrace 1–32, upper reserved 400–432; rows numbered
     lower: numRange(1, 32),
     upper: numRange(400, 432),
     rings: RINGS_BASEBALL,
-    rows: 'ABCDEFGHIJKLMNOP'.split(''),
+    rows: numRange(1, 18),
     seatsPerRow: 18,
   },
   dodger_stadium: {
-    // Dodger Stadium: field level 1–52, top deck 1–52 (simplified)
+    // Dodger Stadium: field level 1–52, top deck 301–335; rows numbered
     lower: numRange(1, 52),
     upper: numRange(301, 335),
     rings: RINGS_BASEBALL,
-    rows: 'ABCDEFGHIJKLMNOPQ'.split(''),
+    rows: numRange(1, 22),
     seatsPerRow: 20,
   },
 
@@ -341,34 +341,34 @@ const VENUE_CONFIGS = {
   estadio_bbva:            { lower: numRange(101,130), upper: numRange(301,330), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),    seatsPerRow: 24 },
 
   // ── MLB (additional stadiums) ─────────────────────────────────────────────────
-  // Section numbers match each ballpark's published seating chart conventions.
-  chase_field:       { lower: numRange(101,136), upper: numRange(301,340), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 20 },
-  truist_park:       { lower: numRange(101,136), upper: numRange(400,428), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  oriole_park:       { lower: numRange(1,54),    upper: [...numRange(300,318), ...numRange(348,366)], rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 18 },
-  fenway_park:       { lower: numRange(1,32),    upper: numRange(300,332), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 18 },
-  guaranteed_rate:   { lower: numRange(101,162), upper: numRange(501,540), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 18 },
-  great_american:    { lower: numRange(100,134), upper: numRange(400,434), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  progressive_field: { lower: numRange(101,130), upper: numRange(400,430), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 18 },
-  coors_field:       { lower: numRange(101,152), upper: numRange(300,340), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 22 },
-  comerica_park:     { lower: numRange(101,130), upper: numRange(326,352), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  minute_maid:       { lower: numRange(100,145), upper: numRange(400,441), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  kauffman_stadium:  { lower: numRange(101,130), upper: numRange(400,428), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 18 },
-  angel_stadium:     { lower: numRange(101,140), upper: numRange(400,436), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  loandepot_park:    { lower: numRange(1,36),    upper: numRange(100,130), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 18 },
-  american_family:   { lower: numRange(101,130), upper: numRange(401,430), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  target_field:      { lower: numRange(1,34),    upper: numRange(300,328), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 18 },
-  citi_field:        { lower: numRange(101,130), upper: numRange(500,530), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  sutter_health:     { lower: numRange(101,118), upper: numRange(201,214), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKL'.split(''),    seatsPerRow: 16 },
-  citizens_bank:     { lower: numRange(101,141), upper: numRange(300,332), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  pnc_park:          { lower: numRange(1,38),    upper: numRange(301,328), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 18 },
-  petco_park:        { lower: numRange(100,130), upper: numRange(300,332), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  oracle_park:       { lower: numRange(101,140), upper: numRange(300,335), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 18 },
-  tmobile_park:      { lower: numRange(100,136), upper: numRange(300,336), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 20 },
-  busch_stadium:     { lower: numRange(101,148), upper: numRange(400,430), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 20 },
-  tropicana_field:   { lower: numRange(101,122), upper: numRange(201,220), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLM'.split(''),    seatsPerRow: 16 },
-  globe_life:        { lower: numRange(1,38),    upper: numRange(200,230), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
-  rogers_centre:     { lower: numRange(100,140), upper: numRange(500,536), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 22 },
-  nationals_park:    { lower: numRange(101,136), upper: numRange(300,332), rings: RINGS_BASEBALL, rows: 'ABCDEFGHIJKLMNOP'.split(''), seatsPerRow: 20 },
+  // MLB rows are numbered (Row 1, 2, 3…) — not lettered — at every ballpark.
+  chase_field:       { lower: numRange(101,136), upper: numRange(301,340), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  truist_park:       { lower: numRange(101,136), upper: numRange(400,428), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  oriole_park:       { lower: numRange(1,54),    upper: [...numRange(300,318), ...numRange(348,366)], rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
+  fenway_park:       { lower: numRange(1,32),    upper: numRange(300,332), rings: RINGS_BASEBALL, rows: numRange(1,15), seatsPerRow: 18 },
+  guaranteed_rate:   { lower: numRange(101,162), upper: numRange(501,540), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 18 },
+  great_american:    { lower: numRange(100,134), upper: numRange(400,434), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  progressive_field: { lower: numRange(101,130), upper: numRange(400,430), rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
+  coors_field:       { lower: numRange(101,152), upper: numRange(300,340), rings: RINGS_BASEBALL, rows: numRange(1,22), seatsPerRow: 22 },
+  comerica_park:     { lower: numRange(101,130), upper: numRange(326,352), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  minute_maid:       { lower: numRange(100,145), upper: numRange(400,441), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  kauffman_stadium:  { lower: numRange(101,130), upper: numRange(400,428), rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
+  angel_stadium:     { lower: numRange(101,140), upper: numRange(400,436), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  loandepot_park:    { lower: numRange(1,36),    upper: numRange(100,130), rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
+  american_family:   { lower: numRange(101,130), upper: numRange(401,430), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  target_field:      { lower: numRange(1,34),    upper: numRange(300,328), rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
+  citi_field:        { lower: numRange(101,130), upper: numRange(500,530), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  sutter_health:     { lower: numRange(101,118), upper: numRange(201,214), rings: RINGS_BASEBALL, rows: numRange(1,16), seatsPerRow: 16 },
+  citizens_bank:     { lower: numRange(101,141), upper: numRange(300,332), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  pnc_park:          { lower: numRange(1,38),    upper: numRange(301,328), rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
+  petco_park:        { lower: numRange(100,130), upper: numRange(300,332), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  oracle_park:       { lower: numRange(101,140), upper: numRange(300,335), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 18 },
+  tmobile_park:      { lower: numRange(100,136), upper: numRange(300,336), rings: RINGS_BASEBALL, rows: numRange(1,22), seatsPerRow: 20 },
+  busch_stadium:     { lower: numRange(101,148), upper: numRange(400,430), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  tropicana_field:   { lower: numRange(101,122), upper: numRange(201,220), rings: RINGS_BASEBALL, rows: numRange(1,16), seatsPerRow: 16 },
+  globe_life:        { lower: numRange(1,38),    upper: numRange(200,230), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
+  rogers_centre:     { lower: numRange(100,140), upper: numRange(500,536), rings: RINGS_BASEBALL, rows: numRange(1,22), seatsPerRow: 22 },
+  nationals_park:    { lower: numRange(101,136), upper: numRange(300,332), rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
 };
 
 const DEFAULT_VENUE = {

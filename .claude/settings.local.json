@@ -12,7 +12,10 @@
       "mcp__mcp-registry__search_mcp_registry",
       "mcp__mcp-registry__list_connectors",
       "PowerShell(\\(Get-Item \"C:\\\\Users\\\\12814\\\\Desktop\\\\Claude Website\\\\nhl-schedule.js\"\\).Length; \\(Get-Content \"C:\\\\Users\\\\12814\\\\Desktop\\\\Claude Website\\\\nhl-schedule.js\" | Measure-Object -Line\\).Lines)",
-      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\12814\\\\Desktop\\\\Claude Website\\\\nhl-schedule.js\"\\); $idx = [Array]::IndexOf\\($bytes, [byte]26\\); \"Ctrl-Z at byte: $idx\")"
+      "PowerShell($bytes = [System.IO.File]::ReadAllBytes\\(\"C:\\\\Users\\\\12814\\\\Desktop\\\\Claude Website\\\\nhl-schedule.js\"\\); $idx = [Array]::IndexOf\\($bytes, [byte]26\\); \"Ctrl-Z at byte: $idx\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }

@@ -2,7 +2,7 @@
 // Deployed automatically at: https://ticketcompasses.com/api/tm
 // Forwards requests to TM Discovery API and adds CORS headers.
 
-const TM_API_KEY = '2Pi4uwk0cTLCbPvDHz2rUP0hLbZIvdUJ';
+const TM_API_KEY = '2Pi4uwk0cTLCbPvDHz2rUPOhLbZIvdUJ';
 const TM_BASE    = 'https://app.ticketmaster.com/discovery/v2/events.json';
 
 export async function onRequest(context) {

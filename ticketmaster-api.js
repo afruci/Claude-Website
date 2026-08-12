@@ -3,10 +3,9 @@
 // ── Ticketmaster Discovery API ────────────────────────────────────────────────
 // Get a free key in ~60 seconds at: https://developer.ticketmaster.com
 // Paste it below, then push. The key is read-only — safe to ship in client JS.
-const TM_API_KEY = '2Pi4uwk0cTLCbPvDHz2rUP0hLbZIvdUJ';
-
-const TM_BASE    = 'https://app.ticketmaster.com/discovery/v2';
-const TM_TTL     = 30 * 60 * 1000; // 30-minute cache
+// API key is now server-side in functions/api/tm.js — not needed here
+const TM_BASE = '/api/tm';   // Cloudflare Pages Function proxy
+const TM_TTL  = 30 * 60 * 1000; // 30-minute cache
 
 // Sport → Ticketmaster classification params
 const TM_SPORTS = {
@@ -19,7 +18,7 @@ const TM_SPORTS = {
 
 // ── Fetch events (with localStorage cache) ────────────────────────────────────
 window.fetchTMEvents = async function (sport) {
-  if (!TM_API_KEY || TM_API_KEY === 'YOUR_TM_API_KEY') return [];
+  // API key lives server-side; no client-side check needed
 
   const cacheKey = `tc_tm_${sport}`;
   try {
@@ -34,9 +33,8 @@ window.fetchTMEvents = async function (sport) {
   if (!params) return [];
 
   const today = new Date().toISOString().slice(0, 10);
-  const url   = new URL(`${TM_BASE}/events.json`);
-  url.searchParams.set('apikey',        TM_API_KEY);
-  url.searchParams.set('countryCode',   'US');
+  const url = new URL(TM_BASE, location.origin);
+  url.searchParams.set('countryCode', 'US');
   url.searchParams.set('startDateTime', `${today}T00:00:00Z`);
   url.searchParams.set('size',          '20');
   url.searchParams.set('sort',          'date,asc');

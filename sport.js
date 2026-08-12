@@ -361,6 +361,7 @@ function renderGames(by, val) {
       <button class="browse-back-btn" onclick="history.back()">← Back</button>
       <span class="browse-nav-label">${escHtml(heading)} &middot; ${count} game${count !== 1 ? 's' : ''}</span>
     </div>
+    <div id="tmLiveStrip"></div>
     <div class="wl-tabs">
       <button class="wl-tab wl-tab-active" id="allGamesTab" onclick="switchToAllGames()">All Games</button>
       <button class="wl-tab" id="watchlistTabBtn" onclick="switchToWatchlist()">
@@ -372,6 +373,57 @@ function renderGames(by, val) {
     <div id="watchlistPanel" class="wl-panel" style="display:none"></div>`;
 
   setBannerSub(count);
+
+  // Async: fetch real TM prices and inject strip (non-blocking)
+  _injectTMStrip(_sport);
+}
+
+// ── Ticketmaster live prices strip ────────────────────────────────────────────
+async function _injectTMStrip(sport) {
+  const strip = document.getElementById('tmLiveStrip');
+  if (!strip || typeof fetchTMEvents !== 'function') return;
+
+  const events = await fetchTMEvents(sport);
+  if (!events.length) return;
+
+  const cards = events.map(ev => {
+    const hasPrice = ev.minPrice !== null;
+    const priceHtml = hasPrice
+      ? `<span class="tm-price">From $${Math.round(ev.minPrice)}</span>`
+      : `<span class="tm-price tm-price-tbd">Price TBD</span>`;
+
+    const [y, m, d] = (ev.date || '').split('-').map(Number);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const monthLabel = m ? months[m - 1] : '—';
+    const dayLabel   = d || '—';
+
+    return `
+      <a class="tm-card" href="${ev.url}" target="_blank" rel="noopener noreferrer">
+        <div class="tm-card-date">
+          <span class="tm-month">${monthLabel}</span>
+          <span class="tm-day">${dayLabel}</span>
+        </div>
+        <div class="tm-card-info">
+          <div class="tm-card-name">${escHtml(ev.name)}</div>
+          <div class="tm-card-venue">${escHtml(ev.venue)}</div>
+        </div>
+        <div class="tm-card-right">
+          ${priceHtml}
+          <span class="tm-buy-btn">Buy →</span>
+        </div>
+      </a>`;
+  }).join('');
+
+  strip.innerHTML = `
+    <div class="tm-strip">
+      <div class="tm-strip-header">
+        <span class="tm-strip-label">
+          <span class="tm-live-dot"></span>Live from Ticketmaster
+        </span>
+        <span class="tm-strip-sub">Real prices · Primary market</span>
+      </div>
+      <div class="tm-cards">${cards}</div>
+    </div>`;
 }
 
 // ── Watchlist (localStorage) ─────────────────────────────────────────────────

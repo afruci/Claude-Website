@@ -27,7 +27,12 @@ export async function onRequest(context) {
   tmUrl.searchParams.set('apikey', TM_API_KEY);
 
   try {
-    const res  = await fetch(tmUrl.toString());
+    const res  = await fetch(tmUrl.toString(), {
+      headers: {
+        'Origin':  'https://ticketcompasses.com',
+        'Referer': 'https://ticketcompasses.com/',
+      },
+    });
     const body = await res.text();
 
     return new Response(body, {

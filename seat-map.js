@@ -649,7 +649,7 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
         `</svg></button>`;
 
       rowHtml +=
-        `<div class="ticket-entry${multi ? ' multi-listed' : ''}" data-price="${minSeatPrice}">` +
+        `<div class="ticket-entry" data-price="${minSeatPrice}">` +
         `<span class="te-seat">Seat&nbsp;${s}</span>` +
         `<div class="te-platforms">${platsHtml}</div>` +
         `${bellBtn}` +

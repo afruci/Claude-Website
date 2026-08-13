@@ -254,10 +254,6 @@
 }
 .ticket-entry:last-child { margin-bottom: 0; }
 
-.ticket-entry.multi-listed {
-  border-color: rgba(245,158,11,.28);
-  background: rgba(245,158,11,.05);
-}
 
 .te-seat {
   font-size: .8rem;

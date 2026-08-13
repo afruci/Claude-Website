@@ -17,10 +17,11 @@ const TM_SPORTS = {
 };
 
 // ── Fetch events (with localStorage cache) ────────────────────────────────────
-window.fetchTMEvents = async function (sport) {
+// keyword: optional team name to narrow results (e.g. "Las Vegas Raiders")
+window.fetchTMEvents = async function (sport, keyword) {
   // API key lives server-side; no client-side check needed
 
-  const cacheKey = `tc_tm_${sport}`;
+  const cacheKey = `tc_tm_${sport}${keyword ? '_' + keyword : ''}`;
   try {
     const raw = localStorage.getItem(cacheKey);
     if (raw) {
@@ -38,6 +39,7 @@ window.fetchTMEvents = async function (sport) {
   url.searchParams.set('startDateTime', `${today}T00:00:00Z`);
   url.searchParams.set('size',          '20');
   url.searchParams.set('sort',          'date,asc');
+  if (keyword) url.searchParams.set('keyword', keyword);
   Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
 
   try {

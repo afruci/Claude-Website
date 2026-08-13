@@ -361,7 +361,6 @@ function renderGames(by, val) {
       <button class="browse-back-btn" onclick="history.back()">← Back</button>
       <span class="browse-nav-label">${escHtml(heading)} &middot; ${count} game${count !== 1 ? 's' : ''}</span>
     </div>
-    <div id="tmLiveStrip"></div>
     <div class="wl-tabs">
       <button class="wl-tab wl-tab-active" id="allGamesTab" onclick="switchToAllGames()">All Games</button>
       <button class="wl-tab" id="watchlistTabBtn" onclick="switchToWatchlist()">
@@ -374,56 +373,59 @@ function renderGames(by, val) {
 
   setBannerSub(count);
 
-  // Async: fetch real TM prices and inject strip (non-blocking)
-  _injectTMStrip(_sport);
+  // Async: fetch real TM prices and inject into matching game rows (non-blocking)
+  _injectTMStrip(_sport, by, val);
 }
 
-// ── Ticketmaster live prices strip ────────────────────────────────────────────
-async function _injectTMStrip(sport) {
-  const strip = document.getElementById('tmLiveStrip');
-  if (!strip || typeof fetchTMEvents !== 'function') return;
+// ── Ticketmaster live prices — inject into matching game rows ─────────────────
+async function _injectTMStrip(sport, by, val) {
+  if (typeof fetchTMEvents !== 'function') return;
 
-  const events = await fetchTMEvents(sport);
+  // Use team name as keyword when browsing by team for precise results
+  const keyword = (by === 'team') ? val : null;
+  const events  = await fetchTMEvents(sport, keyword);
   if (!events.length) return;
 
-  const cards = events.map(ev => {
-    const hasPrice = ev.minPrice !== null;
-    const priceHtml = hasPrice
-      ? `<span class="tm-price">From $${Math.round(ev.minPrice)}</span>`
-      : `<span class="tm-price tm-price-tbd">Price TBD</span>`;
+  // Filter out season packages — we only want single-game tickets
+  const singles = events.filter(ev =>
+    !/season|package|plan|membership|series/i.test(ev.name)
+  );
+  if (!singles.length) return;
 
-    const [y, m, d] = (ev.date || '').split('-').map(Number);
-    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    const monthLabel = m ? months[m - 1] : '—';
-    const dayLabel   = d || '—';
+  // Index TM events by date for fast lookup
+  const tmByDate = {};
+  singles.forEach(ev => {
+    (tmByDate[ev.date] = tmByDate[ev.date] || []).push(ev);
+  });
 
-    return `
-      <a class="tm-card" href="${ev.url}" target="_blank" rel="noopener noreferrer">
-        <div class="tm-card-date">
-          <span class="tm-month">${monthLabel}</span>
-          <span class="tm-day">${dayLabel}</span>
-        </div>
-        <div class="tm-card-info">
-          <div class="tm-card-name">${escHtml(ev.name)}</div>
-          <div class="tm-card-venue">${escHtml(ev.venue)}</div>
-        </div>
-        <div class="tm-card-right">
-          ${priceHtml}
-          <span class="tm-buy-btn">Buy →</span>
-        </div>
-      </a>`;
-  }).join('');
+  // Find each rendered game row and inject a Ticketmaster price row
+  document.querySelectorAll('.game-row[data-date]').forEach(row => {
+    const date   = row.dataset.date;
+    const tmEvs  = tmByDate[date];
+    if (!tmEvs || !tmEvs.length) return;
 
-  strip.innerHTML = `
-    <div class="tm-strip">
-      <div class="tm-strip-header">
-        <span class="tm-strip-label">
-          <span class="tm-live-dot"></span>Live from Ticketmaster
-        </span>
-        <span class="tm-strip-sub">Real prices · Primary market</span>
-      </div>
-      <div class="tm-cards">${cards}</div>
-    </div>`;
+    // Pick the TM event with the lowest price (or first if none have prices)
+    const best = tmEvs
+      .filter(ev => ev.minPrice !== null)
+      .sort((a, b) => a.minPrice - b.minPrice)[0] || tmEvs[0];
+
+    const pricesEl = row.querySelector('.game-prices');
+    if (!pricesEl || !best) return;
+
+    // Build price text
+    const priceText = best.minPrice !== null
+      ? fmt(Math.round(best.minPrice))
+      : 'See prices';
+
+    // Inject as a new price row at the bottom (primary market, separate from resale)
+    const tmRow = document.createElement('div');
+    tmRow.className = 'game-price-row gp-tm-row';
+    tmRow.innerHTML =
+      `<span class="gp-platform" style="color:#026cdf">Ticketmaster</span>` +
+      `<a class="gp-price gp-tm-link" href="${best.url}" target="_blank" rel="noopener noreferrer">${priceText}</a>` +
+      `<span class="gp-badge gp-tm-badge">Primary</span>`;
+    pricesEl.appendChild(tmRow);
+  });
 }
 
 // ── Watchlist (localStorage) ─────────────────────────────────────────────────
@@ -535,7 +537,7 @@ function buildGameRow(event) {
     `${bookmarkSVG(isSaved)}</button>`;
 
   return `
-    <div class="game-row">
+    <div class="game-row" data-id="${event.id}" data-date="${event.date}">
       <div class="game-date">
         <span class="date-month">${month}</span>
         <span class="date-day">${day}</span>

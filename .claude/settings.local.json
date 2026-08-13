@@ -16,7 +16,10 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(curl -s \"https://ticketcompasses.com/sport.html\")",
+      "Bash(curl -sIL \"https://ticketcompasses.com/sport\")",
+      "Bash(curl -s \"https://ticketcompasses.com/api/tm?countryCode=US&classificationName=NFL&size=1\")"
     ]
   }
 }

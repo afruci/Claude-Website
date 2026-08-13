@@ -158,6 +158,18 @@
   letter-spacing: .3px;
 }
 
+/* Ticketmaster price row — primary market badge + clickable price */
+.gp-tm-row { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 4px; }
+.gp-tm-link {
+  color: inherit;
+  text-decoration: none;
+  font-weight: 700;
+}
+.gp-tm-link:hover { text-decoration: underline; }
+.gp-tm-badge {
+  background: #026cdf !important;
+}
+
 /* Game actions: see-tickets + bookmark together */
 .game-actions {
   display: flex;

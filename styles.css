@@ -178,13 +178,26 @@ a { text-decoration: none; color: inherit; }
 
 .stats-inner {
   display: flex;
-  gap: 40px;
+  gap: 24px;
   justify-content: center;
   flex-wrap: wrap;
 }
 
-.stat { font-size: .85rem; color: var(--muted); }
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  color: var(--muted);
+}
+.stat svg { color: var(--primary); flex-shrink: 0; }
 .stat strong { color: var(--text); font-weight: 700; }
+.stat-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  flex-shrink: 0;
+}
 
 /* ── Main / events grid ── */
 .main { padding: 48px 0 64px; }
@@ -948,7 +961,8 @@ a { text-decoration: none; color: inherit; }
   .sport-tile  { min-height: 160px; padding: 24px 12px 20px; }
   .tile-logo, .tile-logo svg { width: 52px; height: 52px; }
   .tile-name   { font-size: 1.1rem; }
-  .stats-inner { gap: 20px; }
+  .stats-inner { gap: 16px; }
+  .stat-divider { display: none; }
   .nav { display: none; }
   .platform-card { min-width: 140px; padding: 16px 20px; }
 }

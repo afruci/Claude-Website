@@ -365,8 +365,25 @@ const VENUE_CONFIGS = {
     seatsPerRow: 26,
   },
 
-  // Pittsburgh Steelers — 100s lower; 200s club, 300s upper, 500s nosebleed
-  acrisure_stadium:        { lower: numRange(101,148), upper: [...numRange(201,244), ...numRange(301,344), ...numRange(501,544)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+  // Pittsburgh Steelers — Acrisure Stadium official sections
+  // Lower: 101–147 (main bowl), C148–C150 (Champions Club south), 151–152 (south end zone)
+  // Club: 205–240 (UPMC Club 205–216, connecting 217–228, Club West 229–240)
+  // Upper: east 504–518, north 519–527, west 528–541
+  // (Luxury suites 301–369, 401–460 and NC-001–NC-015 North Club Lounge excluded)
+  acrisure_stadium: {
+    lower: [
+      ...numRange(101, 147),
+      'C148', 'C149', 'C150',
+      '151', '152',
+    ],
+    upper: [
+      ...numRange(205, 240),
+      ...numRange(504, 541),
+    ],
+    rings: RINGS_FOOTBALL,
+    rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),
+    seatsPerRow: 24,
+  },
 
   // Carolina Panthers — 100s lower; 300s club, 500s upper
   bank_of_america_stadium: { lower: numRange(101,140), upper: [...numRange(301,351), ...numRange(501,554)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },

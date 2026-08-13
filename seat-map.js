@@ -151,9 +151,10 @@ const VENUE_CONFIGS = {
 
   // ── NBA ───────────────────────────────────────────────────────────────────
   td_garden: {
-    // TD Garden: lower bowl 1–22, balcony 300s
+    // TD Garden: lower bowl 1–22, balcony 301–330
+    // Shared: Boston Bruins (NHL) + Boston Celtics (NBA)
     lower: numRange(1, 22),
-    upper: numRange(301, 320),
+    upper: numRange(301, 330),
     rings: RINGS_ARENA,
     rows: 'ABCDEFGHIJKLMNO'.split(''),
     seatsPerRow: 22,
@@ -305,9 +306,10 @@ const VENUE_CONFIGS = {
 
   // ── NBA ───────────────────────────────────────────────────────────────────────
   msg: {
-    // Madison Square Garden: lower bowl 101–120, upper balcony 208–227
+    // Madison Square Garden: lower bowl 101–120, upper balcony 201–227
+    // Shared: NY Rangers (NHL) + NY Knicks (NBA)
     lower: numRange(101, 120),
-    upper: numRange(208, 227),
+    upper: numRange(201, 227),
     rings: RINGS_ARENA,
     rows: 'ABCDEFGHIJKLMNO'.split(''),
     seatsPerRow: 20,
@@ -438,21 +440,30 @@ const VENUE_CONFIGS = {
 
   // ── NHL arenas (additional) ───────────────────────────────────────────────────
   keybank_center:          { lower: numRange(101,120), upper: numRange(301,316), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
-  little_caesars_arena:    { lower: numRange(101,120), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
+  little_caesars_arena:    { lower: numRange(101,126), upper: numRange(201,231), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 }, // Shared: Detroit Red Wings (NHL) + Detroit Pistons (NBA)
   amerant_bank_arena:      { lower: numRange(101,122), upper: numRange(301,316), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   bell_centre:             { lower: numRange(101,126), upper: numRange(301,320), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 22 },
   canadian_tire_centre:    { lower: numRange(101,120), upper: numRange(301,316), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
-  scotiabank_arena:        { lower: numRange(101,122), upper: numRange(301,318), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 },
+  scotiabank_arena:        { lower: numRange(101,122), upper: numRange(301,334), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 }, // Shared: Toronto Maple Leafs (NHL) + Toronto Raptors (NBA)
   pnc_arena:               { lower: numRange(101,120), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   nationwide_arena:        { lower: numRange(101,120), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   prudential_center:       { lower: numRange(1,22),    upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   ubs_arena:               { lower: numRange(101,120), upper: numRange(301,316), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
-  wells_fargo_center:      { lower: numRange(101,122), upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 },
-  ppg_paints_arena:        { lower: numRange(101,122), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
-  capital_one_arena:       { lower: numRange(101,120), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
-  united_center:           { lower: numRange(101,124), upper: numRange(301,320), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 22 },
-  ball_arena:              { lower: numRange(101,124), upper: numRange(301,320), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
-  american_airlines_center:{ lower: numRange(101,122), upper: numRange(301,318), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 },
+  wells_fargo_center:      { lower: numRange(101,124), upper: numRange(201,224), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 }, // Shared: Philadelphia Flyers (NHL) + Philadelphia 76ers (NBA)
+  ppg_paints_arena:        { lower: numRange(101,122), upper: numRange(201,234), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 }, // Pittsburgh Penguins (NHL); also hosts other events
+  capital_one_arena:       { lower: numRange(100,121), upper: numRange(400,433), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 }, // Shared: Washington Capitals (NHL) + Washington Wizards (NBA); upper is 400-level
+  united_center:           { lower: numRange(101,122), upper: numRange(301,334), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 22 }, // Shared: Chicago Blackhawks (NHL) + Chicago Bulls (NBA)
+  ball_arena: {
+    // Ball Arena: lower bowl uses even-numbered sections 102–148;
+    // upper has two tiers — lower balcony (odd 301–379) and upper balcony (even 302–380)
+    // Shared: Colorado Avalanche (NHL) + Denver Nuggets (NBA)
+    lower: Array.from({ length: 24 }, (_, i) => String(102 + i * 2)), // 102,104,...,148
+    upper: numRange(301, 380),
+    rings: RINGS_ARENA,
+    rows: 'ABCDEFGHIJKLMN'.split(''),
+    seatsPerRow: 20,
+  },
+  american_airlines_center:{ lower: numRange(101,124), upper: numRange(301,334), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 }, // Shared: Dallas Stars (NHL) + Dallas Mavericks (NBA)
   xcel_energy_center:      { lower: numRange(101,122), upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   bridgestone_arena:       { lower: numRange(101,118), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLM'.split(''),   seatsPerRow: 20 },
   enterprise_center:       { lower: numRange(101,122), upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
@@ -461,7 +472,7 @@ const VENUE_CONFIGS = {
   honda_center:            { lower: numRange(201,224), upper: numRange(401,420), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLM'.split(''),   seatsPerRow: 20 },
   scotiabank_saddledome:   { lower: numRange(101,120), upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   rogers_place:            { lower: numRange(101,124), upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 22 },
-  cryptodotcom_arena:      { lower: numRange(101,122), upper: numRange(301,318), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 22 },
+  cryptodotcom_arena:      { lower: numRange(101,119), upper: numRange(301,334), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 22 }, // Shared: LA Kings (NHL) + LA Clippers + LA Lakers (NBA)
   sap_center:              { lower: numRange(101,118), upper: numRange(201,216), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLM'.split(''),   seatsPerRow: 18 },
   climate_pledge_arena:    { lower: numRange(101,122), upper: numRange(201,218), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },
   rogers_arena:            { lower: numRange(101,122), upper: numRange(301,318), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },

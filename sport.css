@@ -149,16 +149,24 @@
 
 .gp-badge {
   font-size: .6rem;
-  font-weight: 800;
-  background: var(--green);
-  color: #fff;
-  padding: 1px 5px;
-  border-radius: 999px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: .3px;
+  flex-shrink: 0;
+}
+.gp-badge-official {
+  background: #e6f1fb;
+  color: #0c447c;
+}
+.gp-badge-resale {
+  background: transparent;
+  color: #999;
+  border: 0.5px solid #ccc;
 }
 
-/* Ticketmaster price row — primary market badge + clickable price */
+/* Ticketmaster price row — clickable price */
 .gp-tm-row { border-top: 1px solid var(--border); margin-top: 4px; padding-top: 4px; }
 .gp-tm-link {
   color: inherit;
@@ -166,9 +174,6 @@
   font-weight: 700;
 }
 .gp-tm-link:hover { text-decoration: underline; }
-.gp-tm-badge {
-  background: #026cdf !important;
-}
 
 /* Game actions: see-tickets + bookmark together */
 .game-actions {

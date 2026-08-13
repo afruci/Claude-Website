@@ -90,10 +90,44 @@ const SPORT_META = {
 };
 
 const PLATFORM_COLORS = {
-  Ticketmaster: '#026cdf',
-  StubHub:      '#5f259f',
-  SeatGeek:     '#f4811f',
+  Ticketmaster:  '#026cdf',
+  StubHub:       '#5f259f',
+  SeatGeek:      '#f4811f',
+  'Vivid Seats': '#c8102e',
+  AXS:           '#111111',
 };
+
+// ── Official primary ticketing partner per team ───────────────────────────────
+// Default is Ticketmaster. Only exceptions are listed here.
+const OFFICIAL_TICKETERS = {
+  // NFL
+  'Dallas Cowboys':           'SeatGeek',
+  // NBA
+  'Golden State Warriors':    'AXS',
+  'Denver Nuggets':           'AXS',
+  'Brooklyn Nets':            'SeatGeek',
+  // NHL
+  'Vegas Golden Knights':     'AXS',
+  'Colorado Avalanche':       'AXS',
+  // MLB
+  'New York Mets':            'SeatGeek',
+  // MLS
+  'LA Galaxy':                'AXS',
+  'LAFC':                     'AXS',
+  'Seattle Sounders FC':      'AXS',
+  'Houston Dynamo FC':        'AXS',
+  'Chicago Fire FC':          'SeatGeek',
+  'FC Dallas':                'SeatGeek',
+  'Nashville SC':             'SeatGeek',
+  'New York Red Bulls':       'SeatGeek',
+  'Portland Timbers':         'SeatGeek',
+  'San Jose Earthquakes':     'SeatGeek',
+  'Real Salt Lake':           'SeatGeek',
+};
+
+function officialTicketer(teamName) {
+  return OFFICIAL_TICKETERS[teamName] || 'Ticketmaster';
+}
 
 function total(p) { return p.base + p.fees; }
 function fmt(n)   { return '$' + n.toLocaleString('en-US'); }
@@ -125,10 +159,11 @@ function getAllEvents(sport) {
 }
 
 // ── State ─────────────────────────────────────────────────────────────────────
-let _sport     = '';
-let _allEvents = [];
-let _optData   = [];
-let _currentBy = null;
+let _sport       = '';
+let _allEvents   = [];
+let _optData     = [];
+let _currentBy   = null;
+let _currentTeam = null; // set when browsing by team — used for official ticketer badge
 
 window.pickOption = function(i) {
   navigate(_currentBy, _optData[i]);
@@ -325,7 +360,8 @@ function buildVenueGrid() {
 
 // ── View 3: Games list ────────────────────────────────────────────────────────
 function renderGames(by, val) {
-  _currentBy = by;
+  _currentBy   = by;
+  _currentTeam = (by === 'team') ? val : null;
 
   let filtered = _allEvents;
   let heading  = val;
@@ -418,12 +454,16 @@ async function _injectTMStrip(sport, by, val) {
       : 'See prices';
 
     // Inject as a new price row at the bottom (primary market, separate from resale)
+    const tmOfficial = officialTicketer(_currentTeam) === 'Ticketmaster';
+    const tmBadge    = tmOfficial
+      ? '<span class="gp-badge gp-badge-official">Official</span>'
+      : '<span class="gp-badge gp-badge-resale">Resale</span>';
     const tmRow = document.createElement('div');
     tmRow.className = 'game-price-row gp-tm-row';
     tmRow.innerHTML =
       `<span class="gp-platform" style="color:#026cdf">Ticketmaster</span>` +
       `<a class="gp-price gp-tm-link" href="${best.url}" target="_blank" rel="noopener noreferrer">${priceText}</a>` +
-      `<span class="gp-badge gp-tm-badge">Primary</span>`;
+      tmBadge;
     pricesEl.appendChild(tmRow);
   });
 }
@@ -510,13 +550,18 @@ function buildGameRow(event) {
   const year   = d.getFullYear();
   const sorted = [...event.prices].sort((a, b) => total(a) - total(b));
 
-  const priceRows = sorted.map((p, i) => {
-    const color = PLATFORM_COLORS[p.platform] || '#aaa';
+  const official   = officialTicketer(_currentTeam);
+  const priceRows = sorted.map(p => {
+    const color     = PLATFORM_COLORS[p.platform] || '#aaa';
+    const isOfficial = p.platform === official;
+    const badge     = isOfficial
+      ? '<span class="gp-badge gp-badge-official">Official</span>'
+      : '<span class="gp-badge gp-badge-resale">Resale</span>';
     return `
       <div class="game-price-row">
         <span class="gp-platform" style="color:${color}">${p.platform}</span>
         <span class="gp-price">${fmt(total(p))}</span>
-        ${i === 0 ? '<span class="gp-badge">Best</span>' : ''}
+        ${badge}
       </div>`;
   }).join('');
 

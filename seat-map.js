@@ -217,43 +217,79 @@ const VENUE_CONFIGS = {
 
   // ── NFL ───────────────────────────────────────────────────────────────────
   att_stadium: {
-    // AT&T Stadium: club 101–144, upper 301–344
-    lower: numRange(101, 130),
-    upper: numRange(301, 330),
+    // AT&T Stadium (Cowboys): lower 101–150, mezzanine 200s, upper 301–350, concourse 401–460
+    lower: numRange(101, 150),
+    upper: [...numRange(201, 244), ...numRange(301, 350), ...numRange(401, 460)],
     rings: RINGS_FOOTBALL,
     rows: 'ABCDEFGHIJKLMNOPQRST'.split(''),
     seatsPerRow: 26,
   },
   arrowhead_stadium: {
-    // Arrowhead Stadium: lower 101–128, upper 301–328
-    lower: numRange(101, 128),
-    upper: numRange(301, 328),
+    // Arrowhead Stadium (Chiefs): lower 101–148, club 201–246, upper 301–346
+    lower: numRange(101, 148),
+    upper: [...numRange(201, 246), ...numRange(301, 346)],
     rings: RINGS_FOOTBALL,
     rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),
     seatsPerRow: 26,
   },
   lambeau_field: {
-    // Lambeau Field: lower 101–138, upper 201–238
-    lower: numRange(101, 130),
-    upper: numRange(201, 230),
+    // Lambeau Field (Packers): lower 100–138 (end zones + sidelines), upper 301–354
+    lower: numRange(100, 138),
+    upper: numRange(301, 354),
     rings: RINGS_FOOTBALL,
     rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),
     seatsPerRow: 24,
   },
   allegiant_stadium: {
-    // Allegiant Stadium: lower 101–132, upper 301–332
-    lower: numRange(101, 130),
-    upper: numRange(301, 330),
+    // Allegiant Stadium — official section layout (Las Vegas Raiders)
+    // Lower bowl: west sideline 101–108, north club C109–C115, section 116,
+    //   east sideline 117–129, south club C131–C137, south/west 138–144
+    lower: [
+      // West sideline
+      '101','102','103','104','105',
+      // North end (west corner → field club → east corner)
+      '106','107','108',
+      'C109','C110','C111','C112','C113','C114','C115',
+      '116',
+      // East sideline
+      '117','118','119','120','121','122','123','124','125','126','127','128','129',
+      // South end club → west corner
+      'C131','C132','C133','C134','C135','C136','C137',
+      '138','139','140','141','142','143','144',
+    ],
+    // Upper: club level 200s, upper bowl 300s, nosebleed 400s
+    upper: [
+      // West club (200 level)
+      '201','202','203','204','205','206','207','208',
+      // East club (200 level)
+      '219','220','221','222','223','224','225','226','227','228','229','230','231','232',
+      // South-west club (200 level)
+      '243','244','245','246','247','248',
+      // Upper bowl — west
+      '303','304','305','306',
+      // Upper bowl — north
+      '307','308','309','310','311','312','313','314','315','316','317','318','319','320','321',
+      // Upper bowl — east
+      '322','323','324','325','326','327','328','329','330','331','332','333',
+      // Upper bowl — south/west
+      '334','335','336','337','338','339','340','341','342','343','344','345','346','347',
+      // Nosebleed — north
+      '406','407','408','409','410','411','412','413','414','415','416','417','418','419',
+      // Nosebleed — northeast
+      '420','421',
+      // Nosebleed — south
+      '429','430','431','432','433','434','435','436','437','438','439','440','441','442','443','444',
+    ],
     rings: RINGS_FOOTBALL,
     rows: 'ABCDEFGHIJKLMNOPQRST'.split(''),
-    seatsPerRow: 26,
+    seatsPerRow: 24,
   },
 
   // ── World Cup / large venues ──────────────────────────────────────────────
   metlife_stadium: {
-    // MetLife Stadium: stadium level 101–140, upper 301–340
-    lower: numRange(101, 132),
-    upper: numRange(301, 332),
+    // MetLife Stadium (Giants/Jets): lower 101–149, club 201–250, upper 301–350
+    lower: numRange(101, 149),
+    upper: [...numRange(201, 250), ...numRange(301, 350)],
     rings: RINGS_LARGE,
     rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''),
     seatsPerRow: 28,
@@ -269,40 +305,91 @@ const VENUE_CONFIGS = {
 
   // ── NBA ───────────────────────────────────────────────────────────────────────
   msg: {
-    // Madison Square Garden: suite/floor 1–20, upper 200–225
-    lower: numRange(1, 20),
-    upper: numRange(200, 225),
+    // Madison Square Garden: lower bowl 101–120, upper balcony 208–227
+    lower: numRange(101, 120),
+    upper: numRange(208, 227),
     rings: RINGS_ARENA,
     rows: 'ABCDEFGHIJKLMNO'.split(''),
     seatsPerRow: 20,
   },
 
-  // ── NFL (additional stadiums) ─────────────────────────────────────────────────
-  lumen_field:             { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  sofi_stadium:            { lower: numRange(101,140), upper: numRange(301,340), rings: RINGS_LARGE,    rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
-  levis_stadium:           { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  nrg_stadium:             { lower: numRange(101,138), upper: numRange(301,338), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
-  ford_field:              { lower: numRange(101,134), upper: numRange(301,334), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  us_bank_stadium:         { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  lincoln_financial:       { lower: numRange(101,138), upper: numRange(201,238), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  mercedes_benz_stadium:   { lower: numRange(101,138), upper: numRange(301,338), rings: RINGS_LARGE,    rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
-  acrisure_stadium:        { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  bank_of_america_stadium: { lower: numRange(101,140), upper: numRange(301,340), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
-  highmark_stadium:        { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  paycor_stadium:          { lower: numRange(101,134), upper: numRange(301,334), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  huntington_bank_field:   { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  everbank_stadium:        { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  hard_rock_stadium:       { lower: numRange(101,138), upper: numRange(300,338), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  gillette_stadium:        { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  caesars_superdome:       { lower: numRange(101,140), upper: numRange(300,340), rings: RINGS_LARGE,    rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
-  raymond_james:           { lower: numRange(101,138), upper: numRange(301,338), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  nissan_stadium:          { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  empower_field:           { lower: numRange(101,140), upper: numRange(300,340), rings: RINGS_LARGE,    rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''), seatsPerRow: 26 },
-  state_farm_stadium:      { lower: numRange(101,134), upper: numRange(301,334), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
-  mt_bank_stadium:         { lower: numRange(101,136), upper: numRange(300,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
-  northwest_stadium:       { lower: numRange(100,140), upper: numRange(400,440), rings: RINGS_LARGE,    rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''), seatsPerRow: 28 },
-  soldier_field:           { lower: numRange(1,30),    upper: numRange(100,130), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''),   seatsPerRow: 22 },
-  lucas_oil_stadium:       { lower: numRange(101,136), upper: numRange(301,336), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),  seatsPerRow: 24 },
+  // ── NFL (additional stadiums) — verified section numbers ──────────────────────
+  // lower = bowl closest to field; upper = club/mezzanine + upper decks combined
+
+  // Seattle Seahawks — 100-level lower; 203–241 club/upper (no 300+ tier)
+  lumen_field:             { lower: numRange(100,148), upper: numRange(203,241), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // LA Rams/Chargers — 100s lower; 200s club, 400s upper terrace, 500s top terrace
+  sofi_stadium:            { lower: numRange(100,144), upper: [...numRange(200,244), ...numRange(400,444), ...numRange(500,536)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
+
+  // San Francisco 49ers — 100s lower; 200s club, 300s upper
+  levis_stadium:           { lower: numRange(101,140), upper: [...numRange(201,231), ...numRange(301,330)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Houston Texans — 100s lower; 300s club, 500–600s upper
+  nrg_stadium:             { lower: numRange(101,140), upper: [...numRange(301,346), ...numRange(501,554)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
+
+  // Detroit Lions — 100s lower; 200s club, 300s upper
+  ford_field:              { lower: numRange(100,143), upper: [...numRange(200,230), ...numRange(300,340)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Minnesota Vikings — 100s lower; 200s club, 300s upper
+  us_bank_stadium:         { lower: numRange(101,143), upper: [...numRange(204,242), ...numRange(303,348)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Philadelphia Eagles — 100s lower; 200s upper (2 tiers)
+  lincoln_financial:       { lower: numRange(101,146), upper: numRange(201,243), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // Atlanta Falcons — 100s lower; 200s mezzanine, 300s upper
+  mercedes_benz_stadium:   { lower: numRange(101,136), upper: [...numRange(201,248), ...numRange(301,350)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
+
+  // Pittsburgh Steelers — 100s lower; 200s club, 300s upper, 500s nosebleed
+  acrisure_stadium:        { lower: numRange(101,148), upper: [...numRange(201,244), ...numRange(301,344), ...numRange(501,544)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Carolina Panthers — 100s lower; 300s club, 500s upper
+  bank_of_america_stadium: { lower: numRange(101,140), upper: [...numRange(301,351), ...numRange(501,554)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
+
+  // Buffalo Bills — Highmark Stadium (opened 2026); 100s lower, 200s club, 300s upper
+  highmark_stadium:        { lower: numRange(101,140), upper: [...numRange(201,240), ...numRange(301,336)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // Cincinnati Bengals — 100s lower; 200s club, 300s upper
+  paycor_stadium:          { lower: numRange(101,151), upper: [...numRange(201,244), ...numRange(301,350)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Cleveland Browns — 100s lower; 300s club, 500s upper
+  huntington_bank_field:   { lower: numRange(100,148), upper: [...numRange(301,344), ...numRange(501,548)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Jacksonville Jaguars — 100s lower; 200s club, 300s upper
+  everbank_stadium:        { lower: numRange(101,143), upper: [...numRange(201,243), ...numRange(301,343)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Miami Dolphins — 100s lower; 200s club, 300s upper
+  hard_rock_stadium:       { lower: numRange(101,154), upper: [...numRange(201,244), ...numRange(301,356)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // New England Patriots — 100s lower; 200s club, 300s upper
+  gillette_stadium:        { lower: numRange(101,141), upper: [...numRange(201,230), ...numRange(301,342)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // New Orleans Saints — 100s lower; 500s and 600s upper (Superdome dome tiers)
+  caesars_superdome:       { lower: numRange(101,156), upper: [...numRange(501,560), ...numRange(601,652)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
+
+  // Tampa Bay Buccaneers — 100s lower; 200s middle, 300s upper
+  raymond_james:           { lower: numRange(102,151), upper: [...numRange(201,245), ...numRange(302,344)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // Tennessee Titans — 100s lower; 200s club, 300s upper
+  nissan_stadium:          { lower: numRange(101,146), upper: [...numRange(202,245), ...numRange(303,344)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // Denver Broncos — 100s lower; 300s loge, 500s upper
+  empower_field:           { lower: numRange(100,135), upper: [...numRange(301,320), ...numRange(500,541)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''), seatsPerRow: 26 },
+
+  // Arizona Cardinals — 100s lower; 200s club, 400s upper
+  state_farm_stadium:      { lower: numRange(101,138), upper: [...numRange(201,248), ...numRange(401,455)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
+
+  // Baltimore Ravens — 100s lower; 200s club, 500s/600s upper
+  mt_bank_stadium:         { lower: numRange(100,153), upper: [...numRange(200,253), ...numRange(500,548), ...numRange(600,648)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
+
+  // Washington Commanders — 100s lower; 300s club, 400s/500s upper
+  northwest_stadium:       { lower: numRange(100,148), upper: [...numRange(301,340), ...numRange(401,448), ...numRange(501,540)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''), seatsPerRow: 28 },
+
+  // Chicago Bears — historic Soldier Field; 1–36 lower, 100s upper
+  soldier_field:           { lower: numRange(1,36), upper: numRange(100,145), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 22 },
+
+  // Indianapolis Colts — 100s street level lower; 300–400s club/loge, 500s upper
+  lucas_oil_stadium:       { lower: numRange(101,153), upper: [...numRange(304,349), ...numRange(504,549)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
   // ── NHL arenas (additional) ───────────────────────────────────────────────────
   keybank_center:          { lower: numRange(101,120), upper: numRange(301,316), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMN'.split(''),  seatsPerRow: 20 },

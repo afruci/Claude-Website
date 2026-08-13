@@ -388,6 +388,48 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--primary);
 }
 
+/* ── Why TicketCompass ── */
+.why-section {
+  padding: 56px 0 60px;
+  border-top: 1px solid var(--border);
+}
+.why-heading {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 36px;
+}
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+@media (max-width: 680px) {
+  .why-grid { grid-template-columns: 1fr; gap: 16px; }
+}
+.why-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-align: center;
+}
+.why-icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+.why-title {
+  font-size: .95rem;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+.why-body {
+  font-size: .85rem;
+  color: var(--muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
 /* ── Platform cards section ── */
 .platforms-section {
   background: var(--surface);

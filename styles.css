@@ -408,14 +408,15 @@ a { text-decoration: none; color: inherit; }
 .hero-search-box {
   display: flex;
   align-items: center;
-  background: #fff;
+  background: #ffffff !important;
   border-radius: 999px;
   padding: 0 20px 0 28px;
   box-shadow: 0 4px 24px rgba(0,0,0,.35);
   transition: box-shadow .15s;
+  border: none !important;
 }
 .hero-search-box:focus-within {
-  box-shadow: 0 4px 32px rgba(22,163,74,.35);
+  box-shadow: 0 6px 36px rgba(22,163,74,.4);
 }
 .hero-search-icon {
   font-size: 1.2rem;
@@ -438,6 +439,12 @@ a { text-decoration: none; color: inherit; }
 }
 .hero-search-input::placeholder {
   color: #999;
+}
+.hero-search-wrap.search-open {
+  padding-bottom: 0;
+}
+.sports-section {
+  transition: margin-top .2s ease;
 }
 .hero-search-dropdown {
   position: absolute;

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><rect width='28' height='28' rx='6' fill='%2316a34a'/><ellipse cx='14' cy='14' rx='7' ry='7' stroke='%23fff' stroke-width='1.5' fill='none'/><path d='M14 7v14M7 14h14' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><circle cx='21' cy='8' r='3' fill='%23f59e0b'/></svg>" />
   <title>TicketCompass — Best Sports Ticket Prices</title>
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
 
@@ -303,10 +303,24 @@
     let activeIdx  = -1;
     let results    = [];
 
+    const sportsSection = document.querySelector('.sports-section');
+
+    function pushTiles(open) {
+      if (!sportsSection) return;
+      if (open) {
+        const h = dropdown.offsetHeight || 0;
+        sportsSection.style.marginTop = h + 'px';
+        document.getElementById('heroSearchBox').parentElement.parentElement.classList.add('search-open');
+      } else {
+        sportsSection.style.marginTop = '';
+        document.getElementById('heroSearchBox').parentElement.parentElement.classList.remove('search-open');
+      }
+    }
+
     function render(matches) {
       results   = matches;
       activeIdx = -1;
-      if (!matches.length) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; return; }
+      if (!matches.length) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; pushTiles(false); return; }
       dropdown.innerHTML = matches.map((t, i) =>
         `<li class="hero-search-result" data-i="${i}" role="option">
           <div>
@@ -317,6 +331,7 @@
         </li>`
       ).join('');
       dropdown.classList.add('open');
+      pushTiles(true);
     }
 
     function go(team) {
@@ -356,6 +371,7 @@
         dropdown.classList.remove('open');
         dropdown.innerHTML = '';
         input.value = '';
+        pushTiles(false);
       }
     });
   })();

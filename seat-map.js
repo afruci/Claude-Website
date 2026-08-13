@@ -337,8 +337,33 @@ const VENUE_CONFIGS = {
   // Philadelphia Eagles — 100s lower; 200s upper (2 tiers)
   lincoln_financial:       { lower: numRange(101,146), upper: numRange(201,243), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // Atlanta Falcons — 100s lower; 200s mezzanine, 300s upper
-  mercedes_benz_stadium:   { lower: numRange(101,136), upper: [...numRange(201,248), ...numRange(301,350)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
+  // Atlanta Falcons — Mercedes-Benz Stadium official sections
+  // Lower: 101–107 (east sideline), C108–C112 (south field club), 113–125 (south/west),
+  //        C126–C130 (north field club), 131–136 (north/east)
+  // Upper-200s: 201–209, C210–C212 (gullwing south), 213–235, C236–C238 (gullwing north), 239–247
+  // Upper-300s: 301–323, 324C–327C (300 Level Club, west), 328–350
+  mercedes_benz_stadium: {
+    lower: [
+      ...numRange(101, 107),
+      'C108','C109','C110','C111','C112',
+      ...numRange(113, 125),
+      'C126','C127','C128','C129','C130',
+      ...numRange(131, 136),
+    ],
+    upper: [
+      ...numRange(201, 209),
+      'C210','C211','C212',
+      ...numRange(213, 235),
+      'C236','C237','C238',
+      ...numRange(239, 247),
+      ...numRange(301, 323),
+      '324C','325C','326C','327C',
+      ...numRange(328, 350),
+    ],
+    rings: RINGS_LARGE,
+    rows: 'ABCDEFGHIJKLMNOPQRST'.split(''),
+    seatsPerRow: 26,
+  },
 
   // Pittsburgh Steelers — 100s lower; 200s club, 300s upper, 500s nosebleed
   acrisure_stadium:        { lower: numRange(101,148), upper: [...numRange(201,244), ...numRange(301,344), ...numRange(501,544)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },

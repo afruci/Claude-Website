@@ -419,11 +419,11 @@ a { text-decoration: none; color: inherit; }
   box-shadow: 0 6px 36px rgba(22,163,74,.4);
 }
 .hero-search-icon {
-  font-size: 1.2rem;
   flex-shrink: 0;
-  opacity: .5;
   order: 2;
   padding: 0 4px 0 12px;
+  color: #999;
+  display: block;
 }
 .hero-search-input {
   flex: 1;

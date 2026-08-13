@@ -95,7 +95,6 @@
 .ttl-dot.stubhub      { background: #5f259f; }
 .ttl-dot.seatgeek     { background: #f4811f; }
 
-.ttl-item.caution-legend { gap: 4px; }
 
 .expand-all-btn {
   background: var(--surface);
@@ -314,20 +313,6 @@
   vertical-align: middle;
 }
 
-/* Multi-platform caution badge */
-.te-caution {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: .68rem;
-  font-weight: 700;
-  background: rgba(245,158,11,.16);
-  color: #d97706;
-  border: 1px solid rgba(245,158,11,.35);
-  padding: 2px 8px;
-  border-radius: 999px;
-  white-space: nowrap;
-}
 
 .no-tickets {
   font-size: .85rem;

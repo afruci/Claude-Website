@@ -639,10 +639,6 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
         return `<a class="te-plat ${cls}" href="${url}" target="_blank" rel="noopener noreferrer">${ep.platform} — ${fmt(px)}${badge}</a>`;
       }).join('');
 
-      const caution = multi
-        ? `<span class="te-caution">⚠️ Listed on ${pIdxs.length} platforms</span>`
-        : '';
-
       const bellBtn =
         `<button class="te-bell" aria-label="Set price alert for seat ${s}"` +
         ` data-section="Section&nbsp;${secId}" data-row="Row&nbsp;${letter}"` +
@@ -655,7 +651,7 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
       rowHtml +=
         `<div class="ticket-entry${multi ? ' multi-listed' : ''}" data-price="${minSeatPrice}">` +
         `<span class="te-seat">Seat&nbsp;${s}</span>` +
-        `<div class="te-platforms">${platsHtml}${caution}</div>` +
+        `<div class="te-platforms">${platsHtml}</div>` +
         `${bellBtn}` +
         `</div>`;
     }

@@ -215,14 +215,14 @@ function renderPicker() {
   const hasGroups = _allEvents.some(e => e.group != null);
 
   const cats = [];
-  if (hasWeeks)  cats.push({ key: 'week',  emoji: '📅', label: 'Week',  desc: 'Browse by week number', white: false });
-  if (hasGroups) cats.push({ key: 'group', emoji: '🌍', label: 'Group', desc: 'Browse by group',        white: false });
-  if (hasTeams)  cats.push({ key: 'team',  emoji: '🏛', label: 'Teams', desc: 'Browse by your team',   white: true  });
-                 cats.push({ key: 'venue', emoji: '🏟', label: 'Venue', desc: 'Browse by stadium',      white: true  });
+  if (hasWeeks)  cats.push({ key: 'week',  emoji: '📅', label: 'Week',  desc: 'Browse by week number' });
+  if (hasGroups) cats.push({ key: 'group', emoji: '🌍', label: 'Group', desc: 'Browse by group'        });
+  if (hasTeams)  cats.push({ key: 'team',  emoji: '🏆', label: 'Teams', desc: 'Browse by your team'   });
+                 cats.push({ key: 'venue', emoji: '📍', label: 'Venue', desc: 'Browse by stadium'      });
 
   const cards = cats.map(c => `
     <button class="browse-cat-btn" onclick="navigate('${c.key}', null)">
-      <span class="bcat-emoji${c.white ? ' white' : ''}">${c.emoji}</span>
+      <span class="bcat-emoji">${c.emoji}</span>
       <span class="bcat-label">${c.label}</span>
       <span class="bcat-desc">${c.desc}</span>
     </button>`).join('');

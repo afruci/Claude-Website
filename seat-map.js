@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 const SPORT_LABELS = { nfl:'NFL', nba:'NBA', mlb:'MLB', nhl:'NHL', mls:'MLS', ufc:'UFC', worldcup:'World Cup' };
 
@@ -11,7 +11,7 @@ const PLATFORM_COLORS = {
 // â”€â”€ Stadium photo filenames (Wikimedia Commons) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 // renderPhoto() builds:  commons.wikimedia.org/wiki/Special:FilePath/NAME?width=1280
 // The browser follows the HTTP redirect straight to the Wikimedia CDN image.
-// No JS fetch needed â€” onerror in the <img> tag handles any missing files.
+// No JS fetch needed — onerror in the <img> tag handles any missing files.
 const STADIUM_PHOTOS = {
   // â”€â”€ NBA arenas â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   msg:                     'Madison_Square_Garden.jpg',
@@ -242,7 +242,7 @@ const VENUE_CONFIGS = {
     seatsPerRow: 24,
   },
   allegiant_stadium: {
-    // Allegiant Stadium â€” official section layout (Las Vegas Raiders)
+    // Allegiant Stadium — official section layout (Las Vegas Raiders)
     // Lower bowl: west sideline 101â€“108, north club C109â€“C115, section 116,
     //   east sideline 117â€“129, south club C131â€“C137, south/west 138â€“144
     lower: [
@@ -266,19 +266,19 @@ const VENUE_CONFIGS = {
       '219','220','221','222','223','224','225','226','227','228','229','230','231','232',
       // South-west club (200 level)
       '243','244','245','246','247','248',
-      // Upper bowl â€” west
+      // Upper bowl — west
       '303','304','305','306',
-      // Upper bowl â€” north
+      // Upper bowl — north
       '307','308','309','310','311','312','313','314','315','316','317','318','319','320','321',
-      // Upper bowl â€” east
+      // Upper bowl — east
       '322','323','324','325','326','327','328','329','330','331','332','333',
-      // Upper bowl â€” south/west
+      // Upper bowl — south/west
       '334','335','336','337','338','339','340','341','342','343','344','345','346','347',
-      // Nosebleed â€” north
+      // Nosebleed — north
       '406','407','408','409','410','411','412','413','414','415','416','417','418','419',
-      // Nosebleed â€” northeast
+      // Nosebleed — northeast
       '420','421',
-      // Nosebleed â€” south
+      // Nosebleed — south
       '429','430','431','432','433','434','435','436','437','438','439','440','441','442','443','444',
     ],
     rings: RINGS_FOOTBALL,
@@ -315,10 +315,10 @@ const VENUE_CONFIGS = {
     seatsPerRow: 20,
   },
 
-  // â”€â”€ NFL (additional stadiums) â€” verified section numbers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // â”€â”€ NFL (additional stadiums) — verified section numbers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // lower = bowl closest to field; upper = club/mezzanine + upper decks combined
 
-  // Seattle Seahawks â€” Lumen Field
+  // Seattle Seahawks — Lumen Field
   // Section order derived from official Ticketmaster map (centroid coordinates, viewBox 0 0 10240 7680).
   // Lower: 100-level clockwise from south sideline â†’ SW corner â†’ W end zone â†’ NW â†’ N sideline â†’ NE â†’ E end zone
   // Upper: 300-level clockwise from south open end â†’ W â†’ N â†’ NE â†’ E â†’ SE â†’ back to south
@@ -329,7 +329,7 @@ const VENUE_CONFIGS = {
       '132','133','134','135','136','137','138',
       // SW corner
       '139','140','141','142','143','144','145',
-      // West end zone â€” Hawk's Nest area
+      // West end zone — Hawk's Nest area
       '146','147','148','149','150','151',
       // NW corner
       '100','101','102','103','104','105',
@@ -337,7 +337,7 @@ const VENUE_CONFIGS = {
       '106','107','108','109','110','111','112',
       // NE corner
       '113','114','115','116',
-      // East end zone â€” Seahawks Field Seats area
+      // East end zone — Seahawks Field Seats area
       '117','118','119','120','121','122','123','124','125','126','127','128','129','130','131',
     ],
     upper: [
@@ -355,25 +355,25 @@ const VENUE_CONFIGS = {
     seatsPerRow: 24,
   },
 
-  // LA Rams/Chargers â€” 100s lower; 200s club (non-contiguous), 400s upper terrace, 500s top terrace
+  // LA Rams/Chargers — 100s lower; 200s club (non-contiguous), 400s upper terrace, 500s top terrace
   sofi_stadium:            { lower: numRange(100,144), upper: [...numRange(200,214), ...numRange(224,241), ...numRange(400,457), ...numRange(504,546)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
 
-  // San Francisco 49ers â€” 100s lower; 200s club, 300s upper, 400s top
+  // San Francisco 49ers — 100s lower; 200s club, 300s upper, 400s top
   levis_stadium:           { lower: numRange(101,146), upper: [...numRange(201,231), ...numRange(301,328), ...numRange(401,422)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Houston Texans â€” 100s lower; 300s club (non-contiguous), 500s loge, 600s upper
+  // Houston Texans — 100s lower; 300s club (non-contiguous), 500s loge, 600s upper
   nrg_stadium:             { lower: numRange(101,140), upper: [...numRange(301,318), ...numRange(329,346), ...numRange(501,552), ...numRange(601,652)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
 
-  // Detroit Lions â€” 100s lower; 200s club+mezzanine, 300s upper
+  // Detroit Lions — 100s lower; 200s club+mezzanine, 300s upper
   ford_field:              { lower: numRange(100,141), upper: [...numRange(200,246), ...numRange(300,342)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Minnesota Vikings â€” 100s lower; 200s club, 300s upper
+  // Minnesota Vikings — 100s lower; 200s club, 300s upper
   us_bank_stadium:         { lower: numRange(101,143), upper: [...numRange(204,242), ...numRange(301,351)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Philadelphia Eagles â€” 100s lower; 200s upper (starts at 203)
+  // Philadelphia Eagles — 100s lower; 200s upper (starts at 203)
   lincoln_financial:       { lower: numRange(101,146), upper: numRange(203,243), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // Atlanta Falcons â€” Mercedes-Benz Stadium official sections
+  // Atlanta Falcons — Mercedes-Benz Stadium official sections
   // Lower: 101â€“107 (east sideline), C108â€“C112 (south field club), 113â€“125 (south/west),
   //        C126â€“C130 (north field club), 131â€“136 (north/east)
   // Upper-200s: 201â€“209, C210â€“C212 (gullwing south), 213â€“235, C236â€“C238 (gullwing north), 239â€“247
@@ -401,7 +401,7 @@ const VENUE_CONFIGS = {
     seatsPerRow: 26,
   },
 
-  // Pittsburgh Steelers â€” Acrisure Stadium official sections
+  // Pittsburgh Steelers — Acrisure Stadium official sections
   // Lower: 101â€“147 (main bowl), C148â€“C150 (Champions Club south), 151â€“152 (south end zone)
   // Club: 205â€“240 (UPMC Club 205â€“216, connecting 217â€“228, Club West 229â€“240)
   // Suites: Lower Suites East 301â€“335, Lower Suites West 336â€“369
@@ -424,52 +424,52 @@ const VENUE_CONFIGS = {
     seatsPerRow: 24,
   },
 
-  // Carolina Panthers â€” 100s lower; 300s club, 500s upper
+  // Carolina Panthers — 100s lower; 300s club, 500s upper
   bank_of_america_stadium: { lower: numRange(101,140), upper: [...numRange(301,351), ...numRange(501,554)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
 
-  // Buffalo Bills â€” Highmark Stadium (opened 2026); 100s lower, 200s club, 300s upper
+  // Buffalo Bills — Highmark Stadium (opened 2026); 100s lower, 200s club, 300s upper
   highmark_stadium:        { lower: numRange(101,140), upper: [...numRange(201,240), ...numRange(301,336)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // Cincinnati Bengals â€” 100s lower (incl. end zones to 160); 200s club (non-contiguous), 300s upper
+  // Cincinnati Bengals — 100s lower (incl. end zones to 160); 200s club (non-contiguous), 300s upper
   paycor_stadium:          { lower: numRange(101,160), upper: [...numRange(201,203), ...numRange(217,233), ...numRange(247,249), ...numRange(301,350)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Cleveland Browns â€” 105â€“137 lower; 305â€“337 club, 505â€“537 upper (sections offset from 100/300/500 base)
+  // Cleveland Browns — 105â€“137 lower; 305â€“337 club, 505â€“537 upper (sections offset from 100/300/500 base)
   huntington_bank_field:   { lower: numRange(101,137), upper: [...numRange(305,337), ...numRange(505,537)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Jacksonville Jaguars â€” 100s lower; 200s club (non-contiguous: 201â€“216, 230â€“245); 300s = suites only
+  // Jacksonville Jaguars — 100s lower; 200s club (non-contiguous: 201â€“216, 230â€“245); 300s = suites only
   everbank_stadium:        { lower: numRange(101,143), upper: [...numRange(201,216), ...numRange(230,245)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Miami Dolphins â€” 100s lower; 200s club, 300s upper
+  // Miami Dolphins — 100s lower; 200s club, 300s upper
   hard_rock_stadium:       { lower: numRange(101,154), upper: [...numRange(201,244), ...numRange(301,356)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // New England Patriots â€” 100s lower; 200s club, 300s upper
+  // New England Patriots — 100s lower; 200s club, 300s upper
   gillette_stadium:        { lower: numRange(101,140), upper: [...numRange(201,230), ...numRange(301,342)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // New Orleans Saints â€” 100s lower (101â€“149); 500s loge, 600s upper
+  // New Orleans Saints — 100s lower (101â€“149); 500s loge, 600s upper
   caesars_superdome:       { lower: numRange(101,149), upper: [...numRange(501,560), ...numRange(601,652)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 26 },
 
-  // Tampa Bay Buccaneers â€” 100s lower; 200s middle, 300s upper
+  // Tampa Bay Buccaneers — 100s lower; 200s middle, 300s upper
   raymond_james:           { lower: numRange(102,151), upper: [...numRange(201,245), ...numRange(302,344)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // Tennessee Titans â€” 100s lower; 200s club, 300s upper
+  // Tennessee Titans — 100s lower; 200s club, 300s upper
   nissan_stadium:          { lower: numRange(101,146), upper: [...numRange(202,245), ...numRange(303,344)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // Denver Broncos â€” 100s lower; 300s loge (301â€“343), 500s upper
+  // Denver Broncos — 100s lower; 300s loge (301â€“343), 500s upper
   empower_field:           { lower: numRange(100,135), upper: [...numRange(301,343), ...numRange(500,542)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''), seatsPerRow: 26 },
 
-  // Arizona Cardinals â€” 100s lower (101â€“144); 200s club (non-contiguous), 400s upper
+  // Arizona Cardinals — 100s lower (101â€“144); 200s club (non-contiguous), 400s upper
   state_farm_stadium:      { lower: numRange(101,144), upper: [...numRange(201,222), ...numRange(227,248), ...numRange(401,455)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
-  // Baltimore Ravens â€” 100s lower; 200s club, 500s loge (500â€“553), 600s upper
+  // Baltimore Ravens — 100s lower; 200s club, 500s loge (500â€“553), 600s upper
   mt_bank_stadium:         { lower: numRange(100,153), upper: [...numRange(200,253), ...numRange(500,553), ...numRange(600,648)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRST'.split(''), seatsPerRow: 24 },
 
-  // Washington Commanders â€” 100s lower; 200s Joe Gibbs Club, 300s/400s upper (no 500 level)
+  // Washington Commanders — 100s lower; 200s Joe Gibbs Club, 300s/400s upper (no 500 level)
   northwest_stadium:       { lower: numRange(100,148), upper: [...numRange(201,240), ...numRange(301,342), ...numRange(401,466)], rings: RINGS_LARGE, rows: 'ABCDEFGHIJKLMNOPQRSTUV'.split(''), seatsPerRow: 28 },
 
-  // Chicago Bears â€” Soldier Field; 100s lower, 200s upper
+  // Chicago Bears — Soldier Field; 100s lower, 200s upper
   soldier_field:           { lower: numRange(101,155), upper: numRange(202,256), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQ'.split(''), seatsPerRow: 22 },
 
-  // Indianapolis Colts â€” 100s street level lower; 300s/400s club/loge, 500s/600s upper
+  // Indianapolis Colts — 100s street level lower; 300s/400s club/loge, 500s/600s upper
   lucas_oil_stadium:       { lower: numRange(101,153), upper: [...numRange(304,349), ...numRange(404,449), ...numRange(504,549), ...numRange(604,649)], rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''), seatsPerRow: 24 },
 
   // â”€â”€ NHL arenas (additional) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -489,7 +489,7 @@ const VENUE_CONFIGS = {
   united_center:           { lower: numRange(101,122), upper: numRange(301,334), rings: RINGS_ARENA,   rows: 'ABCDEFGHIJKLMNO'.split(''), seatsPerRow: 22 }, // Shared: Chicago Blackhawks (NHL) + Chicago Bulls (NBA)
   ball_arena: {
     // Ball Arena: lower bowl uses even-numbered sections 102â€“148;
-    // upper has two tiers â€” lower balcony (odd 301â€“379) and upper balcony (even 302â€“380)
+    // upper has two tiers — lower balcony (odd 301â€“379) and upper balcony (even 302â€“380)
     // Shared: Colorado Avalanche (NHL) + Denver Nuggets (NBA)
     lower: Array.from({ length: 24 }, (_, i) => String(102 + i * 2)), // 102,104,...,148
     upper: numRange(301, 380),
@@ -518,7 +518,7 @@ const VENUE_CONFIGS = {
   estadio_bbva:            { lower: numRange(101,130), upper: numRange(301,330), rings: RINGS_FOOTBALL, rows: 'ABCDEFGHIJKLMNOPQRS'.split(''),    seatsPerRow: 24 },
 
   // â”€â”€ MLB (additional stadiums) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-  // MLB rows are numbered (Row 1, 2, 3â€¦) â€” not lettered â€” at every ballpark.
+  // MLB rows are numbered (Row 1, 2, 3â€¦) — not lettered — at every ballpark.
   chase_field:       { lower: numRange(100,143), upper: [...numRange(200,223), ...numRange(300,332)], rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
   truist_park:       { lower: numRange(107,160), upper: [...numRange(210,246), ...numRange(312,347), ...numRange(401,428)], rings: RINGS_BASEBALL, rows: numRange(1,20), seatsPerRow: 20 },
   oriole_park:       { lower: numRange(1,98),    upper: numRange(316,364), rings: RINGS_BASEBALL, rows: numRange(1,18), seatsPerRow: 18 },
@@ -577,7 +577,7 @@ function platformUrl(platform, event) {
   // Convert a team/event name to a URL slug: "Dallas Cowboys" â†’ "dallas-cowboys"
   function toSlug(s) {
     return s.toLowerCase()
-      .replace(/['â€™&]/g, '')
+      .replace(/['’&]/g, '')
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/-+$/, '');
   }
@@ -670,7 +670,7 @@ function generateSectionBody(secId, level, globalIdx, cfg, event) {
         const url    = platformUrl(ep.platform, event);
         const isBest = multi && px === minSeatPrice;
         const badge  = isBest ? '<span class="te-best">Best</span>' : '';
-        return `<a class="te-plat ${cls}" href="${url}" target="_blank" rel="noopener noreferrer">${ep.platform} â€” ${fmt(px)}${badge}</a>`;
+        return `<a class="te-plat ${cls}" href="${url}" target="_blank" rel="noopener noreferrer">${ep.platform} &mdash; ${fmt(px)}${badge}</a>`;
       }).join('');
 
       const bellBtn =
@@ -839,7 +839,7 @@ function renderAccordion(event) {
         `</button>` +
         `<div class="section-body" style="max-height:0;overflow:hidden;transition:max-height .3s ease"></div>`;
 
-      // Store body HTML as pending data â€” only injected when section is first opened
+      // Store body HTML as pending data — only injected when section is first opened
       item.querySelector('.section-body').dataset.pending = bodyHtml;
 
       groupEl.appendChild(item);
@@ -876,7 +876,7 @@ function buildFilters(event) {
     <div class="sm-filters-bar">
       <div class="sm-pf-section">
         <div class="sm-pf-header">
-          <span class="sm-pf-label">Max price <span class="sm-pf-allin">Â· all-in per seat</span></span>
+          <span class="sm-pf-label">Max price <span class="sm-pf-allin">&middot; all-in per seat</span></span>
           <span class="sm-pf-display" id="smPfDisplay">Any price</span>
           <button class="sm-pf-clear" id="smPfClear" onclick="clearMaxPrice()" style="display:none">Clear</button>
         </div>
@@ -974,12 +974,12 @@ function countVisibleInSection(item) {
   const body = item.querySelector('.section-body');
 
   if (body && body.dataset.rendered) {
-    // Section is live in the DOM â€” count directly
+    // Section is live in the DOM — count directly
     return [...item.querySelectorAll('.ticket-entry[data-price]')]
       .filter(e => e.style.display !== 'none').length;
   }
 
-  // Section not yet opened â€” use cached stats
+  // Section not yet opened — use cached stats
   const stats = getSectionStats(item);
   return stats.rows.reduce((total, row) => {
     if (_seatsFilter > 1 && row.mc < _seatsFilter) return total;
@@ -1031,7 +1031,7 @@ function applyFilters(scope) {
 
 
 // â”€â”€ Sport playing-surface diagrams â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
-// Inline SVG overhead diagrams â€” no external images, always displays correctly.
+// Inline SVG overhead diagrams — no external images, always displays correctly.
 const FIELD_DIAGRAMS = {
 
   mlb: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 360" role="img" aria-label="Baseball field">
@@ -1282,12 +1282,12 @@ async function init() {
   badge.textContent = SPORT_LABELS[event.sport] || event.sport.toUpperCase();
   badge.className   = `sport-badge sport-${event.sport}`;
   document.getElementById('eventTitle').textContent = event.title;
-  document.getElementById('eventMeta').textContent  = `ðŸ“ ${event.venue}  Â·  ðŸ“… ${event.date}`;
-  document.title = `${event.title} â€” Tickets Â· TicketCompass`;
+  document.getElementById('eventMeta').textContent  = `📍 ${event.venue}  ·  📅 ${event.date}`;
+  document.title = `${event.title} — Tickets · TicketCompass`;
 
   // Set venue name in hero banner
   const heroName = document.getElementById('heroFallbackName');
-  if (heroName) heroName.textContent = event.venue.split('Â·')[0].trim();
+  if (heroName) heroName.textContent = event.venue.split('·')[0].trim();
 
   renderAccordion(event);
   buildFilters(event);
@@ -1315,10 +1315,10 @@ function openAlertModal(btn) {
 
   // Fill modal context
   document.getElementById('alertSeatLabel').textContent =
-    `${_alertSeat.section} Â· ${_alertSeat.row} Â· ${_alertSeat.seat}`;
+    `${_alertSeat.section} · ${_alertSeat.row} · ${_alertSeat.seat}`;
   document.getElementById('alertEventLabel').textContent =
-    document.getElementById('eventTitle').textContent + ' Â· ' +
-    document.getElementById('eventMeta').textContent.split('Â·')[1]?.trim() || '';
+    document.getElementById('eventTitle').textContent + ' · ' +
+    document.getElementById('eventMeta').textContent.split('·')[1]?.trim() || '';
 
   // Default price input to $10 below current lowest
   const defaultMax = Math.max(1, _alertSeat.price - 10);
@@ -1352,10 +1352,10 @@ function alertUpdateNote() {
   const cur = _alertSeat.price;
   const note = document.getElementById('alertPriceNote');
   if (val >= cur) {
-    note.textContent = `Currently ${fmt(cur)} on ${_alertSeat.platform} â€” in range now`;
+    note.textContent = `Currently ${fmt(cur)} on ${_alertSeat.platform} — in range now`;
     note.className = 'alert-price-note in-range';
   } else {
-    note.textContent = `Currently ${fmt(cur)} on ${_alertSeat.platform} â€” ${fmt(cur - val)} away`;
+    note.textContent = `Currently ${fmt(cur)} on ${_alertSeat.platform} — ${fmt(cur - val)} away`;
     note.className = 'alert-price-note away';
   }
 }
@@ -1372,7 +1372,7 @@ function submitAlertForm() {
 
   // â”€â”€ Submit to Formspree â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // Replace 'YOUR_FORM_ID' with your Formspree form ID after creating a free
-  // account at https://formspree.io â€” takes about 60 seconds.
+  // account at https://formspree.io — takes about 60 seconds.
   fetch('https://formspree.io/f/YOUR_FORM_ID', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -1392,7 +1392,7 @@ function submitAlertForm() {
   // Show confirmation
   const typeLabel = { drop: 'drops in price', threshold: 'reaches your price', sell: 'sells out' };
   document.getElementById('alertConfirmText').innerHTML =
-    `We'll email you when <strong>${_alertSeat.section} Â· ${_alertSeat.row} Â· ${_alertSeat.seat}</strong> ` +
+    `We'll email you when <strong>${_alertSeat.section} · ${_alertSeat.row} · ${_alertSeat.seat}</strong> ` +
     (activeType !== 'sell' ? `drops below <strong>${fmt(+maxPrice)}</strong>` : 'sells out') + '.';
 
   document.getElementById('alertModal').classList.remove('open');

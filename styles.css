@@ -587,27 +587,43 @@ a { text-decoration: none; color: inherit; }
 
 .platform-card {
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-left: 3px solid var(--platform-color, var(--border));
+  border-radius: 0 14px 14px 0;
   padding: 20px 32px;
   min-width: 200px;
-  transition: border-color .2s;
+  background: color-mix(in srgb, var(--platform-color, transparent) 5%, var(--surface));
+  transition: background .2s;
 }
-.platform-card:hover { border-color: var(--primary); }
+.platform-card:hover {
+  background: color-mix(in srgb, var(--platform-color, transparent) 10%, var(--surface));
+}
+
+.platform-card.ticketmaster { --platform-color: #026cdf; }
+.platform-card.stubhub      { --platform-color: #5f259f; }
+.platform-card.seatgeek     { --platform-color: #f4811f; }
 
 .platform-name-lg {
   font-size: 1.1rem;
   font-weight: 800;
   margin-bottom: 4px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.platform-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: var(--platform-color, var(--muted));
 }
 
 .platform-desc {
   font-size: .78rem;
   color: var(--muted);
 }
-
-.platform-card.ticketmaster .platform-name-lg { color: #026cdf; }
-.platform-card.stubhub      .platform-name-lg { color: #5f259f; }
-.platform-card.seatgeek     .platform-name-lg { color: #f4811f; }
 
 /* ── Modal ── */
 .modal-overlay {

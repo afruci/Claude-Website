@@ -368,8 +368,9 @@ const VENUE_CONFIGS = {
   // Pittsburgh Steelers — Acrisure Stadium official sections
   // Lower: 101–147 (main bowl), C148–C150 (Champions Club south), 151–152 (south end zone)
   // Club: 205–240 (UPMC Club 205–216, connecting 217–228, Club West 229–240)
-  // Upper: east 504–518, north 519–527, west 528–541
-  // (Luxury suites 301–369, 401–460 and NC-001–NC-015 North Club Lounge excluded)
+  // Suites: Lower Suites East 301–335, Lower Suites West 336–369
+  //         Upper Suites East 401–439, Upper Suites West 440–460
+  // Upper deck: east 504–518, north 519–527, west 528–541
   acrisure_stadium: {
     lower: [
       ...numRange(101, 147),
@@ -378,6 +379,8 @@ const VENUE_CONFIGS = {
     ],
     upper: [
       ...numRange(205, 240),
+      ...numRange(301, 369),
+      ...numRange(401, 460),
       ...numRange(504, 541),
     ],
     rings: RINGS_FOOTBALL,

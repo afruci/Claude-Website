@@ -36,6 +36,24 @@
     </div>
   </section>
 
+  <!-- Team search -->
+  <div class="hero-search-wrap">
+    <div class="hero-search-inner">
+      <div class="hero-search-box" id="heroSearchBox">
+        <span class="hero-search-icon">🔍</span>
+        <input
+          type="text"
+          id="heroSearchInput"
+          class="hero-search-input"
+          placeholder="Search a team — Cowboys, Lakers, Yankees…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
+      <ul class="hero-search-dropdown" id="heroSearchDropdown"></ul>
+    </div>
+  </div>
+
   <!-- Sport tiles -->
   <section class="sports-section">
     <div class="container">
@@ -263,6 +281,80 @@
       const el = document.getElementById('events-count');
       if (el) el.textContent = featured + schedule;
     })();
+  </script>
+  <script>
+  (function () {
+    // Build master team list from all schedule venue maps
+    const TEAM_INDEX = [];
+    const add = (map, sport) => {
+      if (typeof map === 'undefined') return;
+      Object.entries(map).forEach(([name, venue]) => {
+        TEAM_INDEX.push({ name, venue: venue.split(' · ')[0], city: venue.split(' · ')[1] || '', sport });
+      });
+    };
+    add(typeof NFL_VENUES !== 'undefined' ? NFL_VENUES : undefined, 'nfl');
+    add(typeof MLB_VENUES !== 'undefined' ? MLB_VENUES : undefined, 'mlb');
+    add(typeof NBA_VENUES !== 'undefined' ? NBA_VENUES : undefined, 'nba');
+    add(typeof NHL_VENUES !== 'undefined' ? NHL_VENUES : undefined, 'nhl');
+    add(typeof MLS_VENUES !== 'undefined' ? MLS_VENUES : undefined, 'mls');
+
+    const input    = document.getElementById('heroSearchInput');
+    const dropdown = document.getElementById('heroSearchDropdown');
+    let activeIdx  = -1;
+    let results    = [];
+
+    function render(matches) {
+      results   = matches;
+      activeIdx = -1;
+      if (!matches.length) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; return; }
+      dropdown.innerHTML = matches.map((t, i) =>
+        `<li class="hero-search-result" data-i="${i}" role="option">
+          <div>
+            <div class="hero-search-result-name">${t.name}</div>
+            <div class="hero-search-result-venue">${t.city}</div>
+          </div>
+          <span class="hero-search-badge badge-${t.sport}">${t.sport.toUpperCase()}</span>
+        </li>`
+      ).join('');
+      dropdown.classList.add('open');
+    }
+
+    function go(team) {
+      window.location.href = `sport.html?sport=${team.sport}&by=team&val=${encodeURIComponent(team.name)}`;
+    }
+
+    function setActive(idx) {
+      const items = dropdown.querySelectorAll('.hero-search-result');
+      items.forEach(el => el.classList.remove('active'));
+      if (idx >= 0 && idx < items.length) { items[idx].classList.add('active'); activeIdx = idx; }
+    }
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      if (q.length < 1) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; return; }
+      const matches = TEAM_INDEX.filter(t =>
+        t.name.toLowerCase().includes(q) || t.city.toLowerCase().includes(q)
+      ).slice(0, 8);
+      render(matches);
+    });
+
+    input.addEventListener('keydown', e => {
+      if (!dropdown.classList.contains('open')) return;
+      if (e.key === 'ArrowDown')  { e.preventDefault(); setActive(Math.min(activeIdx + 1, results.length - 1)); }
+      if (e.key === 'ArrowUp')    { e.preventDefault(); setActive(Math.max(activeIdx - 1, 0)); }
+      if (e.key === 'Enter')      { if (activeIdx >= 0) go(results[activeIdx]); else if (results.length === 1) go(results[0]); }
+      if (e.key === 'Escape')     { dropdown.classList.remove('open'); input.blur(); }
+    });
+
+    dropdown.addEventListener('mousedown', e => {
+      const li = e.target.closest('.hero-search-result');
+      if (li) go(results[+li.dataset.i]);
+    });
+
+    document.addEventListener('click', e => {
+      if (!e.target.closest('.hero-search-inner')) dropdown.classList.remove('open');
+    });
+  })();
   </script>
 </body>
 </html>

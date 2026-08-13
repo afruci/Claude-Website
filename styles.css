@@ -388,6 +388,108 @@ a { text-decoration: none; color: inherit; }
   border-color: var(--primary);
 }
 
+/* ── Hero team search ── */
+.hero-search-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 28px 24px 36px;
+}
+.hero-search-inner {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+}
+.hero-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 16px;
+  transition: border-color .15s;
+}
+.hero-search-box:focus-within {
+  border-color: var(--primary);
+}
+.hero-search-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  opacity: .6;
+}
+.hero-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: .95rem;
+  padding: 14px 0;
+  font-family: inherit;
+}
+.hero-search-input::placeholder {
+  color: var(--muted);
+}
+.hero-search-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0; right: 0;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  list-style: none;
+  padding: 4px;
+  margin: 0;
+  z-index: 100;
+  display: none;
+  box-shadow: 0 8px 24px rgba(0,0,0,.4);
+  max-height: 300px;
+  overflow-y: auto;
+}
+.hero-search-dropdown.open {
+  display: block;
+}
+.hero-search-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 7px;
+  cursor: pointer;
+  gap: 12px;
+}
+.hero-search-result:hover,
+.hero-search-result.active {
+  background: var(--surface);
+}
+.hero-search-result-name {
+  font-size: .9rem;
+  color: var(--text);
+  font-weight: 500;
+}
+.hero-search-result-venue {
+  font-size: .75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.hero-search-badge {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  color: #fff;
+}
+.badge-nfl { background: #013369; }
+.badge-mlb { background: #002D72; }
+.badge-nba { background: #C9082A; }
+.badge-nhl { background: #000814; border: 1px solid var(--border); }
+.badge-mls { background: #1a2d5a; }
+
 /* ── Why TicketCompass ── */
 .why-section {
   padding: 56px 0 60px;

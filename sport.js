@@ -193,6 +193,7 @@ function buildBanner(meta, count) {
   const banner = document.getElementById('sportBanner');
   banner.style.borderLeft  = `4px solid ${meta.color}`;
   banner.style.paddingLeft = '20px';
+  banner.style.background  = `${meta.color}0d`;
   document.getElementById('bannerLogo').innerHTML    = meta.logo;
   document.getElementById('bannerTitle').textContent = meta.name;
   setBannerSub(count);

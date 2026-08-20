@@ -770,7 +770,7 @@ a { text-decoration: none; color: inherit; }
 
 .sport-tiles {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 16px;
 }
 
@@ -836,6 +836,8 @@ a { text-decoration: none; color: inherit; }
 .sport-nba-tile { background: linear-gradient(145deg, #C9082A 0%, #d4203e 50%, #17408B 100%); }
 .sport-nhl-tile { background: linear-gradient(145deg, #000814 0%, #001830 50%, #236192 100%); }
 .sport-wc-tile  { background: linear-gradient(145deg, #1a3d6e 0%, #326295 50%, #1a7a4a 100%); }
+.sport-mls-tile { background: linear-gradient(145deg, #1a2d5a 0%, #2a4080 50%, #cc2222 100%); }
+.sport-cfb-tile { background: linear-gradient(145deg, #6B1111 0%, #8B1A1A 50%, #d97706 100%); }
 
 /* Hero adjustment for new homepage */
 .hero {
@@ -969,7 +971,10 @@ a { text-decoration: none; color: inherit; }
 .empty-state p { font-size: 1rem; }
 
 /* ── Responsive ── */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
+  .sport-tiles { grid-template-columns: repeat(4, 1fr); }
+}
+@media (max-width: 700px) {
   .sport-tiles { grid-template-columns: repeat(3, 1fr); }
 }
 @media (max-width: 600px) {

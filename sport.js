@@ -87,6 +87,22 @@ const SPORT_META = {
       <line x1="36" y1="8" x2="36" y2="64" stroke="#fff" stroke-width="1.2" opacity=".8"/>
     </svg>`,
   },
+  cfb: {
+    name: 'College Football',
+    full: 'Power 4 College Football',
+    color: '#8B1A1A',
+    logo: `<svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="36" cy="38" rx="26" ry="16" fill="#7B3F00" stroke="#5a2d00" stroke-width="1.5"/>
+      <path d="M11 38 Q36 28 61 38" stroke="white" stroke-width="2.5" fill="none" opacity=".9"/>
+      <path d="M11 38 Q36 48 61 38" stroke="white" stroke-width="2.5" fill="none" opacity=".9"/>
+      <line x1="36" y1="26" x2="36" y2="50" stroke="white" stroke-width="2" opacity=".9"/>
+      <line x1="31" y1="31" x2="41" y2="31" stroke="white" stroke-width="1.8" opacity=".9"/>
+      <line x1="30" y1="38" x2="42" y2="38" stroke="white" stroke-width="1.8" opacity=".9"/>
+      <line x1="31" y1="45" x2="41" y2="45" stroke="white" stroke-width="1.8" opacity=".9"/>
+      <circle cx="57" cy="17" r="9" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/>
+      <text x="57" y="21" text-anchor="middle" font-size="11" font-weight="900" fill="white" font-family="Arial,sans-serif">★</text>
+    </svg>`,
+  },
 };
 
 const PLATFORM_COLORS = {
@@ -152,6 +168,7 @@ function getAllEvents(sport) {
   if (sport === 'nhl'      && typeof NHL_GAMES       !== 'undefined') all = all.concat(NHL_GAMES);
   if (sport === 'worldcup' && typeof WORLDCUP_GAMES  !== 'undefined') all = all.concat(WORLDCUP_GAMES);
   if (sport === 'mls'      && typeof MLS_GAMES       !== 'undefined') all = all.concat(MLS_GAMES);
+  if (sport === 'cfb'      && typeof CFB_GAMES       !== 'undefined') all = all.concat(CFB_GAMES);
 
   return all
     .filter(e => new Date(e.date) >= today)
@@ -169,6 +186,18 @@ window.pickOption = function(i) {
   navigate(_currentBy, _optData[i]);
 };
 
+window.pickConference = function(conf) {
+  const p = new URLSearchParams({ sport: 'cfb', conf });
+  history.pushState({}, '', `?${p}`);
+  renderView();
+};
+
+window.pickCfbTeam = function(conf, team) {
+  const p = new URLSearchParams({ sport: 'cfb', conf, team });
+  history.pushState({}, '', `?${p}`);
+  renderView();
+};
+
 // ── Navigation ────────────────────────────────────────────────────────────────
 function navigate(by, val) {
   const p = new URLSearchParams({ sport: _sport });
@@ -179,13 +208,82 @@ function navigate(by, val) {
 }
 
 function renderView() {
-  const p   = new URLSearchParams(window.location.search);
-  const by  = p.get('by');
-  const val = p.get('val');
+  const p    = new URLSearchParams(window.location.search);
+  const by   = p.get('by');
+  const val  = p.get('val');
+  const conf = p.get('conf');
+  const team = p.get('team');
+
+  // CFB uses a 3-level hierarchy: conference → team → games
+  if (_sport === 'cfb') {
+    if (!conf)       renderConferences();
+    else if (!team)  renderTeamsInConference(conf);
+    else             renderGames('team', team);
+    return;
+  }
 
   if (!by)            renderPicker();
   else if (!val)      renderOptions(by);
   else                renderGames(by, val);
+}
+
+// ── CFB: Conference grid ──────────────────────────────────────────────────────
+function renderConferences() {
+  if (typeof CFB_CONFERENCES === 'undefined') {
+    document.getElementById('browseArea').innerHTML =
+      '<p style="color:var(--muted);padding:40px;text-align:center">Loading…</p>';
+    return;
+  }
+
+  const cards = Object.entries(CFB_CONFERENCES).map(([key, conf]) => {
+    const gameCount = _allEvents.filter(e => e.conference === key).length;
+    return `
+      <button class="browse-cat-btn conf-card" onclick="pickConference('${key}')">
+        <span class="conf-badge" style="background:${conf.color}">${conf.short}</span>
+        <span class="bcat-label">${key}</span>
+        <span class="bcat-desc">${conf.name}</span>
+        <span class="conf-meta">${conf.teams.length} teams &middot; ${gameCount} games</span>
+      </button>`;
+  }).join('');
+
+  document.getElementById('browseArea').innerHTML = `
+    <div class="browse-picker">
+      <p class="browse-prompt">Select a conference</p>
+      <div class="browse-categories">${cards}</div>
+    </div>`;
+
+  setBannerSub(_allEvents.length);
+}
+
+// ── CFB: Teams within a conference ───────────────────────────────────────────
+function renderTeamsInConference(conf) {
+  if (typeof CFB_CONFERENCES === 'undefined') return;
+  const confData = CFB_CONFERENCES[conf];
+  if (!confData) return;
+
+  const teams = [...confData.teams].sort();
+  const cards = teams.map(t => {
+    const count  = _allEvents.filter(e => e.home === t || e.away === t).length;
+    const venue  = (typeof CFB_VENUES !== 'undefined' && CFB_VENUES[t])
+      ? CFB_VENUES[t].split(' · ')[0] : '';
+    const safeConf = conf.replace(/'/g, "\\'");
+    const safeTeam = t.replace(/'/g, "\\'");
+    return `
+      <button class="opt-card team-opt-card" onclick="pickCfbTeam('${safeConf}','${safeTeam}')">
+        <span class="opt-main">${escHtml(t)}</span>
+        ${venue ? `<span class="opt-sub">${escHtml(venue)}</span>` : ''}
+        <span class="opt-count">${count} game${count !== 1 ? 's' : ''}</span>
+      </button>`;
+  }).join('');
+
+  document.getElementById('browseArea').innerHTML = `
+    <div class="browse-nav-bar">
+      <button class="browse-back-btn" onclick="history.back()">← Back</button>
+      <span class="browse-nav-label" style="color:${confData.color}">${conf} &mdash; ${escHtml(confData.name)}</span>
+    </div>
+    <div class="opt-grid team-opt-grid">${cards}</div>`;
+
+  setBannerSub(_allEvents.length);
 }
 
 // ── Banner ────────────────────────────────────────────────────────────────────
@@ -662,8 +760,8 @@ async function init() {
     }, { passive: true });
   }
 
-  // Fetch real schedule from API (MLB, NFL, NHL, MLS); NBA keeps static
-  if (typeof window.loadSchedule === 'function' && _sport !== 'nba' && _sport !== 'worldcup') {
+  // Fetch real schedule from API (MLB, NFL, NHL, MLS); NBA/worldcup/CFB keep static
+  if (typeof window.loadSchedule === 'function' && _sport !== 'nba' && _sport !== 'worldcup' && _sport !== 'cfb') {
     const apiEvents = await window.loadSchedule(_sport);
     if (apiEvents && apiEvents.length > 0) {
       _allEvents = apiEvents.sort((a, b) => new Date(a.date) - new Date(b.date));

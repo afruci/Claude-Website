@@ -511,6 +511,27 @@
 .bcat-label { font-size: 1.1rem; font-weight: 800; color: var(--text); }
 .bcat-desc  { font-size: .78rem; color: var(--muted); line-height: 1.4; }
 
+/* ── Conference cards (CFB) ── */
+.conf-card  { gap: 10px; }
+.conf-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: .5px;
+  color: #fff;
+  flex-shrink: 0;
+}
+.conf-meta {
+  font-size: .78rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
 
 /* ── Browse nav bar (Back + label) ── */
 .browse-nav-bar {

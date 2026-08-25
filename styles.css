@@ -769,12 +769,13 @@ a { text-decoration: none; color: inherit; }
 }
 
 .sport-tiles {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  display: flex;
   gap: 16px;
+  flex-wrap: wrap;
 }
 
 .sport-tile {
+  flex: 1 1 110px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -971,14 +972,7 @@ a { text-decoration: none; color: inherit; }
 .empty-state p { font-size: 1rem; }
 
 /* ── Responsive ── */
-@media (max-width: 1100px) {
-  .sport-tiles { grid-template-columns: repeat(4, 1fr); }
-}
-@media (max-width: 700px) {
-  .sport-tiles { grid-template-columns: repeat(3, 1fr); }
-}
 @media (max-width: 600px) {
-  .sport-tiles { grid-template-columns: repeat(2, 1fr); }
   .sport-tile  { min-height: 160px; padding: 24px 12px 20px; }
   .tile-logo, .tile-logo svg { width: 52px; height: 52px; }
   .tile-name   { font-size: 1.1rem; }

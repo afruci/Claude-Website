@@ -7,13 +7,6 @@ const CFB_CONFERENCES = {
     short: 'SEC',
     color: '#002D72',
     accent: '#f0b429',
-    logo: `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="28" cy="28" rx="26" ry="22" fill="#002D72"/>
-      <ellipse cx="28" cy="28" rx="23" ry="19" fill="none" stroke="#F0B429" stroke-width="2.5"/>
-      <line x1="5" y1="22" x2="51" y2="22" stroke="#F0B429" stroke-width="1" opacity=".35"/>
-      <line x1="5" y1="34" x2="51" y2="34" stroke="#F0B429" stroke-width="1" opacity=".35"/>
-      <text x="28" y="34" text-anchor="middle" font-size="18" font-weight="900" fill="white" font-family="Arial Black,Arial,sans-serif" letter-spacing="1">SEC</text>
-    </svg>`,
     teams: [
       'Alabama','Arkansas','Auburn','Florida','Georgia','Kentucky',
       'LSU','Mississippi State','Missouri','Ole Miss','Oklahoma',
@@ -25,12 +18,6 @@ const CFB_CONFERENCES = {
     short: 'B1G',
     color: '#002147',
     accent: '#E04E00',
-    logo: `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="7" width="50" height="42" rx="4" fill="#002147"/>
-      <text x="28" y="26" text-anchor="middle" font-size="13" font-weight="900" fill="white" font-family="Arial Black,Arial,sans-serif" letter-spacing="3">BIG</text>
-      <line x1="10" y1="30.5" x2="46" y2="30.5" stroke="#E04E00" stroke-width="1.5"/>
-      <text x="28" y="43" text-anchor="middle" font-size="13" font-weight="900" fill="#E04E00" font-family="Arial Black,Arial,sans-serif" letter-spacing="3">TEN</text>
-    </svg>`,
     teams: [
       'Illinois','Indiana','Iowa','Maryland','Michigan','Michigan State',
       'Minnesota','Nebraska','Northwestern','Ohio State','Penn State',
@@ -42,12 +29,6 @@ const CFB_CONFERENCES = {
     short: 'XII',
     color: '#003087',
     accent: '#c8102e',
-    logo: `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="7" width="50" height="42" rx="4" fill="#003087"/>
-      <text x="28" y="22" text-anchor="middle" font-size="10" font-weight="900" fill="rgba(255,255,255,.75)" font-family="Arial,sans-serif" letter-spacing="4">BIG</text>
-      <text x="28" y="44" text-anchor="middle" font-size="24" font-weight="900" fill="white" font-family="Arial Black,Arial,sans-serif">12</text>
-      <line x1="10" y1="26" x2="46" y2="26" stroke="#c8102e" stroke-width="1.5"/>
-    </svg>`,
     teams: [
       'Arizona','Arizona State','Baylor','BYU','Cincinnati','Colorado',
       'Houston','Iowa State','Kansas','Kansas State','Oklahoma State',
@@ -59,11 +40,6 @@ const CFB_CONFERENCES = {
     short: 'ACC',
     color: '#003087',
     accent: '#e07b00',
-    logo: `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="7" width="50" height="42" rx="4" fill="#1a3a7a"/>
-      <path d="M9 40 Q28 16 47 40" stroke="#e07b00" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <text x="28" y="34" text-anchor="middle" font-size="18" font-weight="900" fill="white" font-family="Arial Black,Arial,sans-serif" letter-spacing="1">ACC</text>
-    </svg>`,
     teams: [
       'Boston College','California','Clemson','Duke','Florida State',
       'Georgia Tech','Louisville','Miami','NC State','North Carolina',
@@ -76,11 +52,6 @@ const CFB_CONFERENCES = {
     short: 'IND',
     color: '#0C2340',
     accent: '#C99700',
-    logo: `<svg viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="50" height="50" rx="8" fill="#0C2340"/>
-      <rect x="6" y="6" width="44" height="44" rx="6" fill="none" stroke="#C99700" stroke-width="2.5"/>
-      <text x="28" y="38" text-anchor="middle" font-size="24" font-weight="900" fill="#C99700" font-family="Arial Black,Arial,sans-serif" letter-spacing="-1">ND</text>
-    </svg>`,
     teams: ['Notre Dame'],
   },
 };

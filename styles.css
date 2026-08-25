@@ -772,6 +772,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .sport-tile {

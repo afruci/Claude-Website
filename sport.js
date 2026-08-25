@@ -99,8 +99,6 @@ const SPORT_META = {
       <line x1="31" y1="31" x2="41" y2="31" stroke="white" stroke-width="1.8" opacity=".9"/>
       <line x1="30" y1="38" x2="42" y2="38" stroke="white" stroke-width="1.8" opacity=".9"/>
       <line x1="31" y1="45" x2="41" y2="45" stroke="white" stroke-width="1.8" opacity=".9"/>
-      <circle cx="57" cy="17" r="9" fill="#f59e0b" stroke="#d97706" stroke-width="1.2"/>
-      <text x="57" y="21" text-anchor="middle" font-size="11" font-weight="900" fill="white" font-family="Arial,sans-serif">★</text>
     </svg>`,
   },
 };
@@ -315,7 +313,7 @@ function renderTeamsInConference(conf) {
   document.getElementById('browseArea').innerHTML = `
     <div class="browse-nav-bar">
       <button class="browse-back-btn" onclick="history.back()">← Back</button>
-      <span class="browse-nav-label" style="color:${confData.color}">${conf} &mdash; ${escHtml(confData.name)}</span>
+      <span class="browse-nav-label" style="color:var(--text)">${conf} &mdash; ${escHtml(confData.name)}</span>
     </div>
     <div class="opt-grid team-opt-grid">${cards}</div>`;
 

@@ -115,30 +115,63 @@ const PLATFORM_COLORS = {
 
 // ── Official primary ticketing partner per team ───────────────────────────────
 // Default is Ticketmaster. Only exceptions are listed here.
+// SeatGeek partners verified from seatgeek.com/enterprise/partners
 const OFFICIAL_TICKETERS = {
-  // NFL
+  // CFB — Big 12 (official SeatGeek conference partner — current 16 members)
+  'Arizona':                  'SeatGeek',
+  'Arizona State':            'SeatGeek',
+  'Baylor':                   'SeatGeek',
+  'BYU':                      'SeatGeek',
+  'Cincinnati':               'SeatGeek',
+  'Colorado':                 'SeatGeek',
+  'Houston':                  'SeatGeek',
+  'Iowa State':               'SeatGeek',
+  'Kansas':                   'SeatGeek',
+  'Kansas State':             'SeatGeek',
+  'Oklahoma State':           'SeatGeek',
+  'TCU':                      'SeatGeek',
+  'Texas Tech':               'SeatGeek',
+  'UCF':                      'SeatGeek',
+  'Utah':                     'SeatGeek',
+  'West Virginia':            'SeatGeek',
+  // CFB — SEC (individually confirmed SeatGeek partnerships)
+  'Texas':                    'SeatGeek',
+  'Oklahoma':                 'SeatGeek',
+  // NFL — SeatGeek
+  'Arizona Cardinals':        'SeatGeek',
+  'Baltimore Ravens':         'SeatGeek',
   'Dallas Cowboys':           'SeatGeek',
-  // NBA
+  'New Orleans Saints':       'SeatGeek',
+  'Tennessee Titans':         'SeatGeek',
+  'Washington Commanders':    'SeatGeek',
+  // NBA — AXS
   'Golden State Warriors':    'AXS',
   'Denver Nuggets':           'AXS',
-  'Brooklyn Nets':            'SeatGeek',
-  // NHL
+  // NBA — SeatGeek
+  'Cleveland Cavaliers':      'SeatGeek',
+  'New Orleans Pelicans':     'SeatGeek',
+  'Utah Jazz':                'SeatGeek',
+  // NHL — AXS
   'Vegas Golden Knights':     'AXS',
   'Colorado Avalanche':       'AXS',
-  // MLB
-  'New York Mets':            'SeatGeek',
-  // MLS
+  // NHL — SeatGeek
+  'Florida Panthers':         'SeatGeek',
+  // MLS — AXS
   'LA Galaxy':                'AXS',
   'LAFC':                     'AXS',
   'Seattle Sounders FC':      'AXS',
   'Houston Dynamo FC':        'AXS',
+  // MLS — SeatGeek
+  'Austin FC':                'SeatGeek',
   'Chicago Fire FC':          'SeatGeek',
+  'FC Cincinnati':            'SeatGeek',
   'FC Dallas':                'SeatGeek',
-  'Nashville SC':             'SeatGeek',
-  'New York Red Bulls':       'SeatGeek',
+  'Minnesota United FC':      'SeatGeek',
+  'Philadelphia Union':       'SeatGeek',
   'Portland Timbers':         'SeatGeek',
-  'San Jose Earthquakes':     'SeatGeek',
   'Real Salt Lake':           'SeatGeek',
+  'Sporting Kansas City':     'SeatGeek',
+  'St. Louis City SC':        'SeatGeek',
 };
 
 function officialTicketer(teamName) {

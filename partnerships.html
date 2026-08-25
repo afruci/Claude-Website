@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><rect width='28' height='28' rx='6' fill='%2316a34a'/><ellipse cx='14' cy='14' rx='7' ry='7' stroke='%23fff' stroke-width='1.5' fill='none'/><path d='M14 7v14M7 14h14' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><circle cx='21' cy='8' r='3' fill='%23f59e0b'/></svg>" />
+  <title>Partnerships — TicketCompass</title>
+  <link rel="stylesheet" href="styles.css?v=9" />
+  <style>
+    /* ── Hero ── */
+    .partners-hero {
+      padding: 80px 0 72px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(245,158,11,.08) 0%, transparent 65%);
+      border-bottom: 1px solid var(--border);
+    }
+    .partners-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .partners-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .partners-hero p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.75;
+    }
+    .hero-cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-accent {
+      display: inline-flex;
+      align-items: center;
+      background: var(--accent);
+      color: #111;
+      font-weight: 800;
+      font-size: .95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: opacity .15s;
+      white-space: nowrap;
+    }
+    .btn-accent:hover { opacity: .88; }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color .15s;
+      white-space: nowrap;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Body ── */
+    .partners-body { padding: 72px 0 88px; }
+
+    /* ── Value props ── */
+    .value-heading {
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -.3px;
+      margin-bottom: 8px;
+    }
+    .value-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: .95rem;
+      margin-bottom: 44px;
+    }
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+    @media (max-width: 720px) {
+      .value-grid { grid-template-columns: 1fr; }
+    }
+    .value-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 30px 24px;
+    }
+    .value-icon {
+      width: 44px;
+      height: 44px;
+      background: rgba(22,163,74,.12);
+      border: 1px solid rgba(22,163,74,.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 18px;
+    }
+    .value-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .value-desc {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Partnership types ── */
+    .types-heading {
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -.3px;
+      margin-bottom: 8px;
+    }
+    .types-sub {
+      color: var(--muted);
+      font-size: .95rem;
+      margin-bottom: 32px;
+    }
+    .type-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 28px;
+      align-items: center;
+    }
+    @media (max-width: 640px) {
+      .type-card { grid-template-columns: 1fr; gap: 18px; }
+    }
+    .type-card.featured {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 4%, var(--surface));
+    }
+    .type-icon-wrap {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+    .type-icon-wrap.green  { background: rgba(22,163,74,.12);  border: 1px solid rgba(22,163,74,.2); }
+    .type-icon-wrap.blue   { background: rgba(2,108,223,.1);   border: 1px solid rgba(2,108,223,.2); }
+    .type-icon-wrap.amber  { background: rgba(245,158,11,.1);  border: 1px solid rgba(245,158,11,.25); }
+    .type-name {
+      font-size: 1.1rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .type-desc {
+      font-size: .87rem;
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 540px;
+    }
+    .type-badge {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: .7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+    .badge-green { background: rgba(22,163,74,.15); color: #22c55e; }
+    .badge-amber { background: rgba(245,158,11,.15); color: var(--accent); }
+    .badge-blue  { background: rgba(2,108,223,.12);  color: #60a5fa; }
+    .type-cta {
+      flex-shrink: 0;
+    }
+    .btn-sm {
+      display: inline-flex;
+      align-items: center;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: .82rem;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background .15s;
+    }
+    .btn-sm:hover { background: var(--primary-dark); }
+    .btn-sm.amber {
+      background: var(--accent);
+      color: #111;
+    }
+    .btn-sm.amber:hover { opacity: .88; }
+
+    /* ── Divider ── */
+    .section-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 72px 0;
+    }
+
+    /* ── Why section ── */
+    .why-partners-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 560px) {
+      .why-partners-grid { grid-template-columns: 1fr; }
+    }
+    .why-p-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .why-p-icon {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .why-p-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+    .why-p-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Contact CTA ── */
+    .partners-cta {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 56px 48px;
+      text-align: center;
+      margin-top: 72px;
+    }
+    .partners-cta h2 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -.4px;
+      margin-bottom: 12px;
+    }
+    .partners-cta p {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+    .partners-cta .email-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 22px;
+      font-size: .95rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      margin-bottom: 28px;
+      transition: border-color .15s;
+    }
+    .partners-cta .email-display:hover { border-color: var(--primary); color: var(--primary); }
+    .partners-cta-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary-lg {
+      display: inline-flex;
+      align-items: center;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .btn-primary-lg:hover { background: var(--primary-dark); }
+    .btn-outline-lg {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .95rem;
+      padding: 14px 28px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color .15s, color .15s;
+      white-space: nowrap;
+    }
+    .btn-outline-lg:hover { border-color: var(--primary); color: var(--primary); }
+
+    @media (max-width: 560px) {
+      .partners-cta { padding: 36px 24px; }
+      .partners-cta h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="#16a34a"/>
+          <ellipse cx="14" cy="14" rx="7" ry="7" stroke="#fff" stroke-width="1.5" fill="none"/>
+          <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="21" cy="8" r="3" fill="#f59e0b"/>
+        </svg>
+        <span>TicketCompass</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Sports</a>
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="about.html" class="nav-link">About</a>
+        <a href="partnerships.html" class="nav-link active">Partners</a>
+        <a href="privacy-policy.html" class="nav-link">Legal</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="partners-hero">
+    <div class="container">
+      <p class="partners-eyebrow">🤝 Work with TicketCompass</p>
+      <h1>Reach fans at the moment<br>they're ready to buy.</h1>
+      <p>TicketCompass puts your platform in front of fans who are actively searching for tickets — comparing prices, picking games, and deciding where to purchase. We're open to affiliate programs, API partnerships, and official partner arrangements.</p>
+      <div class="hero-cta-row">
+        <a href="mailto:ceo@ticketcompasses.com?subject=Partnership Inquiry" class="btn-accent">Start a conversation</a>
+        <a href="about.html" class="btn-ghost">About TicketCompass</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="partners-body">
+    <div class="container">
+
+      <!-- Why partner: value props -->
+      <h2 class="value-heading">Why partner with us?</h2>
+      <p class="value-sub">We send high-intent traffic to ticket platforms — fans who have already chosen a game and are comparing prices to buy.</p>
+
+      <div class="value-grid">
+        <div class="value-card">
+          <div class="value-icon">🎯</div>
+          <div class="value-title">Purchase-intent audience</div>
+          <div class="value-desc">Visitors arrive because they're searching for tickets to a specific game — not browsing, not researching. They are one click away from buying.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">🏈</div>
+          <div class="value-title">6 sports, 900+ events</div>
+          <div class="value-desc">NFL, MLB, NBA, NHL, MLS, and College Football. We cover every major professional league and Power 4 college football, with full season schedules.</div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">💰</div>
+          <div class="value-title">All-in pricing builds trust</div>
+          <div class="value-desc">We show fees before they reach checkout. Fans trust the price they see — which means fewer abandoned carts and higher conversion for our platform partners.</div>
+        </div>
+      </div>
+
+      <!-- Partnership types -->
+      <h2 class="types-heading">Partnership options</h2>
+      <p class="types-sub">We work with ticket platforms, venues, leagues, and sports-adjacent brands. Here's how we typically structure partnerships.</p>
+
+      <!-- Affiliate -->
+      <div class="type-card">
+        <div class="type-icon-wrap green">🔗</div>
+        <div>
+          <div class="type-name">Affiliate Program</div>
+          <div class="type-desc">The standard starting point. We link to your platform's ticket listings and earn a commission on completed purchases. Your affiliate team sets the terms — we handle integration, traffic, and placement. Works with Ticketmaster, StubHub, SeatGeek, AXS, and Vivid Seats affiliate programs.</div>
+          <span class="type-badge badge-green">Open now</span>
+        </div>
+        <div class="type-cta">
+          <a href="mailto:ceo@ticketcompasses.com?subject=Affiliate Program Inquiry" class="btn-sm">Get in touch</a>
+        </div>
+      </div>
+
+      <!-- Official Partner -->
+      <div class="type-card featured">
+        <div class="type-icon-wrap amber">⭐</div>
+        <div>
+          <div class="type-name">Official Partner Arrangement</div>
+          <div class="type-desc">For platforms looking for deeper integration — an "Official Partner" badge on your listings, preferred placement in our price comparison, co-branded content, or a dedicated landing page for your teams and events. Ideal for platforms with large venue or league portfolios looking to drive direct ticketing volume.</div>
+          <span class="type-badge badge-amber">Accepting applications</span>
+        </div>
+        <div class="type-cta">
+          <a href="mailto:ceo@ticketcompasses.com?subject=Official Partner Inquiry" class="btn-sm amber">Apply</a>
+        </div>
+      </div>
+
+      <!-- API / Data -->
+      <div class="type-card">
+        <div class="type-icon-wrap blue">⚡</div>
+        <div>
+          <div class="type-name">API & Data Integration</div>
+          <div class="type-desc">If your platform has a public or partner-accessible API, we can integrate live inventory and real-time pricing directly into TicketCompass — giving your listings greater accuracy and freshness than static affiliate links. We're already integrated with the Ticketmaster Discovery API and open to expanding.</div>
+          <span class="type-badge badge-blue">Discuss with us</span>
+        </div>
+        <div class="type-cta">
+          <a href="mailto:ceo@ticketcompasses.com?subject=API Integration Inquiry" class="btn-sm">Get in touch</a>
+        </div>
+      </div>
+
+      <hr class="section-divider" />
+
+      <!-- Why work with us -->
+      <h2 class="types-heading">What we bring to the partnership</h2>
+      <p class="types-sub">We're transparent about what we are and how we work — which is exactly what makes the traffic valuable.</p>
+
+      <div class="why-partners-grid">
+        <div class="why-p-card">
+          <div class="why-p-icon">⚖️</div>
+          <div>
+            <div class="why-p-title">Platform-neutral by default</div>
+            <div class="why-p-desc">We don't favor any platform. Fans trust our comparisons because we have no incentive to push them toward a particular seller — which means your listing wins when your price is best.</div>
+          </div>
+        </div>
+        <div class="why-p-card">
+          <div class="why-p-icon">📋</div>
+          <div>
+            <div class="why-p-title">Full affiliate disclosure</div>
+            <div class="why-p-desc">We disclose commission relationships clearly on every page. Platforms and leagues increasingly expect partners to be transparent — we already are.</div>
+          </div>
+        </div>
+        <div class="why-p-card">
+          <div class="why-p-icon">🏟️</div>
+          <div>
+            <div class="why-p-title">Deep sports coverage</div>
+            <div class="why-p-desc">Full season schedules for NFL, MLB, NBA, NHL, MLS, and all Power 4 CFB conferences — over 900 events across 6 sports, with venue and team-level browsing.</div>
+          </div>
+        </div>
+        <div class="why-p-card">
+          <div class="why-p-icon">🚀</div>
+          <div>
+            <div class="why-p-title">Growing and independent</div>
+            <div class="why-p-desc">TicketCompass is independently owned and operated — no corporate parent, no conflicting platform interest. Partnerships are straightforward to negotiate and fast to activate.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="partners-cta">
+        <h2>Ready to talk?</h2>
+        <p>Whether you're a platform looking for an affiliate relationship or a league exploring a deeper integration, we'd love to hear from you. Reach out directly — we respond within one business day.</p>
+        <a href="mailto:ceo@ticketcompasses.com?subject=Partnership Inquiry" class="email-display">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+          ceo@ticketcompasses.com
+        </a>
+        <div class="partners-cta-btns">
+          <a href="mailto:ceo@ticketcompasses.com?subject=Partnership Inquiry — Affiliate Program" class="btn-primary-lg">Affiliate inquiry</a>
+          <a href="mailto:ceo@ticketcompasses.com?subject=Partnership Inquiry — Official Partner" class="btn-primary-lg" style="background:var(--accent);color:#111">Official partner inquiry</a>
+          <a href="mailto:ceo@ticketcompasses.com?subject=Partnership Inquiry — API Integration" class="btn-outline-lg">API &amp; data</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-disclosure">TicketCompass earns a commission when you purchase tickets through links on this site. This does not affect the price you pay.</p>
+      <p class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+        <a href="privacy-policy.html#affiliate-disclosure">Affiliate Disclosure</a> &nbsp;·&nbsp;
+        <a href="how-it-works.html">How It Works</a> &nbsp;·&nbsp;
+        <a href="about.html">About</a> &nbsp;·&nbsp;
+        <a href="partnerships.html">Partnerships</a> &nbsp;·&nbsp;
+        <a href="contact.html">Contact</a>
+      </p>
+      <p>© 2026 TicketCompass. An independent price comparison service. Not affiliated with any sports league, team, or ticket platform.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

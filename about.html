@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><rect width='28' height='28' rx='6' fill='%2316a34a'/><ellipse cx='14' cy='14' rx='7' ry='7' stroke='%23fff' stroke-width='1.5' fill='none'/><path d='M14 7v14M7 14h14' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><circle cx='21' cy='8' r='3' fill='%23f59e0b'/></svg>" />
+  <title>About — TicketCompass</title>
+  <link rel="stylesheet" href="styles.css?v=9" />
+  <style>
+    /* ── Hero ── */
+    .about-hero {
+      padding: 72px 0 64px;
+      text-align: center;
+      background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(22,163,74,.12) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .about-eyebrow {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .about-hero h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.5px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+    .about-hero p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* ── Body ── */
+    .about-body { padding: 72px 0 88px; }
+
+    /* ── Stats strip ── */
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 72px;
+    }
+    @media (max-width: 640px) {
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+    .about-stat {
+      background: var(--surface);
+      padding: 28px 20px;
+      text-align: center;
+    }
+    .about-stat-num {
+      font-size: 2.2rem;
+      font-weight: 800;
+      letter-spacing: -.5px;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .about-stat-num span { color: var(--primary); }
+    .about-stat-label {
+      font-size: .78rem;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ── Sections ── */
+    .about-section {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      padding: 48px 0;
+      border-top: 1px solid var(--border);
+      align-items: start;
+    }
+    @media (max-width: 720px) {
+      .about-section { grid-template-columns: 1fr; gap: 20px; }
+    }
+    .about-section-label {
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary);
+      padding-top: 4px;
+    }
+    .about-section h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -.3px;
+      margin-bottom: 14px;
+      line-height: 1.25;
+    }
+    .about-section p {
+      font-size: .95rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+    .about-section p:last-child { margin-bottom: 0; }
+    .about-section strong { color: var(--text); font-weight: 600; }
+
+    /* ── Principles grid ── */
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 4px;
+    }
+    @media (max-width: 500px) {
+      .principles-grid { grid-template-columns: 1fr; }
+    }
+    .principle-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 20px;
+    }
+    .principle-icon { font-size: 1.4rem; margin-bottom: 10px; }
+    .principle-title {
+      font-size: .9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .principle-desc {
+      font-size: .8rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Platform logos row ── */
+    .platform-strip {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .platform-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: .82rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .platform-dot-sm {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA banner ── */
+    .about-cta {
+      margin-top: 72px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 48px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .about-cta-text h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .about-cta-text p {
+      font-size: .9rem;
+      color: var(--muted);
+      margin: 0;
+    }
+    .about-cta-btns {
+      display: flex;
+      gap: 12px;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: 12px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .9rem;
+      padding: 12px 24px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      text-decoration: none;
+      transition: border-color .15s, color .15s;
+      white-space: nowrap;
+    }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <rect width="28" height="28" rx="6" fill="#16a34a"/>
+          <ellipse cx="14" cy="14" rx="7" ry="7" stroke="#fff" stroke-width="1.5" fill="none"/>
+          <path d="M14 7v14M7 14h14" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="21" cy="8" r="3" fill="#f59e0b"/>
+        </svg>
+        <span>TicketCompass</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html" class="nav-link">Sports</a>
+        <a href="how-it-works.html" class="nav-link">How it works</a>
+        <a href="about.html" class="nav-link active">About</a>
+        <a href="partnerships.html" class="nav-link">Partners</a>
+        <a href="privacy-policy.html" class="nav-link">Legal</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <div class="about-hero">
+    <div class="container">
+      <p class="about-eyebrow">About TicketCompass</p>
+      <h1>Built for fans who are<br>tired of hidden fees.</h1>
+      <p>TicketCompass compares all-in ticket prices across the major platforms so you always know the real cost before you click — no surprises at checkout.</p>
+    </div>
+  </div>
+
+  <div class="about-body">
+    <div class="container">
+
+      <!-- Stats -->
+      <div class="about-stats">
+        <div class="about-stat">
+          <div class="about-stat-num"><span>6</span></div>
+          <div class="about-stat-label">Sports covered</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num"><span>3</span></div>
+          <div class="about-stat-label">Platforms compared</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num">100<span>%</span></div>
+          <div class="about-stat-label">All-in pricing — fees included</div>
+        </div>
+        <div class="about-stat">
+          <div class="about-stat-num"><span>$0</span></div>
+          <div class="about-stat-label">Cost to fans</div>
+        </div>
+      </div>
+
+      <!-- Mission -->
+      <div class="about-section">
+        <div class="about-section-label">Our Mission</div>
+        <div>
+          <h2>Transparent pricing for every fan.</h2>
+          <p>Hidden fees are the norm in the ticket industry. A $150 seat becomes $210 by the time you reach checkout — service fees, order fees, facility charges, delivery fees. TicketCompass shows you the <strong>all-in total</strong> upfront, across every platform, so you can compare on equal footing and buy with confidence.</p>
+          <p>We don't sell tickets. We don't take a cut from your order total. We simply show you where the best deal is.</p>
+        </div>
+      </div>
+
+      <!-- What we do -->
+      <div class="about-section">
+        <div class="about-section-label">What We Do</div>
+        <div>
+          <h2>One search. Three platforms. The best price.</h2>
+          <p>We pull pricing data from Ticketmaster, StubHub, and SeatGeek — the three largest ticket platforms — and display every fee so the number you see is the number you pay. No last-minute surprises.</p>
+          <div class="platform-strip">
+            <span class="platform-pill"><span class="platform-dot-sm" style="background:#026cdf"></span>Ticketmaster</span>
+            <span class="platform-pill"><span class="platform-dot-sm" style="background:#5f259f"></span>StubHub</span>
+            <span class="platform-pill"><span class="platform-dot-sm" style="background:#f4811f"></span>SeatGeek</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Principles -->
+      <div class="about-section">
+        <div class="about-section-label">Our Principles</div>
+        <div>
+          <h2>How we stay honest.</h2>
+          <div class="principles-grid">
+            <div class="principle-card">
+              <div class="principle-icon">⚖️</div>
+              <div class="principle-title">Platform-neutral</div>
+              <div class="principle-desc">We compare every platform equally. We don't prioritize a partner's listing or hide a better deal because it's on a different site.</div>
+            </div>
+            <div class="principle-card">
+              <div class="principle-icon">🔍</div>
+              <div class="principle-title">All-in only</div>
+              <div class="principle-desc">Every price shown includes all fees. We never display a base price that inflates at checkout.</div>
+            </div>
+            <div class="principle-card">
+              <div class="principle-icon">🚫</div>
+              <div class="principle-title">No ticket sales</div>
+              <div class="principle-desc">We are a comparison tool, not a seller. Purchases happen entirely on the platform's own secure checkout.</div>
+            </div>
+            <div class="principle-card">
+              <div class="principle-icon">📢</div>
+              <div class="principle-title">Clear disclosure</div>
+              <div class="principle-desc">We earn a commission when you buy through our links. This is disclosed prominently and never affects what prices we show.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Independence -->
+      <div class="about-section">
+        <div class="about-section-label">Independence</div>
+        <div>
+          <h2>We answer to fans, not platforms.</h2>
+          <p>TicketCompass is an <strong>independent company</strong>. We are not affiliated with, endorsed by, or sponsored by any professional sports league, team, or ticket platform. No platform pays for placement or ranking on our site.</p>
+          <p>Our revenue comes from standard affiliate commissions — a small percentage of the ticket price paid by the platform when a purchase is made through our link, at no additional cost to you.</p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="about-cta">
+        <div class="about-cta-text">
+          <h3>Interested in working together?</h3>
+          <p>We're open to affiliate partnerships, API integrations, and official partner arrangements.</p>
+        </div>
+        <div class="about-cta-btns">
+          <a href="partnerships.html" class="btn-primary">View partnership options</a>
+          <a href="contact.html" class="btn-outline">Contact us</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <p class="footer-disclosure">TicketCompass earns a commission when you purchase tickets through links on this site. This does not affect the price you pay.</p>
+      <p class="footer-links">
+        <a href="privacy-policy.html">Privacy Policy</a> &nbsp;·&nbsp;
+        <a href="privacy-policy.html#affiliate-disclosure">Affiliate Disclosure</a> &nbsp;·&nbsp;
+        <a href="how-it-works.html">How It Works</a> &nbsp;·&nbsp;
+        <a href="about.html">About</a> &nbsp;·&nbsp;
+        <a href="contact.html">Contact</a>
+      </p>
+      <p>© 2026 TicketCompass. An independent price comparison service. Not affiliated with any sports league, team, or ticket platform.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

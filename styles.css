@@ -518,6 +518,7 @@ a { text-decoration: none; color: inherit; }
 .badge-nba { background: #C9082A; }
 .badge-nhl { background: #000814; border: 1px solid var(--border); }
 .badge-mls { background: #1a2d5a; }
+.badge-cfb { background: #6B1111; }
 
 /* ── Why TicketCompass ── */
 .why-section {

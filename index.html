@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'><rect width='28' height='28' rx='6' fill='%2316a34a'/><ellipse cx='14' cy='14' rx='7' ry='7' stroke='%23fff' stroke-width='1.5' fill='none'/><path d='M14 7v14M7 14h14' stroke='%23fff' stroke-width='1.5' stroke-linecap='round'/><circle cx='21' cy='8' r='3' fill='%23f59e0b'/></svg>" />
   <title>TicketCompass — Best Sports Ticket Prices</title>
-  <link rel="stylesheet" href="styles.css?v=9" />
+  <link rel="stylesheet" href="styles.css?v=10" />
 </head>
 <body>
 
@@ -50,7 +50,7 @@
           type="text"
           id="heroSearchInput"
           class="hero-search-input"
-          placeholder="Search a team — Cowboys, Lakers, Yankees…"
+          placeholder="Search a team — Cowboys, Lakers, Longhorns…"
           autocomplete="off"
           spellcheck="false"
         />
@@ -313,6 +313,7 @@
   <script src="nhl-schedule.js?v=2"></script>
   <script src="worldcup-schedule.js"></script>
   <script src="mls-schedule.js"></script>
+  <script src="cfb-schedule.js?v=4"></script>
   <script>
     (function () {
       const today = new Date();
@@ -397,6 +398,18 @@
     add(typeof NBA_VENUES !== 'undefined' ? NBA_VENUES : undefined, 'nba');
     add(typeof NHL_VENUES !== 'undefined' ? NHL_VENUES : undefined, 'nhl');
     add(typeof MLS_VENUES !== 'undefined' ? MLS_VENUES : undefined, 'mls');
+    // CFB — include conference key for deep-link navigation
+    if (typeof CFB_VENUES !== 'undefined' && typeof CFB_TEAM_CONF !== 'undefined') {
+      Object.entries(CFB_VENUES).forEach(([name, venue]) => {
+        TEAM_INDEX.push({
+          name,
+          venue: venue.split(' · ')[0],
+          city:  venue.split(' · ')[1] || '',
+          sport: 'cfb',
+          conf:  CFB_TEAM_CONF[name] || '',
+        });
+      });
+    }
 
     const input    = document.getElementById('heroSearchInput');
     const dropdown = document.getElementById('heroSearchDropdown');
@@ -435,7 +448,11 @@
     }
 
     function go(team) {
-      window.location.href = `sport.html?sport=${team.sport}&by=team&val=${encodeURIComponent(team.name)}`;
+      if (team.sport === 'cfb' && team.conf) {
+        window.location.href = `sport.html?sport=cfb&conf=${encodeURIComponent(team.conf)}&team=${encodeURIComponent(team.name)}`;
+      } else {
+        window.location.href = `sport.html?sport=${team.sport}&by=team&val=${encodeURIComponent(team.name)}`;
+      }
     }
 
     function setActive(idx) {

@@ -526,6 +526,13 @@
   color: #fff;
   flex-shrink: 0;
 }
+.conf-logo {
+  display: inline-flex;
+  width: 64px;
+  height: 56px;
+  flex-shrink: 0;
+}
+.conf-logo svg { width: 100%; height: 100%; }
 .conf-meta {
   font-size: .78rem;
   color: var(--primary);

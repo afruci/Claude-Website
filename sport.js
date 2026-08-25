@@ -237,12 +237,15 @@ function renderConferences() {
 
   const cards = Object.entries(CFB_CONFERENCES).map(([key, conf]) => {
     const gameCount = _allEvents.filter(e => e.conference === key).length;
+    const logoHtml  = conf.logo
+      ? `<span class="conf-logo">${conf.logo}</span>`
+      : `<span class="conf-badge" style="background:${conf.color}">${conf.short}</span>`;
     return `
       <button class="browse-cat-btn conf-card" onclick="pickConference('${key}')">
-        <span class="conf-badge" style="background:${conf.color}">${conf.short}</span>
+        ${logoHtml}
         <span class="bcat-label">${key}</span>
         <span class="bcat-desc">${conf.name}</span>
-        <span class="conf-meta">${conf.teams.length} teams &middot; ${gameCount} games</span>
+        <span class="conf-meta">${conf.teams.length} team${conf.teams.length !== 1 ? 's' : ''} &middot; ${gameCount} games</span>
       </button>`;
   }).join('');
 

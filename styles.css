@@ -976,9 +976,10 @@ a { text-decoration: none; color: inherit; }
 
 /* ── Responsive ── */
 @media (max-width: 600px) {
-  .sport-tile  { min-height: 160px; padding: 24px 12px 20px; }
+  .sport-tile  { min-height: 160px; padding: 24px 12px 20px; gap: 8px; }
   .tile-logo, .tile-logo svg { width: 52px; height: 52px; }
   .tile-name   { font-size: 1.1rem; }
+  .tile-sub    { min-height: 2.2em; display: flex; align-items: center; justify-content: center; }
   .stats-inner { gap: 16px; }
   .stat-divider { display: none; }
   .nav { display: none; }

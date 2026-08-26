@@ -186,6 +186,7 @@ const CFB_RAW = [
   // ── Week 0 — Aug 29 ──────────────────────────────────────────────────────────
   ['Alabama',        'Michigan',           'Aug 29, 2026'],
   ['Georgia',        'Clemson',            'Aug 29, 2026'],
+  ['TCU',            'North Carolina',     'Aug 29, 2026', false, 'Aviva Stadium · Dublin, Ireland'],
   ['Oregon',         'LSU',                'Aug 29, 2026'],
   ['Penn State',     'Florida State',      'Aug 29, 2026'],
   ['USC',            'Notre Dame',         'Aug 29, 2026'],
@@ -210,6 +211,10 @@ const CFB_RAW = [
   ['Nebraska',       'UNLV',               'Sep 5, 2026'],
   ['Wisconsin',      'Western Illinois',   'Sep 5, 2026'],
   ['Texas',          'Texas State',        'Sep 5, 2026'],
+  ['Baylor',         'Auburn',             'Sep 5, 2026', false, 'Mercedes-Benz Stadium · Atlanta, GA'],
+
+  // ── Week 1b — Sep 6 ──────────────────────────────────────────────────────────
+  ['Wisconsin',      'Notre Dame',         'Sep 6, 2026', false, 'Lambeau Field · Green Bay, WI'],
 
   // ── Week 2 — Sep 12 ──────────────────────────────────────────────────────────
   ['Alabama',        'Arkansas',           'Sep 12, 2026'],
@@ -243,7 +248,7 @@ const CFB_RAW = [
   ['Michigan State', 'Washington',         'Sep 19, 2026'],
   ['UCF',            'Cincinnati',         'Sep 19, 2026'],
   ['Duke',           'North Carolina',     'Sep 19, 2026'],
-  ['Virginia',       'Boston College',     'Sep 19, 2026'],
+  ['Virginia',       'West Virginia',      'Sep 19, 2026', false, 'Bank of America Stadium · Charlotte, NC'],
   ['Louisville',     'SMU',                'Sep 19, 2026'],
   ['Wisconsin',      'Purdue',             'Sep 19, 2026'],
   ['Mississippi State', 'Arkansas',        'Sep 19, 2026'],
@@ -253,7 +258,8 @@ const CFB_RAW = [
   ['Oregon',         'Utah',               'Sep 19, 2026'],
   ['Iowa',           'Northwestern',       'Sep 19, 2026'],
   ['Maryland',       'Temple',             'Sep 19, 2026'],
-  ['Oklahoma State', 'Kansas',             'Sep 19, 2026'],
+  ['Oklahoma State', 'UTEP',               'Sep 19, 2026'],
+  ['Arizona State',  'Kansas',             'Sep 19, 2026', false, 'Wembley Stadium · London, England'],
 
   // ── Week 4 — Sep 26 ──────────────────────────────────────────────────────────
   ['Georgia',        'Alabama',            'Sep 26, 2026'],
@@ -296,7 +302,7 @@ const CFB_RAW = [
   ['Alabama',        'Tennessee',          'Oct 10, 2026', true],
   ['Georgia',        'Kentucky',           'Oct 10, 2026'],
   ['LSU',            'Florida',            'Oct 10, 2026'],
-  ['Oklahoma',       'Texas',              'Oct 10, 2026', true],
+  ['Oklahoma',       'Texas',              'Oct 10, 2026', true,  'Cotton Bowl · Dallas, TX'],
   ['Ohio State',     'Indiana',            'Oct 10, 2026'],
   ['Michigan',       'Penn State',         'Oct 10, 2026'],
   ['Utah',           'Arizona State',      'Oct 10, 2026'],
@@ -358,9 +364,10 @@ const CFB_RAW = [
   ['Syracuse',       'Boston College',     'Oct 31, 2026'],
   ['TCU',            'Colorado',           'Oct 31, 2026'],
   ['Minnesota',      'Illinois',           'Oct 31, 2026'],
-  ['Florida',        'Georgia',            'Oct 31, 2026'],
+  ['Florida',        'Georgia',            'Oct 31, 2026', true,  'Mercedes-Benz Stadium · Atlanta, GA'],
   ['Missouri',       'South Carolina',     'Oct 31, 2026'],
   ['Texas',          'Mississippi State',  'Oct 31, 2026'],
+  ['Notre Dame',     'Navy',              'Oct 31, 2026', false, 'Gillette Stadium · Foxborough, MA'],
 
   // ── Week 10 — Nov 7 ──────────────────────────────────────────────────────────
   ['Alabama',        'Oklahoma',           'Nov 7, 2026'],
@@ -435,10 +442,13 @@ const CFB_RAW = [
   ['Stanford',       'California',         'Nov 28, 2026', true],
   ['Wake Forest',    'Duke',               'Nov 28, 2026'],
   ['Virginia Tech',  'Virginia',           'Nov 28, 2026', true],
+
+  // ── Army-Navy Game — Dec 12 ──────────────────────────────────────────────────
+  ['Army',           'Navy',              'Dec 12, 2026', true,  'MetLife Stadium · East Rutherford, NJ'],
 ];
 
 // ── Build CFB_GAMES ───────────────────────────────────────────────────────────
-const CFB_GAMES = CFB_RAW.map(([home, away, dateStr, rivalry], idx) => ({
+const CFB_GAMES = CFB_RAW.map(([home, away, dateStr, rivalry, venueOverride], idx) => ({
   id:         `cfb-${String(idx + 1).padStart(3, '0')}`,
   sport:      'cfb',
   title:      `${home} vs. ${away}`,
@@ -446,7 +456,7 @@ const CFB_GAMES = CFB_RAW.map(([home, away, dateStr, rivalry], idx) => ({
     const d = new Date(dateStr);
     return d.toISOString().slice(0, 10);
   })() : dateStr,
-  venue:      CFB_VENUES[home] || `${home} Stadium`,
+  venue:      venueOverride || CFB_VENUES[home] || `${home} Stadium`,
   home,
   away,
   conference: CFB_TEAM_CONF[home] || '',

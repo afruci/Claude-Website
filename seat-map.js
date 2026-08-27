@@ -1262,6 +1262,7 @@ async function init() {
   if (!event && typeof NHL_GAMES       !== 'undefined') event = NHL_GAMES.find(e => e.id === id);
   if (!event && typeof WORLDCUP_GAMES  !== 'undefined') event = WORLDCUP_GAMES.find(e => e.id === id);
   if (!event && typeof MLS_GAMES       !== 'undefined') event = MLS_GAMES.find(e => e.id === id);
+  if (!event && typeof CFB_GAMES       !== 'undefined') event = CFB_GAMES.find(e => e.id === id);
   // Try localStorage cache populated by schedule-api.js
   if (!event && typeof window.getCachedEvent === 'function') event = window.getCachedEvent(id);
   // Last resort: fetch the schedule directly (handles cold loads with no localStorage)

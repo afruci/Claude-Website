@@ -19,7 +19,9 @@
       "Bash(node -e ' *)",
       "Bash(curl -s \"https://ticketcompasses.com/sport.html\")",
       "Bash(curl -sIL \"https://ticketcompasses.com/sport\")",
-      "Bash(curl -s \"https://ticketcompasses.com/api/tm?countryCode=US&classificationName=NFL&size=1\")"
+      "Bash(curl -s \"https://ticketcompasses.com/api/tm?countryCode=US&classificationName=NFL&size=1\")",
+      "Bash(curl -s -o \"C:/Users/12814/AppData/Local/Temp/venue14414.png\" \"https://static-maps.seatgeekimages.com/map/venue/14414/9f3c6f92400633bfe28490c0acbec7d8.png\")",
+      "Bash(python3 -c ' *)"
     ]
   }
 }

@@ -50,7 +50,7 @@
           type="text"
           id="heroSearchInput"
           class="hero-search-input"
-          placeholder="Search a team — Cowboys, Lakers, Longhorns…"
+          placeholder="Search a team — Cowboys, Lakers, Alabama…"
           autocomplete="off"
           spellcheck="false"
         />
@@ -399,10 +399,12 @@
     add(typeof NHL_VENUES !== 'undefined' ? NHL_VENUES : undefined, 'nhl');
     add(typeof MLS_VENUES !== 'undefined' ? MLS_VENUES : undefined, 'mls');
     // CFB — include conference key for deep-link navigation
+    const CFB_DISPLAY_NAMES = { Texas: 'University of Texas' };
     if (typeof CFB_VENUES !== 'undefined' && typeof CFB_TEAM_CONF !== 'undefined') {
       Object.entries(CFB_VENUES).forEach(([name, venue]) => {
         TEAM_INDEX.push({
           name,
+          label: CFB_DISPLAY_NAMES[name] || name,
           venue: venue.split(' · ')[0],
           city:  venue.split(' · ')[1] || '',
           sport: 'cfb',
@@ -437,7 +439,7 @@
       dropdown.innerHTML = matches.map((t, i) =>
         `<li class="hero-search-result" data-i="${i}" role="option">
           <div>
-            <div class="hero-search-result-name">${t.name}</div>
+            <div class="hero-search-result-name">${t.label || t.name}</div>
             <div class="hero-search-result-venue">${t.city}</div>
           </div>
           <span class="hero-search-badge badge-${t.sport}">${t.sport.toUpperCase()}</span>
@@ -465,7 +467,7 @@
       const q = input.value.trim().toLowerCase();
       if (q.length < 1) { dropdown.classList.remove('open'); dropdown.innerHTML = ''; return; }
       const matches = TEAM_INDEX.filter(t =>
-        t.name.toLowerCase().includes(q) || t.city.toLowerCase().includes(q)
+        (t.label || t.name).toLowerCase().includes(q) || t.name.toLowerCase().includes(q) || t.city.toLowerCase().includes(q)
       ).slice(0, 8);
       render(matches);
     });

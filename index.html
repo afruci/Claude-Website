@@ -399,12 +399,12 @@
     add(typeof NHL_VENUES !== 'undefined' ? NHL_VENUES : undefined, 'nhl');
     add(typeof MLS_VENUES !== 'undefined' ? MLS_VENUES : undefined, 'mls');
     // CFB — include conference key for deep-link navigation
-    const CFB_DISPLAY_NAMES = { Texas: 'University of Texas' };
     if (typeof CFB_VENUES !== 'undefined' && typeof CFB_TEAM_CONF !== 'undefined') {
       Object.entries(CFB_VENUES).forEach(([name, venue]) => {
+        const mascot = (typeof CFB_MASCOTS !== 'undefined' && CFB_MASCOTS[name]) ? CFB_MASCOTS[name] : null;
         TEAM_INDEX.push({
           name,
-          label: CFB_DISPLAY_NAMES[name] || name,
+          label: mascot ? `${name} ${mascot}` : name,
           venue: venue.split(' · ')[0],
           city:  venue.split(' · ')[1] || '',
           sport: 'cfb',

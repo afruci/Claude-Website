@@ -834,7 +834,7 @@ function renderAccordion(event) {
           `<div class="sh-right">` +
             `${fromPriceHtml}` +
             `<span class="sh-avail">${availText}</span>` +
-            `<span class="sh-arrow">â–¶</span>` +
+            `` +
           `</div>` +
         `</button>` +
         `<div class="section-body" style="max-height:0;overflow:hidden;transition:max-height .3s ease"></div>`;

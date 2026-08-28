@@ -619,7 +619,7 @@
 }
 
 .opt-main   { font-size: .9rem; font-weight: 700; color: var(--text); line-height: 1.3; }
-.opt-mascot { font-size: .78rem; color: var(--muted); font-style: italic; margin-top: 1px; }
+.opt-mascot { font-size: .8rem; font-weight: 400; color: var(--muted); font-style: normal; }
 .opt-sub    { font-size: .75rem; color: var(--muted); }
 .opt-count  { font-size: .72rem; color: var(--primary); font-weight: 600; margin-top: 3px; }
 

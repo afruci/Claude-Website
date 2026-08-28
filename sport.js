@@ -305,8 +305,7 @@ function renderTeamsInConference(conf) {
     const safeTeam = t.replace(/'/g, "\\'");
     return `
       <button class="opt-card team-opt-card" onclick="pickCfbTeam('${safeConf}','${safeTeam}')">
-        <span class="opt-main">${escHtml(t)}</span>
-        ${mascot ? `<span class="opt-mascot">${escHtml(mascot)}</span>` : ''}
+        <span class="opt-main">${escHtml(t)}${mascot ? ` <span class="opt-mascot">${escHtml(mascot)}</span>` : ''}</span>
         ${venue ? `<span class="opt-sub">${escHtml(venue)}</span>` : ''}
         <span class="opt-count">${count} game${count !== 1 ? 's' : ''}</span>
       </button>`;

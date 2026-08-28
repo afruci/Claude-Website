@@ -795,8 +795,8 @@ async function init() {
     }, { passive: true });
   }
 
-  // Fetch real schedule from API (MLB, NFL, NHL, MLS); NBA/worldcup/CFB keep static
-  if (typeof window.loadSchedule === 'function' && _sport !== 'nba' && _sport !== 'worldcup' && _sport !== 'cfb') {
+  // Fetch real schedule from API (MLB, NFL, MLS); NBA/NHL/worldcup/CFB keep static
+  if (typeof window.loadSchedule === 'function' && _sport !== 'nba' && _sport !== 'nhl' && _sport !== 'worldcup' && _sport !== 'cfb') {
     const apiEvents = await window.loadSchedule(_sport);
     if (apiEvents && apiEvents.length > 0) {
       _allEvents = apiEvents.sort((a, b) => new Date(a.date) - new Date(b.date));

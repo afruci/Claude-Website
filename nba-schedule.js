@@ -139,8 +139,151 @@ function nbaPrices(home, away) {
   ];
 }
 
-// [homeTeam, awayTeam, date]
-const NBA_RAW = [
+// ── Full 82-game schedule generator ──────────────────────────────────────────
+// Regular season: 1,230 games (30 teams × 82 games / 2).
+// Schedule breakdown per team:
+//   4 games × 4 division rivals                      = 16  (2H + 2A each)
+//   4 games × 6 in-conf non-div rivals (cyclic)      = 24  (2H + 2A each)
+//   3 games × 4 in-conf non-div rivals (cyclic)      = 12  (balanced: 2H+1A or 1H+2A)
+//   2 games × 15 cross-conf rivals                   = 30  (1H + 1A each)
+//   Total: 16 + 24 + 12 + 30 = 82 ✓  Home: 8+12+6+15 = 41 ✓
+// Playoffs added as extra games on top of the regular season.
+const NBA_RAW = (function generateNBASchedule() {
+  // Division rosters — position within division (0-4) drives the cyclic formula
+  const DIV = {
+    atlantic:  ['Boston Celtics',       'Brooklyn Nets',          'New York Knicks',        'Philadelphia 76ers',    'Toronto Raptors'],
+    central:   ['Chicago Bulls',        'Cleveland Cavaliers',    'Detroit Pistons',         'Indiana Pacers',        'Milwaukee Bucks'],
+    southeast: ['Atlanta Hawks',        'Charlotte Hornets',      'Miami Heat',              'Orlando Magic',         'Washington Wizards'],
+    northwest: ['Denver Nuggets',       'Minnesota Timberwolves', 'Oklahoma City Thunder',   'Portland Trail Blazers','Utah Jazz'],
+    pacific:   ['Golden State Warriors','LA Clippers',            'Los Angeles Lakers',      'Phoenix Suns',          'Sacramento Kings'],
+    southwest: ['Dallas Mavericks',     'Houston Rockets',        'Memphis Grizzlies',       'New Orleans Pelicans',  'San Antonio Spurs'],
+  };
+  const EAST_DIVS = new Set(['atlantic', 'central', 'southeast']);
+
+  const META = {};
+  for (const [div, teams] of Object.entries(DIV)) {
+    teams.forEach((t, i) => {
+      META[t] = { div, idx: i, conf: EAST_DIVS.has(div) ? 'east' : 'west' };
+    });
+  }
+
+  // ── Game count for each unique pair ────────────────────────────────────────
+  // same div → 4; cross-conf → 2; same-conf diff-div → 3 or 4 (cyclic).
+  // Cyclic: given team 'a' (lower ALL_TEAMS index) with div-index ia, and team
+  //         'b' with div-index ib, they play 4 games when (ib - ia + 5) % 5 < 3.
+  // This gives each team exactly 3 opponents at 4 games per non-div conf division
+  // (= 6 total across 2 non-div conf divisions) and 4 opponents at 3 games. ✓
+  function gameCount(ia, ib, sameDivision, sameConf) {
+    if (sameDivision) return 4;
+    if (!sameConf)    return 2;
+    return ((ib - ia + 5) % 5 < 3) ? 4 : 3;
+  }
+
+  // ── Home/away split ────────────────────────────────────────────────────────
+  // n=4: both teams host 2 → always aHome=2.
+  // n=2: each hosts 1 → aHome=1.
+  // n=3: one team hosts 2, other hosts 1.  We need each team to host exactly
+  //      2 of the 3-game pair from each non-div conf division, so that across
+  //      all 4 three-game opponents a team hosts 2+1+2+1=6 games at home.
+  //   Rule: aHome=2 when ib == (ia+3)%5  (the "closer" 3-game opponent),
+  //          aHome=1 when ib == (ia+4)%5  (the "farther" one).
+  //   This guarantees every team hosts exactly 41 regular-season games. ✓
+  function aHomeCount(n, ia, ib) {
+    if (n === 4) return 2;
+    if (n === 2) return 1;
+    // n === 3
+    return (ib === (ia + 3) % 5) ? 2 : 1;
+  }
+
+  const ALL_TEAMS = Object.values(DIV).flat();
+  const rawPairs  = [];
+
+  for (let i = 0; i < ALL_TEAMS.length; i++) {
+    for (let j = i + 1; j < ALL_TEAMS.length; j++) {
+      const a = ALL_TEAMS[i], b = ALL_TEAMS[j];
+      const ma = META[a], mb = META[b];
+      const n  = gameCount(ma.idx, mb.idx, ma.div === mb.div, ma.conf === mb.conf);
+      const ah = aHomeCount(n, ma.idx, mb.idx);
+      const bh = n - ah;
+      for (let k = 0; k < ah; k++) rawPairs.push([a, b]);
+      for (let k = 0; k < bh; k++) rawPairs.push([b, a]);
+    }
+  }
+  // rawPairs.length === 1,230  (30 teams × 82 / 2)
+
+  // ── Date distribution ─────────────────────────────────────────────────────
+  // Regular season: Oct 20, 2026 – Apr 11, 2027 (skip All-Star break Feb 12-16).
+  const SEASON_START = new Date('2026-10-20');
+  const SEASON_END   = new Date('2027-04-11');
+  const ASB_START    = new Date('2027-02-12');
+  const ASB_END      = new Date('2027-02-16');
+
+  const validDates = [];
+  for (let d = new Date(SEASON_START); d <= SEASON_END; d.setDate(d.getDate() + 1)) {
+    if (!(d >= ASB_START && d <= ASB_END)) validDates.push(new Date(d));
+  }
+  // ~168 valid days; 1,230/168 ≈ 7.3 games/day — matches real NBA cadence.
+
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmt    = d => `${MONTHS[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+
+  // Deterministic seeded shuffle so the schedule is stable across page loads
+  function seededShuffle(arr) {
+    let s = 42;
+    const rng = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 0x100000000; };
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  const shuffled = seededShuffle(rawPairs);
+
+  // Spread games evenly: game i → date at position floor(i × |dates| / total)
+  const total = shuffled.length;
+  const games = shuffled.map(([home, away], i) => {
+    const di = Math.floor(i * validDates.length / total);
+    return [home, away, fmt(validDates[di])];
+  });
+
+  // ── Pin known real games to their confirmed dates ─────────────────────────
+  // Finds the first un-pinned generated game with the same home/away pair and
+  // updates its date. Real games that are the Nth home matchup between a pair
+  // correctly use the Nth available slot (e.g., two Cavaliers-76ers pins for
+  // Oct 22 and Nov 6 use the first and second generated CLE-home-vs-PHI slots).
+  const pinned = new Set();
+  function pinGame(home, away, date) {
+    for (let i = 0; i < games.length; i++) {
+      if (!pinned.has(i) && games[i][0] === home && games[i][1] === away) {
+        games[i][2] = date; pinned.add(i); return;
+      }
+    }
+  }
+
+  // ── Regular-season pins (real confirmed dates) ────────────────────────────
+  pinGame('Detroit Pistons',        'Boston Celtics',         'Oct 20, 2026'); // Opening Night
+  pinGame('New York Knicks',        'Philadelphia 76ers',     'Oct 20, 2026'); // Opening Night
+  pinGame('San Antonio Spurs',      'Oklahoma City Thunder',  'Oct 20, 2026'); // Opening Night
+  pinGame('Memphis Grizzlies',      'Utah Jazz',              'Oct 21, 2026');
+  pinGame('Cleveland Cavaliers',    'Philadelphia 76ers',     'Oct 22, 2026');
+  pinGame('Cleveland Cavaliers',    'Philadelphia 76ers',     'Nov 6, 2026');  // LeBron Cleveland return
+  pinGame('Philadelphia 76ers',     'Boston Celtics',         'Nov 10, 2026'); // Celtics @ 76ers
+  pinGame('Milwaukee Bucks',        'Miami Heat',             'Nov 18, 2026'); // Giannis Milwaukee return
+  pinGame('New York Knicks',        'San Antonio Spurs',      'Dec 25, 2026'); // Christmas
+  pinGame('Boston Celtics',         'Miami Heat',             'Dec 25, 2026'); // Christmas
+  pinGame('Los Angeles Lakers',     'Philadelphia 76ers',     'Dec 25, 2026'); // Christmas — LeBron LA return
+  pinGame('Minnesota Timberwolves', 'Oklahoma City Thunder',  'Dec 25, 2026'); // Christmas
+  pinGame('Golden State Warriors',  'Denver Nuggets',         'Dec 25, 2026'); // Christmas
+  pinGame('Boston Celtics',         'Philadelphia 76ers',     'Jan 21, 2027'); // Jaylen Brown Boston return
+  pinGame('Milwaukee Bucks',        'Miami Heat',             'Jan 28, 2027'); // Giannis Milwaukee return (2)
+
+  games.sort((a, b) => new Date(a[2]) - new Date(b[2]));
+  return games;
+})();
+
+/* ── Legacy static list removed — NBA_RAW is now generated programmatically above ──
+const _NBA_RAW_LEGACY = [
   // ── Opening Night — Oct 20, 2026 ─────────────────────────────────────────────
   ['Detroit Pistons',        'Boston Celtics',         'Oct 20, 2026'],  // Opening Night
   ['New York Knicks',        'Philadelphia 76ers',     'Oct 20, 2026'],  // Opening Night
@@ -897,7 +1040,7 @@ const NBA_RAW = [
   ['Boston Celtics',         'Oklahoma City Thunder',  'Jun 18, 2027'],
   ['Oklahoma City Thunder',  'Boston Celtics',         'Jun 20, 2027'],
   ['Boston Celtics',         'Oklahoma City Thunder',  'Jun 22, 2027'],
-];
+]; ── end legacy list */
 
 let _nbaId = 7000;
 const NBA_GAMES = NBA_RAW.map(([home, away, date]) => ({

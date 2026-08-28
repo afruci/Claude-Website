@@ -120,10 +120,109 @@ function nhlPrices(home, away, round) {
   ];
 }
 
-// [home, away, date, round]
-// round 0 = regular season | 1 = first round | 2 = second round | 3 = conf finals
-// Stanley Cup Finals Game 1 (Jun 1, Tampa vs Colorado) is already in events-data.js (id:2)
-const NHL_RAW = [
+// ── Full 82-game regular-season generator (1,312 total games, round=0 only) ──
+// Per-team breakdown:
+//   4 games × 7 division rivals                           = 28  (2H+2A each)
+//   3 games × 6 same-conf non-div rivals (cyclic)         = 18  (3H+3A balanced)
+//   2 games × 2 same-conf non-div rivals (cyclic)         =  4  (1H+1A each)
+//   2 games × 16 cross-conf rivals                        = 32  (1H+1A each)
+//   Total: 28 + 22 + 32 = 82 ✓   Home: 14 + 9 + 2 + 16 = 41 ✓
+// [home, away, date, round]  — all entries have round=0 (regular season)
+const NHL_RAW = (function generateNHLSchedule() {
+  // 4 divisions of 8 teams each (division index within div = 0-7)
+  const DIVS = {
+    atlantic:     ['Boston Bruins',       'Buffalo Sabres',        'Detroit Red Wings',    'Florida Panthers',
+                   'Montreal Canadiens',  'Ottawa Senators',       'Tampa Bay Lightning',  'Toronto Maple Leafs'],
+    metropolitan: ['Carolina Hurricanes', 'Columbus Blue Jackets', 'New Jersey Devils',    'New York Islanders',
+                   'New York Rangers',    'Philadelphia Flyers',   'Pittsburgh Penguins',  'Washington Capitals'],
+    central:      ['Chicago Blackhawks',  'Colorado Avalanche',    'Dallas Stars',         'Minnesota Wild',
+                   'Nashville Predators', 'St. Louis Blues',       'Utah Hockey Club',     'Winnipeg Jets'],
+    pacific:      ['Anaheim Ducks',       'Calgary Flames',        'Edmonton Oilers',      'Los Angeles Kings',
+                   'San Jose Sharks',     'Seattle Kraken',        'Vancouver Canucks',    'Vegas Golden Knights'],
+  };
+  const EAST = new Set(['atlantic', 'metropolitan']);
+
+  const META = {};
+  for (const [div, teams] of Object.entries(DIVS)) {
+    teams.forEach((t, i) => { META[t] = { div, idx: i, conf: EAST.has(div) ? 'east' : 'west' }; });
+  }
+  const ALL = Object.values(DIVS).flat(); // length 32
+
+  // ── Game count ────────────────────────────────────────────────────────────
+  // same-div → 4; cross-conf → 2; same-conf diff-div:
+  //   2-game when (ia + ib) % 8 ≥ 6 (gives each team exactly 2 of 8 non-div conf opponents at 2-game)
+  //   3-game otherwise (gives each team 6 of 8)
+  function gCount(ma, mb) {
+    if (ma.div === mb.div) return 4;
+    if (ma.conf !== mb.conf) return 2;
+    return ((ma.idx + mb.idx) % 8 >= 6) ? 2 : 3;
+  }
+
+  // ── Home/away split ────────────────────────────────────────────────────────
+  // n=4: 2H+2A; n=2: 1H+1A; n=3 (only for same-conf non-div):
+  //   aHome=2 when (ia+ib)%8 < 3 → gives each team exactly 3 of 6 three-game
+  //   non-div conf opponents where they host 2 (and 3 where they host 1) → net 9H ✓
+  function aHome(n, ia, ib) {
+    if (n === 4) return 2;
+    if (n === 2) return 1;
+    return ((ia + ib) % 8 < 3) ? 2 : 1;
+  }
+
+  // ── Build all [home, away, round=0] raw pairs ────────────────────────────
+  const pairs = [];
+  for (let i = 0; i < ALL.length; i++) {
+    for (let j = i + 1; j < ALL.length; j++) {
+      const a = ALL[i], b = ALL[j];
+      const ma = META[a], mb = META[b];
+      const n  = gCount(ma, mb);
+      const ah = aHome(n, ma.idx, mb.idx);
+      const bh = n - ah;
+      for (let k = 0; k < ah; k++) pairs.push([a, b, 0]);
+      for (let k = 0; k < bh; k++) pairs.push([b, a, 0]);
+    }
+  }
+  // pairs.length === 1,312 (32×82/2)
+
+  // ── Date distribution ─────────────────────────────────────────────────────
+  // Regular season: Oct 7, 2026 – Apr 18, 2027, skip All-Star break Feb 6-9.
+  const START   = new Date('2026-10-07');
+  const END     = new Date('2027-04-18');
+  const ASB_S   = new Date('2027-02-06');
+  const ASB_E   = new Date('2027-02-09');
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const fmt = d => `${MON[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+
+  const dates = [];
+  for (let d = new Date(START); d <= END; d.setDate(d.getDate() + 1)) {
+    if (!(d >= ASB_S && d <= ASB_E)) dates.push(new Date(d));
+  }
+  // ~190 dates; 1,312/190 ≈ 6.9 games/day — matches real NHL cadence
+
+  // Deterministic seeded shuffle for stable output
+  function shuffle(arr) {
+    let s = 73;
+    const rng = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 0x100000000; };
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(rng() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const shuffled = shuffle(pairs);
+  const total    = shuffled.length;
+  const games    = shuffled.map(([home, away, round], i) => {
+    const di = Math.floor(i * dates.length / total);
+    return [home, away, fmt(dates[di]), round];
+  });
+
+  games.sort((a, b) => new Date(a[2]) - new Date(b[2]));
+  return games;
+})();
+
+/* ── Legacy static schedule (replaced by generator above) ──────────────────
+const _NHL_RAW_LEGACY = [
   // ── Regular Season — October 2025 ────────────────────────────────────────────
   ['Boston Bruins','Toronto Maple Leafs','Oct 9, 2025',0],
   ['New York Rangers','New Jersey Devils','Oct 9, 2025',0],
@@ -607,7 +706,7 @@ const NHL_RAW = [
   ['Colorado Avalanche',    'Edmonton Oilers',         'Jun 5, 2027',  3],
   ['Toronto Maple Leafs',   'Boston Bruins',           'Jun 8, 2027',  3],
   ['Colorado Avalanche',    'Edmonton Oilers',         'Jun 10, 2027', 3],
-];
+]; // end legacy list */
 
 const NHL_GAMES = NHL_RAW.map(([home, away, date, round], i) => {
   const roundLabel = round === 3 ? ' — Conference Finals'

@@ -297,14 +297,16 @@ function renderTeamsInConference(conf) {
 
   const teams = [...confData.teams].sort();
   const cards = teams.map(t => {
-    const count  = _allEvents.filter(e => e.home === t || e.away === t).length;
-    const venue  = (typeof CFB_VENUES !== 'undefined' && CFB_VENUES[t])
+    const count   = _allEvents.filter(e => e.home === t || e.away === t).length;
+    const venue   = (typeof CFB_VENUES !== 'undefined' && CFB_VENUES[t])
       ? CFB_VENUES[t].split(' · ')[0] : '';
+    const mascot  = (typeof CFB_MASCOTS !== 'undefined' && CFB_MASCOTS[t]) ? CFB_MASCOTS[t] : '';
     const safeConf = conf.replace(/'/g, "\\'");
     const safeTeam = t.replace(/'/g, "\\'");
     return `
       <button class="opt-card team-opt-card" onclick="pickCfbTeam('${safeConf}','${safeTeam}')">
         <span class="opt-main">${escHtml(t)}</span>
+        ${mascot ? `<span class="opt-mascot">${escHtml(mascot)}</span>` : ''}
         ${venue ? `<span class="opt-sub">${escHtml(venue)}</span>` : ''}
         <span class="opt-count">${count} game${count !== 1 ? 's' : ''}</span>
       </button>`;
